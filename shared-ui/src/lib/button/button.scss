@@ -1,0 +1,226 @@
+:host {
+  display: inline-flex;
+}
+
+.pt-ui-button {
+  border-radius:5px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
+  --pt-ui-tone: var(
+    --mdc-filled-button-container-color,
+    var(
+      --mdc-outlined-button-label-text-color,
+      var(
+        --mdc-text-button-label-text-color,
+        var(--mdc-icon-button-icon-color, #2563eb)
+      )
+    )
+  );
+  --pt-ui-blink-base: color-mix(in srgb, var(--pt-ui-tone) 70%, transparent);
+}
+
+.pt-ui-button .mdc-button__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pt-ui-button .mat-icon {
+  margin: 0;
+}
+
+.pt-ui-button__icon {
+  font-size: 1.05em;
+  height: 1em;
+  width: 1em;
+}
+
+.pt-ui-button.size-sm {
+  font-size: 0.85rem;
+  padding: 0 0.7rem;
+  height: 2.25rem;
+  min-height: 2.25rem;
+  line-height: 1;
+  min-width: 2.5rem;
+}
+
+.pt-ui-button.size-md {
+  font-size: 1rem;
+  padding: 0 1.2rem;
+  min-height: 2.8rem;
+  min-width: 3.4rem;
+}
+
+.pt-ui-button.size-lg {
+  font-size: 1.15rem;
+  padding: 0 1.8rem;
+  min-height: 3.4rem;
+  min-width: 4.2rem;
+}
+
+.pt-ui-button.size-xl {
+  font-size: 1.3rem;
+  padding: 0 2.2rem;
+  min-height: 4rem;
+  min-width: 5rem;
+}
+
+.pt-ui-button.size-xxl {
+  font-size: 1.5rem;
+  padding: 0 2.6rem;
+  min-height: 4.8rem;
+  min-width: 6rem;
+}
+
+.pt-ui-button.icon-only {
+  padding: 0;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+}
+
+.pt-ui-button.icon-only.size-sm {
+  min-width: 2rem;
+  min-height: 2rem;
+}
+
+.pt-ui-button.icon-only.size-lg {
+  min-width: 3.4rem;
+  min-height: 3.4rem;
+}
+
+.pt-ui-button.icon-only.size-xl {
+  min-width: 4rem;
+  min-height: 4rem;
+}
+
+.pt-ui-button.icon-only.size-xxl {
+  min-width: 4.8rem;
+  min-height: 4.8rem;
+}
+
+.pt-ui-button.mat-mdc-icon-button {
+  border-radius: 14px;
+}
+
+.pt-ui-button.variant-outline {
+  border: 1px solid color-mix(in srgb, currentColor 65%, transparent);
+}
+
+.pt-ui-button.variant-ghost {
+  background: transparent;
+}
+
+.pt-ui-button.is-blinking {
+  animation: pt-ui-attention 1.05s ease-out infinite;
+}
+
+/* Default primary tone (when no custom tone is applied) */
+.pt-ui-button:not(.tone-success):not(.tone-info):not(.tone-neutral):not(.tone-danger):not(.tone-warn) {
+  --pt-ui-tone: #007bff;
+  --pt-ui-tone-contrast: #f0f7ff;
+  --pt-ui-tone-soft: rgba(0, 123, 255, 0.28);
+  --mdc-filled-button-container-color: var(--pt-ui-tone);
+  --mdc-filled-button-label-text-color: var(--pt-ui-tone-contrast);
+  --mdc-filled-button-hover-container-color: color-mix(in srgb, var(--pt-ui-tone) 90%, white);
+  --mdc-filled-button-focus-container-color: color-mix(in srgb, var(--pt-ui-tone) 85%, white);
+  --mdc-outlined-button-outline-color: var(--pt-ui-tone);
+  --mdc-outlined-button-label-text-color: var(--pt-ui-tone);
+  --mdc-outlined-button-hover-label-text-color: var(--pt-ui-tone);
+  --mdc-text-button-label-text-color: var(--pt-ui-tone);
+  --mdc-icon-button-icon-color: var(--pt-ui-tone-contrast);
+  --mat-mdc-icon-button-state-layer-color: var(--pt-ui-tone-contrast);
+}
+
+/* Tones which apply for all variants */
+.pt-ui-button.tone-success,
+.pt-ui-button.tone-info,
+.pt-ui-button.tone-neutral,
+.pt-ui-button.tone-danger,
+.pt-ui-button.tone-warn {
+  --mdc-filled-button-container-color: var(--pt-ui-tone);
+  --mdc-filled-button-label-text-color: var(--pt-ui-tone-contrast);
+  --mdc-filled-button-hover-container-color: color-mix(in srgb, var(--pt-ui-tone) 90%, white);
+  --mdc-filled-button-focus-container-color: color-mix(in srgb, var(--pt-ui-tone) 85%, white);
+  --mdc-outlined-button-outline-color: var(--pt-ui-tone);
+  --mdc-outlined-button-label-text-color: var(--pt-ui-tone);
+  --mdc-outlined-button-hover-label-text-color: var(--pt-ui-tone);
+  --mdc-text-button-label-text-color: var(--pt-ui-tone);
+  --mdc-icon-button-icon-color: var(--pt-ui-tone-contrast);
+  --mat-mdc-icon-button-state-layer-color: var(--pt-ui-tone-contrast);
+}
+
+.pt-ui-button.variant-primary.tone-success,
+.pt-ui-button.variant-primary.tone-info,
+.pt-ui-button.variant-primary.tone-neutral,
+.pt-ui-button.variant-primary.tone-danger,
+.pt-ui-button.variant-primary.tone-warn {
+  background-color: var(--pt-ui-tone) !important;
+  color: var(--pt-ui-tone-contrast) !important;
+}
+
+.pt-ui-button.variant-outline.tone-success,
+.pt-ui-button.variant-outline.tone-info,
+.pt-ui-button.variant-outline.tone-neutral,
+.pt-ui-button.variant-outline.tone-danger,
+.pt-ui-button.variant-outline.tone-warn {
+  border-color: var(--pt-ui-tone) !important;
+  color: var(--pt-ui-tone) !important;
+}
+
+.pt-ui-button.variant-ghost.tone-success,
+.pt-ui-button.variant-ghost.tone-info,
+.pt-ui-button.variant-ghost.tone-neutral,
+.pt-ui-button.variant-ghost.tone-danger,
+.pt-ui-button.variant-ghost.tone-warn {
+  color: var(--pt-ui-tone) !important;
+  background: transparent !important;
+}
+
+.pt-ui-button.tone-success {
+  --pt-ui-tone: #16a34a;
+  --pt-ui-tone-contrast: #f0fdf4;
+  --pt-ui-tone-soft: rgba(22, 163, 74, 0.24);
+}
+
+.pt-ui-button.tone-info {
+  --pt-ui-tone: #3BA7DB;
+  --pt-ui-tone-contrast: #F4FAFE;
+  --pt-ui-tone-soft: rgba(59, 167, 219, 0.24);
+}
+
+.pt-ui-button.tone-neutral {
+  --pt-ui-tone: #475569;
+  --pt-ui-tone-contrast: #f8fafc;
+  --pt-ui-tone-soft: rgba(71, 85, 105, 0.22);
+}
+
+.pt-ui-button.tone-danger,
+.pt-ui-button.tone-warn {
+  --pt-ui-tone: #dc2626;
+  --pt-ui-tone-contrast: #fef2f2;
+  --pt-ui-tone-soft: rgba(220, 38, 38, 0.28);
+}
+
+@keyframes pt-ui-attention {
+  0% {
+    box-shadow: 0 0 0 0 var(--pt-ui-blink-base),
+      0 0 0 0 color-mix(in srgb, var(--pt-ui-blink-base) 60%, transparent);
+  }
+  20% {
+    box-shadow: 0 0 0 3px var(--pt-ui-blink-base),
+      0 0 10px 4px color-mix(in srgb, var(--pt-ui-blink-base) 60%, transparent);
+  }
+  55% {
+    box-shadow: 0 0 0 10px transparent,
+      0 0 26px 10px color-mix(in srgb, var(--pt-ui-blink-base) 45%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent;
+  }
+}

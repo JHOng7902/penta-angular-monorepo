@@ -1,0 +1,84 @@
+.nested-table-page {
+  display: grid;
+  gap: 2rem;
+}
+
+.nested-table-page__hero {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 1.75rem 2rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.nested-table-page__section {
+  display: grid;
+  gap: 0.75rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.nested-table-page__desc {
+  margin: 0;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.nested-table-page__steps {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #475569;
+  line-height: 1.6;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.nested-table-page__steps code {
+  background: rgba(15, 23, 42, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+}
+
+.nested-table-page__list {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.nested-table-page__section code {
+  background: rgba(15, 23, 42, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+}
+
+.nested-table-page__code {
+  margin: 0;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  overflow-x: auto;
+}
+
+.nested-table-page__code code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  border: none;
+}
+
+.nested-table-page__notice {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  color: #1f2937;
+}

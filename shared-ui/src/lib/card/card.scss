@@ -1,0 +1,19 @@
+.pt-ui-card {
+  border-radius: 16px;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+.pt-ui-card .mat-mdc-card-title {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.pt-ui-card .mat-mdc-card-content {
+  color: #334155;
+  line-height: 1.6;
+}
+
+.pt-ui-card .mat-mdc-card-actions {
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+}

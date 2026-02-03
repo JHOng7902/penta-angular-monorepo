@@ -1,0 +1,36 @@
+<div class="pt-ui-toast" [ngClass]="positionClass" aria-live="polite">
+  <div class="pt-ui-toast__stack" role="region" aria-label="Notifications">
+    @for (toast of activeToasts; track trackByToastId($index, toast)) {
+      <div
+        #toastItem
+        class="pt-ui-toast__item"
+        [class.is-leaving]="toast.state === 'leaving'"
+        [ngClass]="'pt-ui-toast__item--' + toast.type"
+        [style.--toast-duration]="toast.durationMs + 'ms'"
+        [attr.data-toast-id]="toast.id"
+      >
+        <div class="pt-ui-toast__icon">
+          <mat-icon>{{ iconFor(toast.type) }}</mat-icon>
+        </div>
+        <div class="pt-ui-toast__content">
+          <div class="pt-ui-toast__title">{{ displayTitle(toast) }}</div>
+          <div class="pt-ui-toast__message">{{ toast.message }}</div>
+        </div>
+        @if (toast.closable) {
+          <button
+            mat-icon-button
+            type="button"
+            class="pt-ui-toast__close"
+            (click)="onClose(toast, $event)"
+            aria-label="Close notification"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+        @if (toast.durationMs > 0) {
+          <div class="pt-ui-toast__progress"></div>
+        }
+      </div>
+    }
+  </div>
+</div>

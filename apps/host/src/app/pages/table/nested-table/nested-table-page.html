@@ -1,0 +1,251 @@
+<main class="nested-table-page">
+  <header class="nested-table-page__hero">
+    <h2>Nested Table</h2>
+    <p>
+      The <strong>pt-ui-nested-table</strong> displays parent rows with a collapsible
+      sub-table. Click the expand icon to reveal nested data.
+    </p>
+  </header>
+
+  <section class="nested-table-page__section" id="import-use">
+    <h3>Import &amp; Use</h3>
+    <ol class="nested-table-page__steps">
+      <li>Import <code>NestedTable</code> from the shared library.</li>
+      <li>Provide parent data and the nested key.</li>
+      <li>Define column lists for parent and child rows.</li>
+    </ol>
+    <pre class="nested-table-page__code" ngNonBindable><code>import &#123; NestedTable &#125; from '@penta/shared-ui';
+
+&lt;pt-ui-nested-table
+  [data]="nestedRows"
+  [columns]="columns"
+  [nestedKey]="'StationOrgans'"
+  [nestedColumns]="nestedColumns"
+  [displayCheckbox]="false"
+  [displayNestedCheckbox]="true"
+  [displayIndex]="false"
+  [displayNestedIndex]="true"
+  [enableSorting]="true"
+  [enableNestedSorting]="true"
+  tableHeight="52vh"
+  nestedTableHeight="32vh"
+  [stickyHeader]="true"
+  [nestedStickyHeader]="true"
+  [displayView]="true"
+  [displayEdit]="true"
+  [displayDelete]="true"
+  [displayNestedView]="true"
+  [displayNestedEdit]="true"
+  [displayNestedDelete]="true"
+  (view)="onView($event)"
+  (edit)="onEdit($event)"
+  (remove)="onDelete($event)"
+  (nestedView)="onNestedView($event)"
+  (nestedEdit)="onNestedEdit($event)"
+  (nestedRemove)="onNestedDelete($event)"
+&gt;&lt;/pt-ui-nested-table&gt;</code></pre>
+  </section>
+
+  <section class="nested-table-page__section" id="demo">
+    <h3>Live Demo</h3>
+    <p class="nested-table-page__desc">
+      Expand a station row to see its organs.
+    </p>
+    <pt-ui-nested-table
+      [data]="nestedRows"
+      [columns]="columns"
+      [nestedKey]="'StationOrgans'"
+      [nestedColumns]="nestedColumns"
+      [displayCheckbox]="displayCheckbox"
+      [displayNestedCheckbox]="displayNestedCheckbox"
+      [displayIndex]="displayIndex"
+      [displayNestedIndex]="displayNestedIndex"
+      [enableSorting]="enableSorting"
+      [enableNestedSorting]="enableNestedSorting"
+      [tableHeight]="tableHeight"
+      [nestedTableHeight]="nestedTableHeight"
+      [stickyHeader]="stickyHeader"
+      [nestedStickyHeader]="nestedStickyHeader"
+      [displayView]="displayView"
+      [displayEdit]="displayEdit"
+      [displayDelete]="displayDelete"
+      [displayNestedView]="displayNestedView"
+      [displayNestedEdit]="displayNestedEdit"
+      [displayNestedDelete]="displayNestedDelete"
+      (view)="onView($event)"
+      (edit)="onEdit($event)"
+      (remove)="onDelete($event)"
+      (nestedView)="onNestedView($event)"
+      (nestedEdit)="onNestedEdit($event)"
+      (nestedRemove)="onNestedDelete($event)"
+    ></pt-ui-nested-table>
+    <div class="nested-table-page__notice">
+      <strong>Last action:</strong> {{ lastAction }}
+    </div>
+  </section>
+
+  <section class="nested-table-page__section" id="example-readonly">
+    <h3>Read-Only (No Actions)</h3>
+    <p class="nested-table-page__desc">
+      Basic nested table with sorting and sticky headers, without action buttons or checkboxes.
+    </p>
+    <pre class="nested-table-page__code" ngNonBindable><code>&lt;pt-ui-nested-table
+  [data]="nestedRows"
+  [columns]="columns"
+  [nestedKey]="'StationOrgans'"
+  [nestedColumns]="nestedColumns"
+  [enableSorting]="true"
+  [enableNestedSorting]="true"
+  [displayView]="false"
+  [displayEdit]="false"
+  [displayDelete]="false"
+  [displayNestedView]="false"
+  [displayNestedEdit]="false"
+  [displayNestedDelete]="false"
+  [displayCheckbox]="false"
+  [displayNestedCheckbox]="false"
+  [displayIndex]="false"
+  [displayNestedIndex]="false"
+  tableHeight="36vh"
+  nestedTableHeight="24vh"
+  [stickyHeader]="true"
+  [nestedStickyHeader]="true"
+&gt;&lt;/pt-ui-nested-table&gt;</code></pre>
+    <pt-ui-nested-table
+      [data]="nestedRows"
+      [columns]="columns"
+      [nestedKey]="'StationOrgans'"
+      [nestedColumns]="nestedColumns"
+      [enableSorting]="true"
+      [enableNestedSorting]="true"
+      [displayView]="false"
+      [displayEdit]="false"
+      [displayDelete]="false"
+      [displayNestedView]="false"
+      [displayNestedEdit]="false"
+      [displayNestedDelete]="false"
+      [displayCheckbox]="false"
+      [displayNestedCheckbox]="false"
+      [displayIndex]="false"
+      [displayNestedIndex]="false"
+      tableHeight="36vh"
+      nestedTableHeight="24vh"
+      [stickyHeader]="true"
+      [nestedStickyHeader]="true"
+    ></pt-ui-nested-table>
+  </section>
+
+  <section class="nested-table-page__section" id="example-selection">
+    <h3>Selection + Index</h3>
+    <p class="nested-table-page__desc">
+      Enable selection and row indexes for both parent and child rows.
+    </p>
+    <pre class="nested-table-page__code" ngNonBindable><code>&lt;pt-ui-nested-table
+  [data]="nestedRows"
+  [columns]="columns"
+  [nestedKey]="'StationOrgans'"
+  [nestedColumns]="nestedColumns"
+  [displayCheckbox]="true"
+  [displayNestedCheckbox]="true"
+  [displayIndex]="true"
+  [displayNestedIndex]="true"
+  [enableSorting]="true"
+  [enableNestedSorting]="true"
+  tableHeight="36vh"
+  nestedTableHeight="24vh"
+  [stickyHeader]="true"
+  [nestedStickyHeader]="true"
+&gt;&lt;/pt-ui-nested-table&gt;</code></pre>
+    <pt-ui-nested-table
+      [data]="nestedRows"
+      [columns]="columns"
+      [nestedKey]="'StationOrgans'"
+      [nestedColumns]="nestedColumns"
+      [displayCheckbox]="true"
+      [displayNestedCheckbox]="true"
+      [displayIndex]="true"
+      [displayNestedIndex]="true"
+      [enableSorting]="true"
+      [enableNestedSorting]="true"
+      tableHeight="36vh"
+      nestedTableHeight="24vh"
+      [stickyHeader]="true"
+      [nestedStickyHeader]="true"
+    ></pt-ui-nested-table>
+  </section>
+
+  <section class="nested-table-page__section" id="example-compact">
+    <h3>Compact (Short Height)</h3>
+    <p class="nested-table-page__desc">
+      Compact layout with actions enabled and shorter heights.
+    </p>
+    <pre class="nested-table-page__code" ngNonBindable><code>&lt;pt-ui-nested-table
+  [data]="nestedRows"
+  [columns]="columns"
+  [nestedKey]="'StationOrgans'"
+  [nestedColumns]="nestedColumns"
+  [displayView]="true"
+  [displayEdit]="true"
+  [displayDelete]="true"
+  [displayNestedView]="true"
+  [displayNestedEdit]="true"
+  [displayNestedDelete]="true"
+  [enableSorting]="true"
+  [enableNestedSorting]="true"
+  tableHeight="28vh"
+  nestedTableHeight="18vh"
+&gt;&lt;/pt-ui-nested-table&gt;</code></pre>
+    <pt-ui-nested-table
+      [data]="nestedRows"
+      [columns]="columns"
+      [nestedKey]="'StationOrgans'"
+      [nestedColumns]="nestedColumns"
+      [displayView]="true"
+      [displayEdit]="true"
+      [displayDelete]="true"
+      [displayNestedView]="true"
+      [displayNestedEdit]="true"
+      [displayNestedDelete]="true"
+      [enableSorting]="true"
+      [enableNestedSorting]="true"
+      tableHeight="28vh"
+      nestedTableHeight="18vh"
+    ></pt-ui-nested-table>
+  </section>
+
+  <section class="nested-table-page__section" id="api">
+    <h3>Inputs &amp; Outputs</h3>
+    <ul class="nested-table-page__list">
+      <li><code>data</code>: array of parent rows</li>
+      <li><code>columns</code>: parent column list</li>
+      <li><code>nestedKey</code>: property name for child rows</li>
+      <li><code>nestedColumns</code>: child column list</li>
+      <li><code>displayCheckbox</code>: boolean</li>
+      <li><code>displayNestedCheckbox</code>: boolean</li>
+      <li><code>displayIndex</code>: boolean</li>
+      <li><code>displayNestedIndex</code>: boolean</li>
+      <li><code>enableSorting</code>: boolean</li>
+      <li><code>enableNestedSorting</code>: boolean</li>
+      <li><code>displayView</code>: boolean</li>
+      <li><code>displayEdit</code>: boolean</li>
+      <li><code>displayDelete</code>: boolean</li>
+      <li><code>displayNestedView</code>: boolean</li>
+      <li><code>displayNestedEdit</code>: boolean</li>
+      <li><code>displayNestedDelete</code>: boolean</li>
+      <li><code>stickyHeader</code>: boolean</li>
+      <li><code>tableHeight</code>: string (e.g. <code>50vh</code>)</li>
+      <li><code>nestedTableHeight</code>: string (e.g. <code>32vh</code>)</li>
+      <li><code>nestedStickyHeader</code>: boolean</li>
+      <li><code>expandIcon</code>: icon name for collapsed state</li>
+      <li><code>collapseIcon</code>: icon name for expanded state</li>
+    </ul>
+    <ul class="nested-table-page__list">
+      <li><code>view</code>: emits row data</li>
+      <li><code>edit</code>: emits row data</li>
+      <li><code>remove</code>: emits row data</li>
+      <li><code>nestedView</code>: emits child row data</li>
+      <li><code>nestedEdit</code>: emits child row data</li>
+      <li><code>nestedRemove</code>: emits child row data</li>
+    </ul>
+  </section>
+</main>

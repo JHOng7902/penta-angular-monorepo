@@ -1,0 +1,236 @@
+{
+    "Status": true,
+    "ResponseData": [
+        {
+            "LotNo": "545806822104316032",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0426000000001",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-23T09:40:43.5580223",
+            "UpdatedOn": "2026-01-23T09:58:53.2641122"
+        },
+        {
+            "LotNo": "545806822104316033",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0426000000010",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-23T09:40:43.5641883",
+            "UpdatedOn": "2026-01-23T10:04:29.4513634"
+        },
+        {
+            "LotNo": "545806822104316034",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0426000000002",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-23T09:40:43.5695797",
+            "UpdatedOn": "2026-01-23T10:10:15.4938574"
+        },
+        {
+            "LotNo": "545806822104316035",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0426000000005",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-23T09:40:43.5747921",
+            "UpdatedOn": "2026-01-23T10:11:41.34742"
+        },
+        {
+            "LotNo": "545806822104316036",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0426000000009",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-23T09:40:43.5802035",
+            "UpdatedOn": "2026-01-23T11:02:49.5838129"
+        },
+        {
+            "LotNo": "545806822104316037",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0426000000003",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-23T09:40:43.5854437",
+            "UpdatedOn": "2026-01-23T11:07:35.860284"
+        },
+        {
+            "LotNo": "545806822104316038",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0426000000004",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-23T09:40:43.5906395",
+            "UpdatedOn": "2026-01-23T11:52:47.594465"
+        },
+        {
+            "LotNo": "545806822104316039",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0426000000006",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-23T09:40:43.5956744",
+            "UpdatedOn": "2026-01-26T11:21:07.2829647"
+        },
+        {
+            "LotNo": "545806822104316040",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0526000000001",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-23T09:40:43.6010359",
+            "UpdatedOn": "2026-01-26T11:23:50.3316682"
+        },
+        {
+            "LotNo": "545806822104316041",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0526000000002",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-23T09:40:43.6066032",
+            "UpdatedOn": "2026-01-26T13:55:37.5605782"
+        },
+        {
+            "LotNo": "547970779258763392",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0526000000007",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-26T09:20:07.9054526",
+            "UpdatedOn": "2026-01-26T14:00:46.4672728"
+        },
+        {
+            "LotNo": "547970779258763393",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": "PQ0526000000008",
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-26T09:20:07.9117496",
+            "UpdatedOn": "2026-01-26T14:03:10.311406"
+        },
+        {
+            "LotNo": "547970779258763394",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": null,
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-26T09:20:07.9190593",
+            "UpdatedOn": "2026-01-26T10:24:27.4353583"
+        },
+        {
+            "LotNo": "547970779258763395",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": null,
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-26T09:20:07.9243592",
+            "UpdatedOn": "2026-01-26T09:59:21.7309036"
+        },
+        {
+            "LotNo": "547970779258763396",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": null,
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-26T09:20:07.9296429",
+            "UpdatedOn": "2026-01-26T09:32:25.6856688"
+        },
+        {
+            "LotNo": "547970779258763397",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": null,
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-26T09:20:07.9346805",
+            "UpdatedOn": "2026-01-26T09:33:09.6695097"
+        },
+        {
+            "LotNo": "547970779258763398",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": null,
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-26T09:20:07.939828",
+            "UpdatedOn": "2026-01-26T09:34:12.3146418"
+        },
+        {
+            "LotNo": "547970779258763399",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": null,
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-26T09:20:07.9450865",
+            "UpdatedOn": "2026-01-26T09:31:54.4321803"
+        },
+        {
+            "LotNo": "547970779258763400",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": null,
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-26T09:20:07.9502525",
+            "UpdatedOn": "2026-01-26T09:46:03.9116831"
+        },
+        {
+            "LotNo": "547970779258763401",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": null,
+            "Status": "C",
+            "StatusDescription": "COMPLETED",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-26T09:20:07.9555399",
+            "UpdatedOn": "2026-01-26T09:21:33.9406562"
+        },
+        {
+            "LotNo": "548823669594601600",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": null,
+            "Status": "P",
+            "StatusDescription": "PROCESSING",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-27T13:34:39.8651063",
+            "UpdatedOn": "2026-01-27T13:34:40.1200041"
+        },
+        {
+            "LotNo": "548823669594601601",
+            "PlanCode": "Sub-Accessories",
+            "ParentLotNo": null,
+            "Status": "P",
+            "StatusDescription": "PROCESSING",
+            "UpdatedBy": "P3117",
+            "CreatedOn": "2026-01-27T13:34:40.1405071",
+            "UpdatedOn": "2026-01-27T13:34:40.148011"
+        }
+    ],
+    "StatusData": {
+        "StatusCode": 200,
+        "Message": "Sublot report retrieved successfully"
+    },
+    "Exception": null,
+    "Metadata": {
+        "Timestamp": "2026-01-28T14:10:04.763008+08:00",
+        "ResponseMemorySize": "5.29KB",
+        "ResponseTimeSpan": "708.1546ms"
+    },
+    "Pagination": null
+}

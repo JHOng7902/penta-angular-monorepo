@@ -1,0 +1,31 @@
+@use "@angular/material" as mat;
+
+@include mat.core();
+html, body { height: 100%; }
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    --primary-color: #70F9D5;
+}
+
+$penta-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$blue-palette,
+    tertiary: mat.$cyan-palette,
+  ),
+));
+
+@include mat.all-component-themes($penta-theme);
+
+:root {
+  color-scheme: light;
+}
+
+body{
+  background: #f8fafc;
+  color: #0f172a;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}

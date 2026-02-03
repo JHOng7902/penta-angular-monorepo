@@ -1,0 +1,107 @@
+<div
+  class="pt-ui-input"
+  [class.pt-ui-input--label-left]="labelPosition === 'left'"
+  [class.pt-ui-input--label-hidden]="labelPosition === 'hidden'"
+>
+  @if (labelPosition !== 'hidden' && label) {
+    <label class="pt-ui-input__label" [attr.for]="inputId">
+      {{ label }}
+      @if (required) {
+        <span class="pt-ui-input__required">*</span>
+      }
+    </label>
+  }
+  <div class="pt-ui-input__field" [class.is-blinking]="blink">
+    @if (icon && !isIconTrailing) {
+      @if (isMaterialIcon) {
+        <mat-icon class="pt-ui-input__icon is-material is-leading">{{ icon }}</mat-icon>
+      } @else {
+        <span class="pt-ui-input__icon is-text is-leading">{{ icon }}</span>
+      }
+    }
+    @if (multiline) {
+      <textarea
+        [id]="inputId"
+        [name]="name"
+        [placeholder]="placeholder"
+        [value]="displayValue"
+        [class.has-leading-icon]="hasLeadingIcon"
+        [class.has-trailing-icon]="hasTrailingIcon"
+        [class.has-text-icon]="isTextIcon"
+        [class.has-clear]="showClearButton"
+        [disabled]="disabled"
+        [attr.required]="required ? '' : null"
+        [attr.minlength]="minLength ?? null"
+        [attr.maxlength]="maxLength ?? null"
+        (input)="onInput($event)"
+      ></textarea>
+    } @else {
+      <input
+        [id]="inputId"
+        [name]="name"
+        [type]="actualInputType"
+        [placeholder]="placeholder"
+        [value]="displayValue"
+        [class.has-leading-icon]="hasLeadingIcon"
+        [class.has-trailing-icon]="hasTrailingIcon"
+        [class.has-text-icon]="isTextIcon"
+        [class.has-clear]="showClearButton"
+        [class.has-toggle]="showPasswordToggle"
+        [disabled]="disabled"
+        [attr.required]="required ? '' : null"
+        [attr.minlength]="minLength ?? null"
+        [attr.maxlength]="maxLength ?? null"
+        (input)="onInput($event)"
+      />
+    }
+    <div class="pt-ui-input__actions">
+      @if (icon && isIconTrailing) {
+        @if (iconClickable && !disabled) {
+          <button
+            class="pt-ui-input__icon-button"
+            type="button"
+            [attr.aria-label]="icon"
+            (click)="onIconClick()"
+          >
+            @if (isMaterialIcon) {
+              <mat-icon class="pt-ui-input__icon is-material is-trailing">{{ icon }}</mat-icon>
+            } @else {
+              <span class="pt-ui-input__icon is-text is-trailing">{{ icon }}</span>
+            }
+          </button>
+        } @else {
+          @if (isMaterialIcon) {
+            <mat-icon class="pt-ui-input__icon is-material is-trailing">{{ icon }}</mat-icon>
+          } @else {
+            <span class="pt-ui-input__icon is-text is-trailing">{{ icon }}</span>
+          }
+        }
+      }
+      @if (showPasswordToggle) {
+        <button
+          class="pt-ui-input__toggle"
+          type="button"
+          [attr.aria-label]="isPasswordVisible ? 'Hide password' : 'Show password'"
+          (click)="togglePasswordVisibility()"
+        >
+          {{ isPasswordVisible ? 'Hide' : 'Show' }}
+        </button>
+      }
+      @if (showActionDivider) {
+        <span class="pt-ui-input__divider" aria-hidden="true"></span>
+      }
+      @if (showClearButton) {
+        <button
+          class="pt-ui-input__clear"
+          type="button"
+          aria-label="Clear input"
+          (click)="onClear()"
+        >
+          x
+        </button>
+      }
+    </div>
+  </div>
+</div>
+
+

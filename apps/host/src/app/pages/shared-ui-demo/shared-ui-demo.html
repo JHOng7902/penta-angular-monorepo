@@ -1,0 +1,70 @@
+<div class="demo-page">
+  <section class="demo-section">
+    <pt-ui-section-title
+      title="Buttons"
+      subtitle="Primary, outline, and ghost variants with size options."
+    ></pt-ui-section-title>
+    <div class="demo-row">
+      <pt-ui-button label="Primary"></pt-ui-button>
+      <pt-ui-button variant="outline" label="Outline"></pt-ui-button>
+      <pt-ui-button variant="ghost" label="Ghost"></pt-ui-button>
+    </div>
+    <div class="demo-row">
+      <pt-ui-button size="sm" label="Small"></pt-ui-button>
+      <pt-ui-button size="md" label="Medium"></pt-ui-button>
+      <pt-ui-button size="lg" label="Large"></pt-ui-button>
+      <pt-ui-button size="xl" label="XL"></pt-ui-button>
+      <pt-ui-button size="xxl" label="XXL" tooltip="XXL button" tooltipPosition="above"></pt-ui-button>
+      <pt-ui-button variant="outline" [disabled]="true" label="Disabled"></pt-ui-button>
+      <pt-ui-button
+        content="text-icon"
+        icon="bolt"
+        color="success"
+        label="Success"
+        [blink]="true"
+      ></pt-ui-button>
+      <pt-ui-button
+        content="icon"
+        icon="campaign"
+        [blink]="true"
+        color="info"
+        ariaLabel="Notifications"
+        (pressed)="displayText($event)"
+      ></pt-ui-button>
+    </div>
+    @if(text !== ''){
+      <p>{{text}}</p>
+    }
+  </section>
+
+  <section class="demo-section">
+    <pt-ui-section-title
+      title="Cards"
+      subtitle="Flexible layout with header, body, and footer slots."
+    ></pt-ui-section-title>
+    <div class="demo-grid">
+      <pt-ui-card>
+        <div ptUiCardHeader>Team Alignment</div>
+        <div ptUiCardBody>
+          Keep shared UI consistent across projects and deploy the same components
+          to every app inside the monorepo.
+        </div>
+        <div ptUiCardFooter>
+          <pt-ui-button size="sm">Review</pt-ui-button>
+          <pt-ui-button variant="outline" size="sm">Open spec</pt-ui-button>
+        </div>
+      </pt-ui-card>
+      <pt-ui-card>
+        <div ptUiCardHeader>Release Pipeline</div>
+        <div ptUiCardBody>
+          Conventional commits drive version bumps, changelogs, and releases
+          automatically when you push to main.
+        </div>
+        <div ptUiCardFooter>
+          <pt-ui-button size="sm">Release dry-run</pt-ui-button>
+        </div>
+      </pt-ui-card>
+    </div>
+  </section>
+</div>
+

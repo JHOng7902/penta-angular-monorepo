@@ -1,0 +1,59 @@
+.product-badge {
+  border-radius: 4px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+.action-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  justify-content: center;
+  padding: 0.25rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 110px;
+  max-width: 180px;
+  background: #f3f4f6;
+  color: #1f2937;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.action-badge svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+  display: block;
+}
+
+.action-start {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #334155;
+  border-color: #cbd5f5;
+}
+
+.action-end {
+  background: linear-gradient(135deg, #ecfccb 0%, #d1fae5 100%);
+  color: #065f46;
+  border-color: #86efac;
+}
+
+.action-track-in {
+  background: linear-gradient(135deg, #e0f2fe 0%, #c7d2fe 100%);
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+.action-track-out {
+  background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+  color: #9a3412;
+  border-color: #fdba74;
+}
+

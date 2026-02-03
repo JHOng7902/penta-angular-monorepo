@@ -1,0 +1,176 @@
+<main class="table-page">
+  <header class="table-page__hero">
+    <h2>Table Component</h2>
+    <p>
+      The shared <strong>pt-ui-table</strong> renders JSON data, supports
+      selection, row actions, status badges, date formatting, and optional
+      pagination.
+    </p>
+  </header>
+
+  <section class="table-page__section" id="import-use">
+    <h3>Import &amp; Use</h3>
+    <ol class="table-page__steps">
+      <li>Import <code>Table</code> from the shared library.</li>
+      <li>Add it to the <code>imports</code> array of your standalone component.</li>
+      <li>Bind your <code>ResponseData</code> array to <code>[data]</code>.</li>
+    </ol>
+    <pre class="table-page__code" ngNonBindable><code>import &#123; Table &#125; from '@penta/shared-ui';
+
+@Component(&#123;
+  standalone: true,
+  imports: [Table],
+&#125;)
+export class ExampleComponent &#123;&#125;
+
+&lt;pt-ui-table [data]="response.ResponseData"&gt;&lt;/pt-ui-table&gt;</code></pre>
+  </section>
+
+  <section class="table-page__section" id="demo">
+    <h3>Live Demo</h3>
+    <p class="table-page__desc">
+      This demo uses the sample response format (ResponseData array) and shows
+      checkboxes, actions, and pagination.
+    </p>
+    <pre class="table-page__code" ngNonBindable><code>&lt;pt-ui-table
+  [data]="response.ResponseData"
+  [columns]="columns"
+  [displayCheckbox]="true"
+  [displayView]="true"
+  [displayEdit]="true"
+  [displayDelete]="true"
+  [displayIndex]="true"
+  [enableSorting]="true"
+  tableHeight="50vh"
+  [stickyHeader]="true"
+  [displayPaginator]="true"
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 20]"
+  (view)="onView($event)"
+  (edit)="onEdit($event)"
+  (remove)="onDelete($event)"
+  (selectionChange)="onSelection($event)"
+  (rowPressed)="onRowClick($event)"
+&gt;&lt;/pt-ui-table&gt;</code></pre>
+    <pt-ui-table
+      [data]="response.ResponseData"
+      [columns]="columns"
+      [displayCheckbox]="true"
+      [displayView]="true"
+      [displayEdit]="true"
+      [displayDelete]="true"
+      [displayIndex]="true"
+      [enableSorting]="true"
+      tableHeight="50vh"
+      [stickyHeader]="true"
+      [displayPaginator]="true"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"
+      (view)="onView($event)"
+      (edit)="onEdit($event)"
+      (remove)="onDelete($event)"
+      (selectionChange)="onSelection($event)"
+      (rowPressed)="onRowClick($event)"
+    ></pt-ui-table>
+    <div class="table-page__notice">
+      <strong>Last action:</strong> {{ lastAction }}
+    </div>
+  </section>
+
+  <section class="table-page__section" id="header-tools">
+    <h3>Header Tools Slot</h3>
+    <p class="table-page__desc">
+      You can inject your own buttons or inputs into the table header (right side)
+      by placing elements with the <code>table-tools</code> attribute inside
+      <code>&lt;pt-ui-table&gt;</code>.
+    </p>
+    <pre class="table-page__code" ngNonBindable><code>&lt;pt-ui-table [data]="response.ResponseData"&gt;
+  &lt;div table-tools&gt;
+    &lt;input type="text" placeholder="Search..." /&gt;
+    &lt;button type="button"&gt;Export&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/pt-ui-table&gt;</code></pre>
+    <pt-ui-table
+      [data]="response.ResponseData"
+      [columns]="columns"
+      [displayIndex]="true"
+      [enableSorting]="true"
+    >
+      <div table-tools class="table-page__tools">
+        <pt-ui-input type="text" placeholder="Search..." />
+        <pt-ui-button type="button" size="sm"  buttonText="Export" color="info"></pt-ui-button>
+      </div>
+    </pt-ui-table>
+  </section>
+
+  <section class="table-page__section" id="index-column">
+    <h3>Index Column</h3>
+    <p class="table-page__desc">
+      Turn on <code>displayIndex</code> to show row numbering (useful with pagination).
+    </p>
+    <pre class="table-page__code"><code>{{ indexCode }}</code></pre>
+    <label class="table-page__toggle">
+      <input
+        type="checkbox"
+        [checked]="indexDemo"
+        (change)="toggleIndex($event)"
+      />
+      Enable <code>displayIndex</code>
+    </label>
+    <pt-ui-table
+      [data]="response.ResponseData"
+      [columns]="columns"
+      [displayIndex]="indexDemo"
+    ></pt-ui-table>
+  </section>
+
+  <section class="table-page__section" id="features">
+    <h3>Features</h3>
+    <ul class="table-page__list">
+      <li>Auto-build columns from the first row or pass a custom <code>columns</code> array.</li>
+      <li>Optional selection checkboxes with select-all.</li>
+      <li>Row actions (View / Edit / Delete) with events.</li>
+      <li>Optional index column for row numbering.</li>
+      <li>Sortable headers when sorting is enabled.</li>
+      <li>Configurable height via <code>tableHeight</code> (e.g. <code>50vh</code>).</li>
+      <li>Sticky header support via <code>stickyHeader</code>.</li>
+      <li>Status columns render colored badges with icons.</li>
+      <li>Date columns auto-format via the shared date pipe.</li>
+      <li>Optional paginator with size options.</li>
+    </ul>
+  </section>
+
+  <section class="table-page__section" id="api">
+    <h3>Inputs &amp; Outputs</h3>
+    <div class="table-page__api">
+      <div>
+        <h4>Inputs</h4>
+        <ul>
+          <li><code>data</code>: array of rows (ResponseData)</li>
+          <li><code>columns</code>: string[] or column config</li>
+          <li><code>displayCheckbox</code>: boolean</li>
+          <li><code>displayView</code>: boolean</li>
+          <li><code>displayEdit</code>: boolean</li>
+          <li><code>displayDelete</code>: boolean</li>
+          <li><code>displayIndex</code>: boolean</li>
+          <li><code>enableSorting</code>: boolean</li>
+          <li><code>tableHeight</code>: string (e.g. <code>50vh</code>)</li>
+          <li><code>stickyHeader</code>: boolean</li>
+          <li><code>displayPaginator</code>: boolean</li>
+          <li><code>pageSize</code>: number</li>
+          <li><code>pageSizeOptions</code>: number[]</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Outputs</h4>
+        <ul>
+          <li><code>view</code>: emits row data</li>
+          <li><code>edit</code>: emits row data</li>
+          <li><code>remove</code>: emits row data</li>
+          <li><code>selectionChange</code>: emits selected rows</li>
+          <li><code>rowPressed</code>: emits row data on row click</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>

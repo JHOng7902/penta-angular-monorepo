@@ -1,0 +1,185 @@
+<main class="toast-page">
+  <header class="toast-page__hero">
+    <h2>Toast Message</h2>
+    <p>
+      The <strong>pt-ui-toast-message</strong> component displays temporary
+      notifications with type styling, close actions, and countdown animation.
+    </p>
+  </header>
+
+  <section class="toast-page__section" id="import-use">
+    <h3>Import &amp; Use</h3>
+    <ol class="toast-page__steps">
+      <li>Import <code>ToastMessage</code> from the shared library.</li>
+      <li>Place the toast outlet once (e.g., in App layout).</li>
+      <li>Configure defaults (position + per-type durations).</li>
+      <li>Show toasts using only <code>type</code> and <code>message</code>.</li>
+    </ol>
+    <pre class="toast-page__code" ngNonBindable><code>import &#123; ToastMessage, ToastMessageService &#125; from '@penta/shared-ui';
+
+constructor(private toastService: ToastMessageService) &#123;
+  toastService.configure(&#123;
+    position: 'top-right',
+    typeDurations: &#123; success: 3000, info: 4000, warning: 5000, error: 6000 &#125;,
+    maxToasts: 6
+  &#125;);
+&#125;
+
+toastService.showToast('success', 'Profile updated');
+
+&lt;pt-ui-toast-message [useService]="true"&gt;&lt;/pt-ui-toast-message&gt;</code></pre>
+    <p class="toast-page__desc">
+      Tips: put the toast outlet once in your shell component, then inject
+      <code>ToastMessageService</code> anywhere you need a notification.
+      Toasts are closable by default; you only pass a duration override when
+      needed.
+    </p>
+  </section>
+
+  <section class="toast-page__section" id="demo">
+    <h3>Live Demo</h3>
+    <p class="toast-page__desc">
+      Use the controls to trigger custom toasts. Duration is configured per type
+      once, so you only pass <code>type</code> and <code>message</code> when showing
+      a toast. The progress bar animates until auto-close, or click the close icon
+      to dismiss. The title is derived from the toast type.
+    </p>
+    <p class="toast-page__desc">
+      Hint: set a duration to <code>0</code> to keep that toast type visible until
+      the user closes it manually.
+    </p>
+
+    <div class="toast-page__controls">
+      <label>
+        Message
+        <input type="text" [(ngModel)]="message" placeholder="Toast message" />
+      </label>
+      <label>
+        Type
+        <select [(ngModel)]="type">
+          @for (option of types; track option) {
+            <option [value]="option">{{ option }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        Position
+        <select [(ngModel)]="position" (ngModelChange)="applyConfig()">
+          @for (option of positions; track option) {
+            <option [value]="option">{{ option }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        Success Duration (ms)
+        <input
+          type="number"
+          [(ngModel)]="typeDurations.success"
+          (ngModelChange)="applyConfig()"
+          min="0"
+        />
+      </label>
+      <label>
+        Info Duration (ms)
+        <input
+          type="number"
+          [(ngModel)]="typeDurations.info"
+          (ngModelChange)="applyConfig()"
+          min="0"
+        />
+      </label>
+      <label>
+        Warning Duration (ms)
+        <input
+          type="number"
+          [(ngModel)]="typeDurations.warning"
+          (ngModelChange)="applyConfig()"
+          min="0"
+        />
+      </label>
+      <label>
+        Error Duration (ms)
+        <input
+          type="number"
+          [(ngModel)]="typeDurations.error"
+          (ngModelChange)="applyConfig()"
+          min="0"
+        />
+      </label>
+      <label>
+        Max Toasts
+        <input type="number" [(ngModel)]="maxToasts" (ngModelChange)="applyConfig()" min="1" />
+      </label>
+    </div>
+
+    <div class="toast-page__actions">
+      <pt-ui-button buttonText="Show Toast" (pressed)="showToast()"></pt-ui-button>
+      <pt-ui-button
+        variant="outline"
+        buttonText="Clear All"
+        (pressed)="clearToasts()"
+      ></pt-ui-button>
+    </div>
+
+    <div class="toast-page__quick">
+      <pt-ui-button buttonText="Success" color="success" (pressed)="showTypeToast('success')"></pt-ui-button>
+      <pt-ui-button buttonText="Info" color="info" (pressed)="showTypeToast('info')"></pt-ui-button>
+      <pt-ui-button buttonText="Warning" color="warn" (pressed)="showTypeToast('warning')"></pt-ui-button>
+      <pt-ui-button buttonText="Error" color="danger" (pressed)="showTypeToast('error')"></pt-ui-button>
+    </div>
+
+    <div class="toast-page__notice">
+      <strong>Last event:</strong> {{ lastEvent }}
+    </div>
+  </section>
+
+  <section class="toast-page__section" id="examples">
+    <h3>Examples</h3>
+    <p class="toast-page__desc">
+      Call the <code>showToast</code> method with a toast type and message.
+      You can also pass a duration override when showing a toast. The progress bar animates until auto-close, or click the close icon to dismiss. The title is derived from the toast type.
+    </p>
+    <div class="toast-page__example-grid">
+      <div>
+        <h4>Use Type Defaults</h4>
+        <pre class="toast-page__code" ngNonBindable><code>toastService.showToast('info', 'This uses the default info duration.');</code></pre>
+      </div>
+      <div>
+        <h4>Override Duration (Optional)</h4>
+        <pre class="toast-page__code" ngNonBindable><code>toastService.showToast('success', 'Closes in 2 seconds.', &#123;
+  durationMs: 2000
+&#125;);</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="toast-page__section" id="api">
+    <h3>Inputs &amp; Outputs</h3>
+    <p class="toast-page__desc">
+      The toast outlet accepts these inputs/outputs. When using the service, only
+      <code>useService</code> is required.
+    </p>
+    <div class="toast-page__api">
+      <div>
+        <h4>Inputs</h4>
+        <ul>
+          <li><code>toasts</code>: array of toast items (manual mode)</li>
+          <li><code>defaultDurationMs</code>: number (fallback duration)</li>
+          <li><code>position</code>: top-right | top-left | bottom-right | bottom-left | top-center | bottom-center</li>
+          <li><code>useService</code>: boolean (use <code>ToastMessageService</code>)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Outputs</h4>
+        <ul>
+          <li><code>dismissed</code>: emits &#123; id, reason, toast &#125;</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<pt-ui-toast-message
+  [useService]="true"
+  (dismissed)="onToastDismiss($event.reason.toUpperCase() + ': ' + $event.toast.message)"
+></pt-ui-toast-message>

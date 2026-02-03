@@ -1,0 +1,126 @@
+<div class="pt-ui-table" [style.height]="tableHeight">
+  <div class="pt-ui-table__header">
+    <div class="pt-ui-table__summary">
+      In Total there are ( {{ dataSource.data.length }} ) entries
+    </div>
+    <div class="pt-ui-table__tools">
+      <ng-content select="[table-tools]"></ng-content>
+    </div>
+  </div>
+  <div class="pt-ui-table__content">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="pt-ui-table__table"
+      matSort
+      [matSortDisabled]="!enableSorting"
+    >
+      @if (displayCheckbox) {
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              [checked]="isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              (change)="masterToggle()"
+              (click)="$event.stopPropagation()"
+            ></mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              [checked]="selection.isSelected(row)"
+              (change)="toggleRow(row)"
+              (click)="$event.stopPropagation()"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+      }
+
+      @if (displayView || displayEdit || displayDelete) {
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="pt-ui-table__actions">
+              @if (displayView) {
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="onView(row); $event.stopPropagation()"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              }
+              @if (displayEdit) {
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="onEdit(row); $event.stopPropagation()"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+              }
+              @if (displayDelete) {
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="onDelete(row); $event.stopPropagation()"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              }
+            </div>
+          </td>
+        </ng-container>
+      }
+
+      @if (displayIndex) {
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef class="pt-ui-table__index-header">#</th>
+          <td mat-cell *matCellDef="let row; let i = index" class="pt-ui-table__index">
+            {{ rowIndex(i) }}
+          </td>
+        </ng-container>
+      }
+
+      @for (column of normalizedColumns; track trackByKey($index, column)) {
+        <ng-container [matColumnDef]="column.key">
+          @if (enableSorting) {
+            <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.key">
+              {{ column.label }}
+            </th>
+          } @else {
+            <th mat-header-cell *matHeaderCellDef>{{ column.label }}</th>
+          }
+          <td mat-cell *matCellDef="let row">
+            @if (isStatusColumn(column.key)) {
+              <span class="status-badge" [class]="statusClass(statusLabel(row, column.key))">
+                <mat-icon>{{ statusIcon(statusLabel(row, column.key)) }}</mat-icon>
+                {{ statusLabel(row, column.key) }}
+              </span>
+            } @else if (isDateCell(column.key, row[column.key])) {
+              {{ row[column.key] | pentaDateTime }}
+            } @else {
+              {{ formatValue(row[column.key]) }}
+            }
+          </td>
+        </ng-container>
+      }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: stickyHeader"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="onRowPressed(row)"
+      ></tr>
+    </table>
+  </div>
+
+  @if (displayPaginator) {
+    <mat-paginator
+      [length]="dataSource.filteredData.length"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageSize]="pageSize"
+      showFirstLastButtons
+    ></mat-paginator>
+  }
+</div>
+

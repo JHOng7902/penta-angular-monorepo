@@ -1,0 +1,228 @@
+<main class="button-page">
+  <header class="button-page__hero" id="button-hero">
+    <h2>Button Component</h2>
+    <p>
+      The shared <strong>pt-ui-button</strong> supports variants, sizes,
+      colors, content modes (text/icon/text-icon), tooltip, and attention
+      animation.
+    </p>
+  </header>
+
+  <div class="button-page__content">
+  <section class="button-page__section" id="import-use">
+    <h3>Import &amp; Use</h3>
+        <ol class="button-page__steps">
+          <li>
+            Import the <code>Button</code> component from the shared library.
+          </li>
+          <li>
+            Add it to the <code>imports</code> array of your standalone component.
+          </li>
+          <li>
+            Use <code>&lt;pt-ui-button&gt;</code> in the template.
+          </li>
+        </ol>
+        <pre class="button-page__code" ngNonBindable><code>import &#123; Button &#125; from '@penta/shared-ui';
+
+@Component(&#123;
+  standalone: true,
+  imports: [Button],
+&#125;)
+export class ExampleComponent &#123;&#125;
+
+&lt;pt-ui-button buttonText="Save"&gt;&lt;/pt-ui-button&gt;</code></pre>
+    <p class="button-page__desc">
+      Tip: if you need click handling, use <code>(pressed)</code> or set
+      <code>type="submit"</code> inside a form.
+    </p>
+  </section>
+
+  <section class="button-page__section" id="api">
+    <h3>Inputs &amp; Outputs</h3>
+    <p class="button-page__desc">
+      These are the inputs and outputs supported by the shared
+      <code>pt-ui-button</code> component.
+    </p>
+    <div class="button-page__api">
+      <div>
+        <h4>Inputs</h4>
+        <ul>
+          <li><code>variant</code>: <code>primary</code> | <code>outline</code> | <code>ghost</code></li>
+          <li><code>size</code>: <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code> | <code>xxl</code></li>
+          <li><code>content</code>: <code>text</code> | <code>icon</code> | <code>text-icon</code></li>
+          <li><code>icon</code>: Material icon name (string)</li>
+          <li><code>buttonText</code>: text label (string)</li>
+          <li><code>color</code>: <code>primary</code> | <code>accent</code> | <code>warn</code> | <code>success</code> | <code>info</code> | <code>neutral</code> | <code>danger</code> | <code>fail</code></li>
+          <li><code>blink</code>: boolean</li>
+          <li><code>disabled</code>: boolean</li>
+          <li><code>type</code>: <code>button</code> | <code>submit</code> | <code>reset</code></li>
+          <li><code>ariaLabel</code>: string</li>
+          <li><code>tooltip</code>: string</li>
+          <li><code>tooltipPosition</code>: <code>above</code> | <code>below</code> | <code>left</code> | <code>right</code> | <code>before</code> | <code>after</code> | <code>start</code> | <code>end</code></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Outputs</h4>
+        <ul>
+          <li><code>pressed</code>: emits <code>MouseEvent</code> on click</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="button-page__section" id="content-modes">
+    <h3>Content Modes</h3>
+    <p class="button-page__desc">
+      Choose between text, icon-only, or text + icon buttons. Use
+      <code>content</code> and <code>icon</code> to control layout.
+    </p>
+    <div class="button-row">
+      <pt-ui-button buttonText="Text" content="text"></pt-ui-button>
+      <pt-ui-button buttonText="Text + Icon" content="text-icon" icon="bolt"></pt-ui-button>
+      <pt-ui-button
+        content="icon"
+        icon="settings"
+        ariabuttonText="Settings"
+        tooltip="Icon only"
+      ></pt-ui-button>
+    </div>
+    <pre class="button-page__code"><code>&lt;pt-ui-button buttonText="Text" content="text"&gt;&lt;/pt-ui-button&gt;
+&lt;pt-ui-button buttonText="Text + Icon" content="text-icon" icon="bolt"&gt;&lt;/pt-ui-button&gt;
+&lt;pt-ui-button content="icon" icon="settings" ariabuttonText="Settings"&gt;&lt;/pt-ui-button&gt;</code></pre>
+    </section>
+
+    <section class="button-page__section" id="variants">
+        <h3>Variants</h3>
+    <p class="button-page__desc">
+      Variants affect the visual emphasis: <code>primary</code> (filled),
+      <code>outline</code> (border), and <code>ghost</code> (text).
+    </p>
+    <div class="button-row">
+      <pt-ui-button buttonText="Primary" variant="primary"></pt-ui-button>
+      <pt-ui-button buttonText="Outline" variant="outline"></pt-ui-button>
+      <pt-ui-button buttonText="Ghost" variant="ghost"></pt-ui-button>
+    </div>
+    <pre class="button-page__code"><code>&lt;pt-ui-button buttonText="Primary" variant="primary"&gt;&lt;/pt-ui-button&gt;
+&lt;pt-ui-button buttonText="Outline" variant="outline"&gt;&lt;/pt-ui-button&gt;
+&lt;pt-ui-button buttonText="Ghost" variant="ghost"&gt;&lt;/pt-ui-button&gt;</code></pre>
+    </section>
+
+    <section class="button-page__section" id="colors">
+        <h3>Colors</h3>
+    <p class="button-page__desc">
+      Custom tones work across all variants. Use
+      <code>success</code>, <code>info</code>, <code>neutral</code>,
+      <code>danger</code>, or <code>warn</code>.
+    </p>
+    <div class="button-row">
+      <pt-ui-button buttonText="Success" color="success"></pt-ui-button>
+      <pt-ui-button buttonText="Info" color="info"></pt-ui-button>
+      <pt-ui-button buttonText="Neutral" color="neutral"></pt-ui-button>
+      <pt-ui-button buttonText="Danger" color="danger"></pt-ui-button>
+      <pt-ui-button buttonText="Warn" color="warn"></pt-ui-button>
+    </div>
+    <pre class="button-page__code"><code>&lt;pt-ui-button buttonText="Success" color="success"&gt;&lt;/pt-ui-button&gt;
+&lt;pt-ui-button buttonText="Danger" color="danger"&gt;&lt;/pt-ui-button&gt;</code></pre>
+    </section>
+
+    <section class="button-page__section" id="sizes">
+        <h3>Sizes</h3>
+    <p class="button-page__desc">
+      Sizes control font and button height. Available:
+      <code>sm</code>, <code>md</code>, <code>lg</code>,
+      <code>xl</code>, <code>xxl</code>.
+    </p>
+    <div class="button-row">
+      <pt-ui-button buttonText="Small" size="sm"></pt-ui-button>
+      <pt-ui-button buttonText="Medium" size="md"></pt-ui-button>
+      <pt-ui-button buttonText="Large" size="lg"></pt-ui-button>
+      <pt-ui-button buttonText="XL" size="xl"></pt-ui-button>
+      <pt-ui-button buttonText="XXL" size="xxl"></pt-ui-button>
+    </div>
+    <pre class="button-page__code"><code>&lt;pt-ui-button buttonText="XL" size="xl"&gt;&lt;/pt-ui-button&gt;
+&lt;pt-ui-button buttonText="XXL" size="xxl"&gt;&lt;/pt-ui-button&gt;</code></pre>
+    </section>
+
+    <section class="button-page__section" id="tooltip">
+        <h3>Tooltip + Position</h3>
+    <p class="button-page__desc">
+      Tooltips appear on hover using <code>tooltip</code> and
+      <code>tooltipPosition</code>.
+    </p>
+    <div class="button-row">
+      <pt-ui-button
+        buttonText="Above"
+        tooltip="Tooltip above"
+        tooltipPosition="above"
+      ></pt-ui-button>
+      <pt-ui-button
+        buttonText="Right"
+        tooltip="Tooltip right"
+        tooltipPosition="right"
+      ></pt-ui-button>
+      <pt-ui-button
+        buttonText="Below"
+        tooltip="Tooltip below"
+        tooltipPosition="below"
+      ></pt-ui-button>
+      <pt-ui-button
+        buttonText="Left"
+        tooltip="Tooltip left"
+        tooltipPosition="left"
+      ></pt-ui-button>
+    </div>
+    <pre class="button-page__code"><code>&lt;pt-ui-button buttonText="Above" tooltip="Tooltip above" tooltipPosition="above"&gt;&lt;/pt-ui-button&gt;</code></pre>
+    </section>
+
+    <section class="button-page__section" id="blink">
+        <h3>Blinking Attention</h3>
+    <p class="button-page__desc">
+      Use <code>blink</code> for attention states such as alerts or next-step
+      actions.
+    </p>
+    <div class="button-row">
+      <pt-ui-button buttonText="Blink" [blink]="true"></pt-ui-button>
+      <pt-ui-button buttonText="Success" color="success" [blink]="true"></pt-ui-button>
+      <pt-ui-button
+        content="icon"
+        icon="campaign"
+        ariabuttonText="Notify"
+        color="info"
+        [blink]="true"
+      ></pt-ui-button>
+    </div>
+    <pre class="button-page__code"><code>&lt;pt-ui-button buttonText="Blink" [blink]="true"&gt;&lt;/pt-ui-button&gt;</code></pre>
+    </section>
+
+    <section class="button-page__section" id="events">
+        <h3>Events</h3>
+    <p>
+      Use <code>(pressed)</code> to handle clicks or set
+      <code>type="submit"</code> in a form to submit.
+    </p>
+    <div class="button-row">
+      <pt-ui-button buttonText="Pressed event" tooltip="Emits pressed"></pt-ui-button>
+      <pt-ui-button buttonText="Disabled" [disabled]="true"></pt-ui-button>
+    </div>
+    <p class="button-page__desc">
+      You can also bind <code>disabled</code> to conditions, for example disabling
+      until an input has text.
+    </p>
+    <div class="button-row">
+      <pt-ui-input
+        type="text"
+        placeholder="Type to enable"
+        (input)="disableName = $any($event.target).value"
+      />
+      <pt-ui-button buttonText="Save" content="text-icon" [icon]="'save'" [disabled]="!disableName" size="sm"></pt-ui-button>
+    </div>
+    <pre class="button-page__code"><code>&lt;pt-ui-button buttonText="Save" (pressed)="onSave()"&gt;&lt;/pt-ui-button&gt;
+&lt;form (ngSubmit)="onSubmit()"&gt;
+  &lt;pt-ui-button type="submit" buttonText="Submit"&gt;&lt;/pt-ui-button&gt;
+&lt;/form&gt;
+
+&lt;pt-ui-input type="text" placeholder="Type to enable" (input)="disableName = $any($event.target).value"/&gt;
+&lt;pt-ui-button buttonText="Save" content="text-icon" [icon]="'save'" [disabled]="!disableName" size="sm"&gt;&lt;/pt-ui-button&gt;</code></pre>
+    </section>
+  </div>
+</main>

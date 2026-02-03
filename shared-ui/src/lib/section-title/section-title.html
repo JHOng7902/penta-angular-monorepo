@@ -1,0 +1,14 @@
+<div class="pt-ui-section-title">
+  <div class="pt-ui-section-title__eyebrow">
+    <ng-content select="[ptUiSectionEyebrow]"></ng-content>
+  </div>
+  @if (hasTitle) {
+    <h2 class="pt-ui-section-title__title">{{ title }}</h2>
+  }
+  @if (hasSubtitle) {
+    <p class="pt-ui-section-title__subtitle">{{ subtitle }}</p>
+  }
+  <ng-content></ng-content>
+</div>
+
+

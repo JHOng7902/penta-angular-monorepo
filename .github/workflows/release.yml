@@ -1,0 +1,42 @@
+name: release
+
+on:
+  push:
+    branches: ["master", "main"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Configure npm registry (optional)
+        env:
+          NPM_REGISTRY_URL: ${{ secrets.NPM_REGISTRY_URL }}
+        run: |
+          if [ -n "$NPM_REGISTRY_URL" ]; then
+            npm config set registry "$NPM_REGISTRY_URL"
+          fi
+      - name: Version (Nx Release)
+        run: npx nx release version --yes
+      - name: Build shared library
+        run: npx nx build shared-ui
+      - name: Publish (Nx Release)
+        if: ${{ secrets.NPM_TOKEN != '' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx nx release publish --yes

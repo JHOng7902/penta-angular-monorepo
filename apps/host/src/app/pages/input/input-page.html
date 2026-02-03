@@ -1,0 +1,316 @@
+<main class="input-page">
+  <header class="input-page__hero">
+    <h2>Input Component</h2>
+    <p>
+      The shared <strong>pt-ui-input</strong> supports flexible types, labels, icons,
+      validation lengths, clear action, and two-way binding.
+    </p>
+  </header>
+
+  <section class="input-page__section" id="import-use">
+    <h3>Import &amp; Use</h3>
+    <ol class="input-page__steps">
+      <li>Import <code>InputComponent</code> from the shared library.</li>
+      <li>Add it to the <code>imports</code> array of your standalone component.</li>
+      <li>Bind using <code>[(value)]</code> or <code>[value]</code> + <code>(valueChange)</code>.</li>
+    </ol>
+    <pre class="input-page__code" ngNonBindable><code>import &#123; InputComponent &#125; from '@penta/shared-ui';
+
+@Component(&#123;
+  standalone: true,
+  imports: [InputComponent],
+&#125;)
+export class ExampleComponent &#123;&#125;
+
+&lt;pt-ui-input label="Name" [(value)]="name"&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="password-preview">
+    <h3>Password Preview</h3>
+    <p class="input-page__desc">
+      Use <code>allowPasswordPreview</code> to show a toggle that reveals/hides
+      password values. Works alongside the clear button.
+    </p>
+    <pt-ui-input
+      label="Secure Access"
+      type="password"
+      placeholder="Enter password"
+      [allowPasswordPreview]="true"
+      [showClear]="true"
+      [(value)]="passwordValue"
+    ></pt-ui-input>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input
+  type="password"
+  [allowPasswordPreview]="true"
+  [showClear]="true"
+&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="types">
+    <h3>Input Types</h3>
+    <p class="input-page__desc">
+      Supported types: <code>text</code>, <code>email</code>, <code>password</code>,
+      <code>number</code>, <code>tel</code>, <code>url</code>, <code>search</code>,
+      <code>date</code>, <code>datetime-local</code>, <code>time</code>.
+      Radio/checkbox/button are intentionally blocked.
+    </p>
+    <div class="input-page__grid">
+      <pt-ui-input label="Text" type="text" placeholder="Type here" [(value)]="basicValue"></pt-ui-input>
+      <pt-ui-input label="Email" type="email" placeholder="email@domain.com" [(value)]="emailValue"></pt-ui-input>
+      <pt-ui-input label="Password" type="password" placeholder="******" [(value)]="passwordValue"></pt-ui-input>
+    </div>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input label="Email" type="email"&gt;&lt;/pt-ui-input&gt;
+&lt;pt-ui-input label="Password" type="password"&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="date-time">
+    <h3>Date, Date-Time, Time (Malaysia)</h3>
+    <p class="input-page__desc">
+      Date returns just the selected date (YYYY-MM-DD). Date-time and time emit
+      ISO 8601 with a <code>Z</code> suffix (UTC-style), keeping the exact local
+      time the user picked.
+    </p>
+    <div class="input-page__grid">
+      <pt-ui-input label="Date" type="date" [(value)]="dateValue"></pt-ui-input>
+      <pt-ui-input label="Date-Time" type="datetime-local" [(value)]="dateTimeValue"></pt-ui-input>
+      <pt-ui-input label="Time" type="time" [(value)]="timeValue"></pt-ui-input>
+    </div>
+    <div class="input-page__notice">
+      <strong>Payload values:</strong>
+      Date: {{ dateValue || '—' }} |
+      Date-Time: {{ dateTimeValue || '—' }} |
+      Time: {{ timeValue || '—' }}
+    </div>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input label="Date" type="date" [(value)]="dateValue"&gt;&lt;/pt-ui-input&gt;
+&lt;pt-ui-input label="Date-Time" type="datetime-local" [(value)]="dateTimeValue"&gt;&lt;/pt-ui-input&gt;
+&lt;pt-ui-input label="Time" type="time" [(value)]="timeValue"&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="label-positions">
+    <h3>Label Positions</h3>
+    <p class="input-page__desc">
+      Control label placement with <code>labelPosition</code>: <code>top</code>,
+      <code>left</code>, or <code>hidden</code>.
+    </p>
+    <div class="input-page__grid">
+      <pt-ui-input label="Top Label" labelPosition="top" [(value)]="basicValue"></pt-ui-input>
+      <pt-ui-input label="Left Label" labelPosition="left" [(value)]="leftLabelValue"></pt-ui-input>
+      <pt-ui-input label="Hidden Label" labelPosition="hidden" placeholder="No label shown" [(value)]="hiddenLabelValue"></pt-ui-input>
+    </div>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input label="Left Label" labelPosition="left"&gt;&lt;/pt-ui-input&gt;
+&lt;pt-ui-input label="Hidden Label" labelPosition="hidden" placeholder="..."&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="required">
+    <h3>Required + Validation Length</h3>
+    <p class="input-page__desc">
+      Use <code>required</code>, <code>minLength</code>, and <code>maxLength</code>
+      to guide validation. Required fields show a red asterisk.
+    </p>
+    <div class="input-page__grid">
+      <pt-ui-input
+        label="Required Field"
+        [required]="true"
+        placeholder="Must fill"
+        [(value)]="requiredValue"
+      ></pt-ui-input>
+      <pt-ui-input
+        label="Min 3 / Max 12"
+        [minLength]="3"
+        [maxLength]="12"
+        placeholder="3-12 chars"
+        [(value)]="minMaxValue"
+      ></pt-ui-input>
+    </div>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input label="Required Field" [required]="true"&gt;&lt;/pt-ui-input&gt;
+&lt;pt-ui-input [minLength]="3" [maxLength]="12"&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="disabled">
+    <h3>Disabled State</h3>
+    <p class="input-page__desc">
+      Bind <code>disabled</code> to any condition. Toggle below to see it update.
+    </p>
+    <label class="input-page__toggle">
+      <input type="checkbox" [checked]="disabledToggle" (change)="toggleDisabled($event)" />
+      Disable input
+    </label>
+    <pt-ui-input
+      label="Conditionally Disabled"
+      [disabled]="disabledToggle"
+      [(value)]="disabledValue"
+    ></pt-ui-input>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input [disabled]="isLocked"&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="icons">
+    <h3>Leading Icon</h3>
+    <p class="input-page__desc">
+      Use <code>icon</code> to show a leading label or symbol inside the input.
+      If the text matches a Material icon name (ex: <code>search</code>), it renders the icon.
+      If not, the text is shown as-is.
+      Set <code>iconPosition</code> to <code>right</code> and enable <code>iconClickable</code>
+      to make the icon clickable and listen to <code>(iconClick)</code>.
+    </p>
+    <div class="input-page__grid">
+      <pt-ui-input label="Icon Text" placeholder="Type icon text" [(value)]="iconText"></pt-ui-input>
+      <pt-ui-input label="Preview" [icon]="iconText" placeholder="Preview uses icon text"></pt-ui-input>
+    </div>
+    <div class="input-page__grid">
+      <pt-ui-input label="Email" icon="email" placeholder="email@domain.com" [(value)]="iconValue"></pt-ui-input>
+      <pt-ui-input label="ID" icon="ID" placeholder="Employee ID" [(value)]="basicValue"></pt-ui-input>
+      <pt-ui-input label="Search" icon="search" placeholder="Search keyword" [(value)]="iconShortValue"></pt-ui-input>
+    </div>
+    <div class="input-page__grid">
+      <pt-ui-input
+        label="Search (Right Icon)"
+        icon="search"
+        iconPosition="right"
+        placeholder="Search keyword"
+        [(value)]="iconShortValue"
+      ></pt-ui-input>
+    </div>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input label="Email" icon="email"&gt;&lt;/pt-ui-input&gt;
+&lt;pt-ui-input label="Search" icon="search"&gt;&lt;/pt-ui-input&gt;
+&lt;pt-ui-input label="Search" icon="search" iconPosition="right"&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="icon-events">
+    <h3>Right Icon + Key Events</h3>
+    <p class="input-page__desc">
+      Make the right icon clickable with <code>iconClickable</code>, and listen for
+      <code>keyupEvent</code> / <code>keydownEnterEvent</code>.
+    </p>
+    <pt-ui-input
+      label="Search Action"
+      icon="search"
+      iconPosition="right"
+      [iconClickable]="true"
+      placeholder="Type and press Enter"
+      [(value)]="eventValue"
+      (iconClick)="onInputIconClick()"
+      (keyupEvent)="onInputKeyup($event)"
+      (keydownEnterEvent)="onInputEnter($event)"
+    ></pt-ui-input>
+    <div class="input-page__notice">
+      <strong>Events:</strong>
+      Icon clicks: {{ iconClickCount }} |
+      Last key: {{ lastKey || '—' }} |
+      Enter count: {{ enterCount }}
+    </div>
+    <pt-ui-input
+      label="Search Action (Disabled)"
+      icon="search"
+      iconPosition="right"
+      [iconClickable]="true"
+      [disabled]="true"
+      placeholder="Disabled input"
+    ></pt-ui-input>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input
+  icon="search"
+  iconPosition="right"
+  [iconClickable]="true"
+  (iconClick)="onInputIconClick()"
+  (keyupEvent)="onInputKeyup($event)"
+  (keydownEnterEvent)="onInputEnter($event)"
+&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="clear">
+    <h3>Clear Button</h3>
+    <p class="input-page__desc">
+      Enable <code>showClear</code> to show a clear icon when text is present.
+    </p>
+    <pt-ui-input
+      label="Clearable Input"
+      [showClear]="true"
+      placeholder="Type then clear"
+      [(value)]="clearValue"
+    ></pt-ui-input>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input [showClear]="true"&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="blink">
+    <h3>Blinking Attention</h3>
+    <p class="input-page__desc">
+      Use <code>blink</code> to draw attention to an input (optional).
+    </p>
+    <pt-ui-input
+      label="Attention Required"
+      placeholder="Fill this field"
+      [blink]="true"
+      [(value)]="blinkValue"
+    ></pt-ui-input>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input [blink]="true"&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="textarea">
+    <h3>Textarea</h3>
+    <p class="input-page__desc">
+      Set <code>multiline</code> to render a textarea with the same styling and bindings.
+    </p>
+    <pt-ui-input
+      label="Description"
+      [multiline]="true"
+      placeholder="Write details here..."
+      [(value)]="textareaValue"
+    ></pt-ui-input>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input label="Description" [multiline]="true"&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="binding">
+    <h3>Two-Way Binding</h3>
+    <p class="input-page__desc">
+      Use <code>[(value)]</code> to keep the UI and data in sync.
+    </p>
+    <pt-ui-input
+      label="Live Value"
+      placeholder="Type something"
+      [(value)]="basicValue"
+    ></pt-ui-input>
+    <div class="input-page__notice">
+      <strong>Current value:</strong> {{ basicValue || '—' }}
+    </div>
+    <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input [(value)]="name"&gt;&lt;/pt-ui-input&gt;</code></pre>
+  </section>
+
+  <section class="input-page__section" id="api">
+    <h3>Inputs &amp; Outputs</h3>
+    <div class="input-page__api">
+      <div>
+        <h4>Inputs</h4>
+        <ul>
+          <li><code>label</code>: string</li>
+          <li><code>type</code>: string (text, email, password, number, date, time, datetime-local)</li>
+          <li><code>placeholder</code>: string</li>
+          <li><code>value</code>: string</li>
+          <li><code>required</code>: boolean</li>
+          <li><code>disabled</code>: boolean</li>
+          <li><code>labelPosition</code>: <code>top</code> | <code>left</code> | <code>hidden</code></li>
+          <li><code>minLength</code>: number</li>
+          <li><code>maxLength</code>: number</li>
+          <li><code>icon</code>: string</li>
+          <li><code>iconPosition</code>: <code>left</code> | <code>right</code></li>
+          <li><code>iconMode</code>: <code>auto</code> | <code>text</code></li>
+          <li><code>iconClickable</code>: boolean</li>
+          <li><code>showClear</code>: boolean</li>
+          <li><code>multiline</code>: boolean</li>
+          <li><code>allowPasswordPreview</code>: boolean</li>
+          <li><code>blink</code>: boolean</li>
+          <li><code>id</code>: string</li>
+          <li><code>name</code>: string</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Outputs</h4>
+        <ul>
+          <li><code>valueChange</code>: emits current string</li>
+          <li><code>iconClick</code>: emits when the right icon is clicked</li>
+          <li><code>keyupEvent</code>: emits keyboard events from the input</li>
+          <li><code>keydownEnterEvent</code>: emits when Enter is pressed</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+

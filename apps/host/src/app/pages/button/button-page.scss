@@ -1,0 +1,98 @@
+.button-page {
+  display: grid;
+  gap: 2rem;
+}
+
+.button-page__content {
+  display: grid;
+  gap: 2rem;
+}
+
+.button-page__hero {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 1.75rem 2rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.button-page__section {
+  display: grid;
+  gap: 0.75rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  scroll-margin-top: 6.5rem;
+}
+
+.button-page__desc {
+  margin: 0;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.button-page__steps {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #475569;
+  line-height: 1.6;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.button-page__steps code {
+  background: rgba(15, 23, 42, 0.08);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.button-page__api {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.button-page__api h4 {
+  margin: 0 0 0.4rem;
+}
+
+.button-page__api ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+code {
+  background: rgba(15, 23, 42, 0.08);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+}
+
+.button-page__code {
+  margin: 0;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  overflow-x: auto;
+}
+
+.button-page__code code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+:global(html) {
+  scroll-behavior: smooth;
+}

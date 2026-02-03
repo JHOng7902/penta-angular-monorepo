@@ -1,0 +1,202 @@
+@switch (variant) {
+  @case ('primary') {
+    @if (content === 'icon') {
+      <button
+        mat-icon-button
+        class="pt-ui-button icon-only variant-primary"
+      [class.size-sm]="size === 'sm'"
+      [class.size-md]="size === 'md'"
+      [class.size-lg]="size === 'lg'"
+      [class.size-xl]="size === 'xl'"
+      [class.size-xxl]="size === 'xxl'"
+        [class.is-blinking]="blink"
+        [class.tone-success]="color === 'success'"
+        [class.tone-info]="color === 'info'"
+        [class.tone-neutral]="color === 'neutral'"
+        [class.tone-danger]="color === 'danger' || color === 'fail'"
+        [class.tone-warn]="color === 'warn'"
+      [matTooltip]="tooltip"
+      [matTooltipPosition]="tooltipPosition"
+      [attr.type]="type"
+      [disabled]="disabled"
+      [attr.aria-label]="ariaLabel"
+      [color]="matColor"
+      (click)="onPressed($event)"
+    >
+        <mat-icon class="pt-ui-button__icon" aria-hidden="true">
+          {{ icon }}
+        </mat-icon>
+      </button>
+    } @else {
+      <button
+        mat-flat-button
+        class="pt-ui-button variant-primary"
+      [class.size-sm]="size === 'sm'"
+      [class.size-md]="size === 'md'"
+      [class.size-lg]="size === 'lg'"
+      [class.size-xl]="size === 'xl'"
+      [class.size-xxl]="size === 'xxl'"
+        [class.is-blinking]="blink"
+        [class.tone-success]="color === 'success'"
+        [class.tone-info]="color === 'info'"
+        [class.tone-neutral]="color === 'neutral'"
+        [class.tone-danger]="color === 'danger' || color === 'fail'"
+        [class.tone-warn]="color === 'warn'"
+      [matTooltip]="tooltip"
+      [matTooltipPosition]="tooltipPosition"
+      [attr.type]="type"
+      [disabled]="disabled"
+      [attr.aria-label]="ariaLabel"
+      [color]="matColor"
+      (click)="onPressed($event)"
+    >
+        @if (showIcon) {
+          <mat-icon class="pt-ui-button__icon" aria-hidden="true">
+            {{ icon }}
+          </mat-icon>
+        }
+        @if (showText) {
+          @if (displayText?.length) {
+            <span class="pt-ui-button__label">{{ displayText }}</span>
+          } @else {
+            <!-- display with ng-content -->
+            <span class="pt-ui-button__label"><ng-content></ng-content></span>
+          }
+        }
+      </button>
+    }
+  }
+  @case ('outline') {
+    @if (content === 'icon') {
+      <button
+        mat-icon-button
+        class="pt-ui-button icon-only variant-outline"
+      [class.size-sm]="size === 'sm'"
+      [class.size-md]="size === 'md'"
+      [class.size-lg]="size === 'lg'"
+      [class.size-xl]="size === 'xl'"
+      [class.size-xxl]="size === 'xxl'"
+        [class.is-blinking]="blink"
+        [class.tone-success]="color === 'success'"
+        [class.tone-info]="color === 'info'"
+        [class.tone-neutral]="color === 'neutral'"
+        [class.tone-danger]="color === 'danger' || color === 'fail'"
+        [class.tone-warn]="color === 'warn'"
+      [matTooltip]="tooltip"
+      [matTooltipPosition]="tooltipPosition"
+      [attr.type]="type"
+      [disabled]="disabled"
+      [attr.aria-label]="ariaLabel"
+      [color]="matColor"
+      (click)="onPressed($event)"
+    >
+        <mat-icon class="pt-ui-button__icon" aria-hidden="true">
+          {{ icon }}
+        </mat-icon>
+      </button>
+    } @else {
+      <button
+        mat-stroked-button
+        class="pt-ui-button variant-outline"
+      [class.size-sm]="size === 'sm'"
+      [class.size-md]="size === 'md'"
+      [class.size-lg]="size === 'lg'"
+      [class.size-xl]="size === 'xl'"
+      [class.size-xxl]="size === 'xxl'"
+        [class.is-blinking]="blink"
+      [class.tone-success]="color === 'success'"
+      [class.tone-info]="color === 'info'"
+      [class.tone-neutral]="color === 'neutral'"
+      [class.tone-danger]="color === 'danger' || color === 'fail'"
+      [class.tone-warn]="color === 'warn'"
+      [matTooltip]="tooltip"
+      [matTooltipPosition]="tooltipPosition"
+      [attr.type]="type"
+      [disabled]="disabled"
+      [attr.aria-label]="ariaLabel"
+      [color]="matColor"
+      (click)="onPressed($event)"
+    >
+        @if (showIcon) {
+          <mat-icon class="pt-ui-button__icon" aria-hidden="true">
+            {{ icon }}
+          </mat-icon>
+        }
+        @if (showText) {
+          @if (displayText?.length) {
+            <span class="pt-ui-button__label">{{ displayText }}</span>
+          } @else {
+            <span class="pt-ui-button__label"><ng-content></ng-content></span>
+          }
+        }
+      </button>
+    }
+  }
+  @default {
+    @if (content === 'icon') {
+      <button
+        mat-icon-button
+        class="pt-ui-button icon-only variant-ghost"
+      [class.size-sm]="size === 'sm'"
+      [class.size-md]="size === 'md'"
+      [class.size-lg]="size === 'lg'"
+      [class.size-xl]="size === 'xl'"
+      [class.size-xxl]="size === 'xxl'"
+        [class.is-blinking]="blink"
+      [class.tone-success]="color === 'success'"
+      [class.tone-info]="color === 'info'"
+      [class.tone-neutral]="color === 'neutral'"
+      [class.tone-danger]="color === 'danger' || color === 'fail'"
+      [class.tone-warn]="color === 'warn'"
+      [matTooltip]="tooltip"
+      [matTooltipPosition]="tooltipPosition"
+      [attr.type]="type"
+      [disabled]="disabled"
+      [attr.aria-label]="ariaLabel"
+      [color]="matColor"
+      (click)="onPressed($event)"
+    >
+        <mat-icon class="pt-ui-button__icon" aria-hidden="true">
+          {{ icon }}
+        </mat-icon>
+      </button>
+    } @else {
+      <button
+        mat-button
+        class="pt-ui-button variant-ghost"
+      [class.size-sm]="size === 'sm'"
+      [class.size-md]="size === 'md'"
+      [class.size-lg]="size === 'lg'"
+      [class.size-xl]="size === 'xl'"
+      [class.size-xxl]="size === 'xxl'"
+        [class.is-blinking]="blink"
+      [class.tone-success]="color === 'success'"
+      [class.tone-info]="color === 'info'"
+      [class.tone-neutral]="color === 'neutral'"
+      [class.tone-danger]="color === 'danger' || color === 'fail'"
+      [class.tone-warn]="color === 'warn'"
+      [matTooltip]="tooltip"
+      [matTooltipPosition]="tooltipPosition"
+      [attr.type]="type"
+      [disabled]="disabled"
+      [attr.aria-label]="ariaLabel"
+      [color]="matColor"
+      (click)="onPressed($event)"
+    >
+        @if (showIcon) {
+          <mat-icon class="pt-ui-button__icon" aria-hidden="true">
+            {{ icon }}
+          </mat-icon>
+        }
+        @if (showText) {
+          @if (displayText?.length) {
+            <span class="pt-ui-button__label">{{ displayText }}</span>
+          } @else {
+            <span class="pt-ui-button__label"><ng-content></ng-content></span>
+          }
+        }
+      </button>
+    }
+  }
+}
+

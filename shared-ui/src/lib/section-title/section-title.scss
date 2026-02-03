@@ -1,0 +1,29 @@
+.pt-ui-section-title {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.pt-ui-section-title__eyebrow:empty {
+  display: none;
+}
+
+.pt-ui-section-title__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.pt-ui-section-title__title {
+  font-size: 1.6rem;
+  margin: 0;
+  color: #0f172a;
+}
+
+.pt-ui-section-title__subtitle {
+  margin: 0;
+  color: #475569;
+}
+

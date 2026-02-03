@@ -1,0 +1,70 @@
+{
+    "Status": true,
+    "ResponseData": {
+        "StationOrganConfig": [
+            {
+                "StationConfigID": 4,
+                "ModelId": "LEAPMOTOR",
+                "ModelDesc": "LEAPMOTOR",
+                "Station": "C 208",
+                "Updated_By": "joy",
+                "Updated_On": "2025-07-11T09:10:17.4993505",
+                "Created_By": "Armand Peugeot\r\n",
+                "Created_On": "2025-06-12T00:00:00",
+                "StationOrgans": [
+                    {
+                        "StationConfigID": 4,
+                        "OrganCode": "CoolingAssembly",
+                        "Updated_By": null,
+                        "Updated_On": null,
+                        "Created_By": "joy",
+                        "Created_On": "2025-07-11T09:15:26.6024231"
+                    },
+                    {
+                        "StationConfigID": 4,
+                        "OrganCode": "HoodLatch",
+                        "Updated_By": null,
+                        "Updated_On": null,
+                        "Created_By": "joy",
+                        "Created_On": "2025-07-11T09:15:33.3187567"
+                    },
+                    {
+                        "StationConfigID": 4,
+                        "OrganCode": "HornTrafficWarning",
+                        "Updated_By": null,
+                        "Updated_On": null,
+                        "Created_By": "joy",
+                        "Created_On": "2025-07-11T10:16:57.0288216"
+                    },
+                    {
+                        "StationConfigID": 4,
+                        "OrganCode": "Power",
+                        "Updated_By": null,
+                        "Updated_On": null,
+                        "Created_By": "joy",
+                        "Created_On": "2025-07-11T09:15:10.2557348"
+                    },
+                    {
+                        "StationConfigID": 4,
+                        "OrganCode": "SurroundViewCamera_FRT",
+                        "Updated_By": null,
+                        "Updated_On": null,
+                        "Created_By": "joy",
+                        "Created_On": "2025-07-11T10:17:37.2031648"
+                    }
+                ]
+            }
+        ]
+    },
+    "StatusData": {
+        "StatusCode": 200,
+        "Message": "Station Organ Config data retrieved successfully."
+    },
+    "Exception": null,
+    "Metadata": {
+        "Timestamp": "2026-02-03T09:43:51.4398764+08:00",
+        "ResponseMemorySize": "1.24KB",
+        "ResponseTimeSpan": ""
+    },
+    "Pagination": null
+}

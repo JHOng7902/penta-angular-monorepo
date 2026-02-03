@@ -1,0 +1,148 @@
+<div
+  class="pt-ui-nested-table"
+  [style.height]="tableHeight"
+  [style.--pt-ui-nested-sticky-offset]="nestedStickyOffset"
+  [style.--pt-ui-nested-header-height]="stickyHeader ? '56px' : '0px'"
+>
+  <div class="pt-ui-nested-table__content">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="pt-ui-nested-table__table"
+      multiTemplateDataRows
+      matSort
+      [matSortDisabled]="!enableSorting"
+    >
+      <ng-container matColumnDef="expand">
+        <th mat-header-cell *matHeaderCellDef class="pt-ui-nested-table__expand-header"></th>
+        <td mat-cell *matCellDef="let row" class="pt-ui-nested-table__expand-cell">
+          <button
+            mat-icon-button
+            type="button"
+            class="pt-ui-nested-table__expand-button"
+            [disabled]="!rowHasChildren(row)"
+            [attr.aria-label]="isExpanded(row) ? 'Collapse row' : 'Expand row'"
+            (click)="toggleRow(row, $event)"
+          >
+            <mat-icon>{{ isExpanded(row) ? collapseIcon : expandIcon }}</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      @if (displayCheckbox) {
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              [checked]="isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              (click)="$event.stopPropagation()"
+              (change)="masterToggle($event)"
+            ></mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              [checked]="selection.isSelected(row)"
+              (click)="$event.stopPropagation()"
+              (change)="toggleSelection(row, $event)"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+      }
+
+      @if (displayView || displayEdit || displayDelete) {
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="pt-ui-nested-table__actions">
+              @if (displayView) {
+                <button mat-icon-button type="button" (click)="onView(row, $event)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              }
+              @if (displayEdit) {
+                <button mat-icon-button type="button" (click)="onEdit(row, $event)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              }
+              @if (displayDelete) {
+                <button mat-icon-button type="button" (click)="onDelete(row, $event)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              }
+            </div>
+          </td>
+        </ng-container>
+      }
+
+      @if (displayIndex) {
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef class="pt-ui-nested-table__index-header">#</th>
+          <td mat-cell *matCellDef="let row" class="pt-ui-nested-table__index">
+            {{ rowIndex(row) }}
+          </td>
+        </ng-container>
+      }
+
+      @for (column of normalizedColumns; track trackByKey($index, column)) {
+        <ng-container [matColumnDef]="column.key">
+          @if (enableSorting) {
+            <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.key">
+              {{ column.label }}
+            </th>
+          } @else {
+            <th mat-header-cell *matHeaderCellDef>{{ column.label }}</th>
+          }
+          <td mat-cell *matCellDef="let row">
+            @if (isStatusColumn(column.key)) {
+              <span class="status-badge" [class]="statusClass(statusLabel(row, column.key))">
+                <mat-icon>{{ statusIcon(statusLabel(row, column.key)) }}</mat-icon>
+                {{ statusLabel(row, column.key) }}
+              </span>
+            } @else if (isDateCell(column.key, row[column.key])) {
+              {{ row[column.key] | pentaDateTime }}
+            } @else {
+              {{ formatValue(row[column.key]) }}
+            }
+          </td>
+        </ng-container>
+      }
+
+      <ng-container matColumnDef="detail">
+        <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+          <div class="pt-ui-nested-table__detail" [class.is-open]="isExpanded(row)">
+            <div class="pt-ui-nested-table__detail-label">{{ detailLabel }}</div>
+            <pt-ui-table
+              [data]="nestedData(row)"
+              [columns]="nestedColumns"
+              [displayIndex]="displayNestedIndex"
+              [tableHeight]="nestedTableHeight"
+              [enableSorting]="enableNestedSorting"
+              [stickyHeader]="nestedStickyHeader || stickyHeader"
+              [displayView]="displayNestedView"
+              [displayEdit]="displayNestedEdit"
+              [displayDelete]="displayNestedDelete"
+              [displayCheckbox]="displayNestedCheckbox"
+              (selectionChange)="nestedSelectionChange.emit($event)"
+              (view)="onNestedView($event)"
+              (edit)="onNestedEdit($event)"
+              (remove)="onNestedDelete($event)"
+            ></pt-ui-table>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: stickyHeader"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="pt-ui-nested-table__row"
+        [class.is-expanded]="isExpanded(row)"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: detailColumns"
+        class="pt-ui-nested-table__detail-row"
+      ></tr>
+    </table>
+  </div>
+</div>

@@ -34,6 +34,9 @@ export class ToastMessageService {
       info: 4000,
       warning: 5000,
       error: 6000,
+      loading: 0,
+      neutral: 4000,
+      system: 4500,
     },
     maxToasts: 6,
   });

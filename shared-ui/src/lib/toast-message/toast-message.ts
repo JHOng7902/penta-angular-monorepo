@@ -18,7 +18,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
 import { ToastMessageService } from './toast-message.service';
 
-export type ToastMessageType = 'success' | 'error' | 'info' | 'warning';
+export type ToastMessageType =
+  | 'success'
+  | 'error'
+  | 'info'
+  | 'warning'
+  | 'loading'
+  | 'neutral'
+  | 'system';
 
 export interface ToastMessageItem {
   id?: string;
@@ -126,6 +133,12 @@ export class ToastMessage implements OnChanges, OnDestroy, AfterViewInit {
         return 'error';
       case 'warning':
         return 'warning';
+      case 'loading':
+        return 'autorenew';
+      case 'neutral':
+        return 'info_outline';
+      case 'system':
+        return 'cloud';
       case 'info':
       default:
         return 'info';
@@ -219,6 +232,12 @@ export class ToastMessage implements OnChanges, OnDestroy, AfterViewInit {
         return 'Error';
       case 'warning':
         return 'Warning';
+      case 'loading':
+        return 'Loading';
+      case 'neutral':
+        return 'Notice';
+      case 'system':
+        return 'System';
       case 'info':
       default:
         return 'Info';

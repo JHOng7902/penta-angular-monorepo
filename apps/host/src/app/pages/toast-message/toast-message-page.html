@@ -20,12 +20,20 @@
 constructor(private toastService: ToastMessageService) &#123;
   toastService.configure(&#123;
     position: 'top-right',
-    typeDurations: &#123; success: 3000, info: 4000, warning: 5000, error: 6000 &#125;,
+    typeDurations: &#123;
+      success: 3000,
+      info: 4000,
+      warning: 5000,
+      error: 6000,
+      loading: 0,
+      neutral: 4000,
+      system: 4500
+    &#125;,
     maxToasts: 6
   &#125;);
 &#125;
 
-toastService.showToast('success', 'Profile updated');
+toastService.show('success', 'Profile updated');
 
 &lt;pt-ui-toast-message [useService]="true"&gt;&lt;/pt-ui-toast-message&gt;</code></pre>
     <p class="toast-page__desc">
@@ -107,6 +115,33 @@ toastService.showToast('success', 'Profile updated');
         />
       </label>
       <label>
+        Loading Duration (ms)
+        <input
+          type="number"
+          [(ngModel)]="typeDurations.loading"
+          (ngModelChange)="applyConfig()"
+          min="0"
+        />
+      </label>
+      <label>
+        Neutral Duration (ms)
+        <input
+          type="number"
+          [(ngModel)]="typeDurations.neutral"
+          (ngModelChange)="applyConfig()"
+          min="0"
+        />
+      </label>
+      <label>
+        System Duration (ms)
+        <input
+          type="number"
+          [(ngModel)]="typeDurations.system"
+          (ngModelChange)="applyConfig()"
+          min="0"
+        />
+      </label>
+      <label>
         Max Toasts
         <input type="number" [(ngModel)]="maxToasts" (ngModelChange)="applyConfig()" min="1" />
       </label>
@@ -126,6 +161,9 @@ toastService.showToast('success', 'Profile updated');
       <pt-ui-button buttonText="Info" color="info" (pressed)="showTypeToast('info')"></pt-ui-button>
       <pt-ui-button buttonText="Warning" color="warn" (pressed)="showTypeToast('warning')"></pt-ui-button>
       <pt-ui-button buttonText="Error" color="danger" (pressed)="showTypeToast('error')"></pt-ui-button>
+      <pt-ui-button buttonText="Loading" color="neutral" (pressed)="showTypeToast('loading')"></pt-ui-button>
+      <pt-ui-button buttonText="Neutral" color="neutral" (pressed)="showTypeToast('neutral')"></pt-ui-button>
+      <pt-ui-button buttonText="System" color="info" (pressed)="showTypeToast('system')"></pt-ui-button>
     </div>
 
     <div class="toast-page__notice">
@@ -136,17 +174,17 @@ toastService.showToast('success', 'Profile updated');
   <section class="toast-page__section" id="examples">
     <h3>Examples</h3>
     <p class="toast-page__desc">
-      Call the <code>showToast</code> method with a toast type and message.
+      Call the <code>show</code> method with a toast type and message.
       You can also pass a duration override when showing a toast. The progress bar animates until auto-close, or click the close icon to dismiss. The title is derived from the toast type.
     </p>
     <div class="toast-page__example-grid">
       <div>
         <h4>Use Type Defaults</h4>
-        <pre class="toast-page__code" ngNonBindable><code>toastService.showToast('info', 'This uses the default info duration.');</code></pre>
+        <pre class="toast-page__code" ngNonBindable><code>toastService.show('info', 'This uses the default info duration.');</code></pre>
       </div>
       <div>
         <h4>Override Duration (Optional)</h4>
-        <pre class="toast-page__code" ngNonBindable><code>toastService.showToast('success', 'Closes in 2 seconds.', &#123;
+        <pre class="toast-page__code" ngNonBindable><code>toastService.show('success', 'Closes in 2 seconds.', &#123;
   durationMs: 2000
 &#125;);</code></pre>
       </div>
@@ -176,6 +214,22 @@ toastService.showToast('success', 'Profile updated');
         </ul>
       </div>
     </div>
+  </section>
+
+  <section class="toast-page__section" id="usage">
+    <h3>Toast Type Usage</h3>
+    <p class="toast-page__desc">
+      Suggested usage for each toast type.
+    </p>
+    <ul class="toast-page__list">
+      <li><code>success</code>: action completed (save, submit, update)</li>
+      <li><code>error</code>: action failed (validation error, API failure)</li>
+      <li><code>warning</code>: needs attention but not a failure (unsaved changes, partial success)</li>
+      <li><code>info</code>: general FYI (feature tips, neutral updates)</li>
+      <li><code>loading</code>: long-running action in progress (syncing, uploading)</li>
+      <li><code>neutral</code>: low-priority notice (background task queued)</li>
+      <li><code>system</code>: infrastructure/app events (maintenance, connectivity changes)</li>
+    </ul>
   </section>
 </main>
 

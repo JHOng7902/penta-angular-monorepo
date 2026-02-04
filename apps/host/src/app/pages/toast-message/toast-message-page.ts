@@ -38,13 +38,24 @@ export class ToastMessagePage {
     'bottom-center',
   ];
 
-  readonly types: ToastMessageType[] = ['success', 'error', 'info', 'warning'];
+  readonly types: ToastMessageType[] = [
+    'success',
+    'error',
+    'info',
+    'warning',
+    'loading',
+    'neutral',
+    'system',
+  ];
 
   typeDurations: Record<ToastMessageType, number> = {
     success: 3000,
     info: 4000,
     warning: 5000,
     error: 6000,
+    loading: 0,
+    neutral: 4000,
+    system: 4500,
   };
   maxToasts = 6;
 

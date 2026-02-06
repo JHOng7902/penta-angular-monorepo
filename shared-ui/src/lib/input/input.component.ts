@@ -1,4 +1,16 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -8,10 +20,11 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
 })
-export class InputComponent {
+export class InputComponent implements AfterViewInit, OnChanges, OnDestroy {
   private static nextId = 0;
   private readonly autoId = `pt-ui-input-${InputComponent.nextId++}`;
   private readonly blockedTypes = new Set(['radio', 'checkbox', 'button']);
+  private scanTimer?: ReturnType<typeof setTimeout>;
 
   @Input() label = '';
   @Input() type = 'text';
@@ -23,6 +36,7 @@ export class InputComponent {
   @Input() labelPosition: 'top' | 'left' | 'hidden' = 'top';
   @Input() minLength?: number;
   @Input() maxLength?: number;
+  @Input() scanMaxLength?: number;
   @Input() icon?: string;
   @Input() iconMode: 'auto' | 'text' = 'auto';
   @Input() iconPosition: 'left' | 'right' = 'left';
@@ -32,11 +46,20 @@ export class InputComponent {
   @Input() blink = false;
   @Input() id?: string;
   @Input() name?: string;
+  @Input() scanMode = false;
+  @Input() scanAutoFocus = true;
+  @Input() scanDebounceMs = 500;
+  @Input() scanSubmitOnEnter = true;
+  @Input() scanClearOnSubmit = true;
 
   @Output() valueChange = new EventEmitter<string>();
   @Output() keyupEvent = new EventEmitter<KeyboardEvent>();
   @Output() keydownEnterEvent = new EventEmitter<KeyboardEvent>();
   @Output() iconClick = new EventEmitter<void>();
+  @Output() scanSubmit = new EventEmitter<string>();
+
+  @ViewChild('inputElement')
+  inputElement?: ElementRef<HTMLInputElement | HTMLTextAreaElement>;
 
   get inputType(): string {
     const normalized = (this.type || 'text').toLowerCase();
@@ -56,6 +79,13 @@ export class InputComponent {
 
   get displayValue(): string {
     return this.toInputValue(this.value ?? '');
+  }
+
+  get effectiveMaxLength(): number | null {
+    if (this.scanMode && this.scanMaxLength !== undefined) {
+      return this.scanMaxLength;
+    }
+    return this.maxLength ?? null;
   }
 
   get showClearButton(): boolean {
@@ -102,12 +132,31 @@ export class InputComponent {
     return /^[a-z0-9_]+$/.test(this.icon);
   }
 
+  ngAfterViewInit(): void {
+    this.focusIfNeeded();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['scanMode'] || changes['scanAutoFocus'] || changes['disabled']) {
+      if (!this.scanMode || this.disabled) {
+        this.clearScanTimer();
+      }
+      this.focusIfNeeded();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.clearScanTimer();
+  }
+
   onInput(event: Event): void {
     const target = event.target as HTMLInputElement | null;
     const rawValue = target?.value ?? '';
-    const nextValue = this.normalizeValue(rawValue);
+    const normalizedValue = this.normalizeValue(rawValue);
+    const nextValue = this.scanMode ? this.normalizeScanValue(normalizedValue) : normalizedValue;
     this.value = nextValue;
     this.valueChange.emit(nextValue);
+    this.handleScanInput(nextValue);
   }
 
   onClear(): void {
@@ -136,6 +185,11 @@ export class InputComponent {
     }
     if (event.key === 'Enter') {
       this.keydownEnterEvent.emit(event);
+      if (this.scanMode && this.scanSubmitOnEnter) {
+        event.preventDefault();
+        this.clearScanTimer();
+        this.submitScan(this.value);
+      }
     }
   }
 
@@ -146,12 +200,57 @@ export class InputComponent {
     this.iconClick.emit();
   }
 
+  private handleScanInput(value: string): void {
+    if (!this.scanMode) {
+      return;
+    }
+    this.scheduleScanSubmit(value);
+  }
+
+  private scheduleScanSubmit(value: string): void {
+    this.clearScanTimer();
+    if (!this.scanDebounceMs || this.scanDebounceMs <= 0) {
+      return;
+    }
+    this.scanTimer = setTimeout(() => {
+      this.submitScan(value);
+    }, this.scanDebounceMs);
+  }
+
+  private submitScan(value: string): void {
+    const payload = this.normalizeScanValue(value ?? '');
+    if (!payload) {
+      return;
+    }
+    this.scanSubmit.emit(payload);
+    if (this.scanClearOnSubmit) {
+      this.value = '';
+      this.valueChange.emit('');
+    }
+  }
+
+  private clearScanTimer(): void {
+    if (this.scanTimer !== undefined) {
+      clearTimeout(this.scanTimer);
+      this.scanTimer = undefined;
+    }
+  }
+
   private isInputTarget(target: EventTarget | null): boolean {
     if (!(target instanceof HTMLElement)) {
       return false;
     }
     const tagName = target.tagName.toLowerCase();
     return tagName === 'input' || tagName === 'textarea';
+  }
+
+  private focusIfNeeded(): void {
+    if (!this.scanMode || !this.scanAutoFocus || this.disabled) {
+      return;
+    }
+    setTimeout(() => {
+      this.inputElement?.nativeElement.focus();
+    }, 0);
   }
 
   private normalizeValue(value: string): string {
@@ -170,6 +269,10 @@ export class InputComponent {
       return normalized.endsWith('Z') ? normalized : `${normalized}Z`;
     }
     return value;
+  }
+
+  private normalizeScanValue(value: string): string {
+    return value.replace(/\s+/g, '').toUpperCase();
   }
 
   private toInputValue(value: string): string {

@@ -192,6 +192,16 @@ export class NestedTablePage {
     'Updated_On',
   ];
 
+  isParentCheckboxDisabled = (row: Record<string, unknown>) => {
+    const status = String(row?.['Status'] ?? '').toUpperCase();
+    return status === 'COMPLETED' || status === 'SCRAPPED';
+  };
+
+  isNestedCheckboxDisabled = (row: Record<string, unknown>) => {
+    const status = String(row?.['Status'] ?? '').toUpperCase();
+    return status === 'SCRAPPED' || status === 'HOLD';
+  };
+
   onView(row: Record<string, unknown>) {
     this.lastAction = `View clicked for StationConfigID ${row?.['StationConfigID'] ?? ''}`;
   }

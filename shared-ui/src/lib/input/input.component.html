@@ -21,6 +21,7 @@
     }
     @if (multiline) {
       <textarea
+        #inputElement
         [id]="inputId"
         [name]="name"
         [placeholder]="placeholder"
@@ -32,11 +33,12 @@
         [disabled]="disabled"
         [attr.required]="required ? '' : null"
         [attr.minlength]="minLength ?? null"
-        [attr.maxlength]="maxLength ?? null"
+        [attr.maxlength]="effectiveMaxLength"
         (input)="onInput($event)"
       ></textarea>
     } @else {
       <input
+        #inputElement
         [id]="inputId"
         [name]="name"
         [type]="actualInputType"
@@ -50,7 +52,7 @@
         [disabled]="disabled"
         [attr.required]="required ? '' : null"
         [attr.minlength]="minLength ?? null"
-        [attr.maxlength]="maxLength ?? null"
+        [attr.maxlength]="effectiveMaxLength"
         (input)="onInput($event)"
       />
     }

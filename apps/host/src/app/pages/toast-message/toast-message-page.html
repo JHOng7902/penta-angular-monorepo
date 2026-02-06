@@ -200,18 +200,36 @@ toastService.show('success', 'Profile updated');
     <div class="toast-page__api">
       <div>
         <h4>Inputs</h4>
-        <ul>
-          <li><code>toasts</code>: array of toast items (manual mode)</li>
-          <li><code>defaultDurationMs</code>: number (fallback duration)</li>
-          <li><code>position</code>: top-right | top-left | bottom-right | bottom-left | top-center | bottom-center</li>
-          <li><code>useService</code>: boolean (use <code>ToastMessageService</code>)</li>
-        </ul>
+        <table class="toast-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>toasts</code></td><td>ToastItem[]</td><td>Manual mode: pass the toast array yourself.</td></tr>
+            <tr><td><code>defaultDurationMs</code></td><td>number</td><td>Fallback duration when a toast type has no override.</td></tr>
+            <tr><td><code>position</code></td><td>string</td><td>Toast position (top-right, top-left, bottom-right, etc.).</td></tr>
+            <tr><td><code>useService</code></td><td>boolean</td><td>Bind to <code>ToastMessageService</code> stream.</td></tr>
+          </tbody>
+        </table>
       </div>
       <div>
         <h4>Outputs</h4>
-        <ul>
-          <li><code>dismissed</code>: emits &#123; id, reason, toast &#125;</li>
-        </ul>
+        <table class="toast-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>dismissed</code></td><td>EventEmitter&lt;&#123; id, reason, toast &#125;&gt;</td><td>Emits when a toast is closed or expires.</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>

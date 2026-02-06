@@ -17,6 +17,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { PentaDateTimePipe } from './table-date.pipe';
+import { InputComponent } from '../input/input.component';
 
 export interface TableColumn {
   key: string;
@@ -35,6 +36,7 @@ export interface TableColumn {
     MatButtonModule,
     MatSortModule,
     PentaDateTimePipe,
+    InputComponent,
   ],
   templateUrl: './table.html',
   styleUrl: './table.scss',
@@ -51,14 +53,36 @@ export class Table implements OnChanges, AfterViewInit {
   @Input() displayPaginator = false;
   @Input() tableHeight?: string;
   @Input() stickyHeader = false;
+  @Input() displayHeader = true;
+  @Input() headerVariant: 'default' | 'scan' = 'default';
+  @Input() scanPlaceholder = 'Scan...';
+  @Input() scanValue = '';
+  @Input() scanDisabled = false;
+  @Input() scanDisabledMessage = 'Scan is disabled';
+  @Input() scanKey = 'LotNo';
+  @Input() scanMatch: 'exact' | 'contains' = 'exact';
+  @Input() clearScanOnMatch = true;
+  @Input() scanAutoFocus = true;
+  @Input() scanDebounceMs = 500;
+  @Input() scanSubmitOnEnter = true;
+  @Input() scanClearOnSubmit = false;
+  @Input() scanMaxLength?: number;
+  @Input() scanBlink = false;
+  @Input() scanOnlySelection = false;
+  @Input() selectionSort: 'none' | 'top' | 'bottom' = 'none';
+  @Input() rowTrackByKey?: string;
   @Input() pageSizeOptions: number[] = [5, 10, 20];
   @Input() pageSize = 10;
+  @Input() checkboxDisabled:
+    | boolean
+    | ((row: Record<string, unknown>) => boolean) = false;
 
   @Output() view = new EventEmitter<Record<string, unknown>>();
   @Output() edit = new EventEmitter<Record<string, unknown>>();
   @Output() remove = new EventEmitter<Record<string, unknown>>();
   @Output() selectionChange = new EventEmitter<Record<string, unknown>[]>();
   @Output() rowPressed = new EventEmitter<Record<string, unknown>>();
+  @Output() scan = new EventEmitter<string>();
 
   private paginatorRef?: MatPaginator;
   @ViewChild(MatPaginator)
@@ -77,6 +101,7 @@ export class Table implements OnChanges, AfterViewInit {
   selection = new SelectionModel<Record<string, unknown>>(true, []);
   normalizedColumns: TableColumn[] = [];
   displayedColumns: string[] = [];
+  private baseData: Record<string, unknown>[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (
@@ -86,13 +111,22 @@ export class Table implements OnChanges, AfterViewInit {
       changes['displayView'] ||
       changes['displayEdit'] ||
       changes['displayDelete'] ||
-      changes['displayIndex']
+      changes['displayIndex'] ||
+      changes['checkboxDisabled'] ||
+      changes['headerVariant'] ||
+      changes['scanValue']
     ) {
+      if (changes['data']) {
+        this.baseData = [...(this.data ?? [])];
+      }
       this.normalizedColumns = this.normalizeColumns();
       this.displayedColumns = this.buildDisplayedColumns();
       this.dataSource.data = this.data ?? [];
       this.selection.clear();
       this.emitSelection();
+    }
+    if (changes['selectionSort']) {
+      this.applySelectionSort();
     }
     if (changes['displayPaginator']) {
       this.configurePaginator();
@@ -123,6 +157,32 @@ export class Table implements OnChanges, AfterViewInit {
     this.remove.emit(row);
   }
 
+  onScanValueChange(value: string): void {
+    this.scanValue = value;
+  }
+
+  onScanSubmit(value: string): void {
+    this.scanValue = value;
+    this.scan.emit(value);
+    if (!value || !this.displayCheckbox) {
+      return;
+    }
+    const normalized = value.trim();
+    if (!normalized) {
+      return;
+    }
+    const matchedRow = this.findScanMatch(normalized);
+    if (!matchedRow || this.isBaseCheckboxDisabled(matchedRow)) {
+      return;
+    }
+    this.selection.select(matchedRow);
+    this.emitSelection();
+    if (this.clearScanOnMatch) {
+      this.scanValue = '';
+      this.scan.emit('');
+    }
+  }
+
   rowIndex(index: number): number {
     if (this.displayPaginator && this.paginator) {
       return this.paginator.pageIndex * this.paginator.pageSize + index + 1;
@@ -131,23 +191,59 @@ export class Table implements OnChanges, AfterViewInit {
   }
 
   toggleRow(row: Record<string, unknown>): void {
+    if (this.isCheckboxDisabled(row)) {
+      return;
+    }
     this.selection.toggle(row);
     this.emitSelection();
   }
 
   isAllSelected(): boolean {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numRows > 0 && numSelected === numRows;
+    const selectableRows = this.getBaseSelectableRows();
+    const numRows = selectableRows.length;
+    if (numRows === 0) {
+      return false;
+    }
+    const numSelected = selectableRows.filter((row) => this.selection.isSelected(row)).length;
+    return numSelected === numRows;
+  }
+
+  get selectedCount(): number {
+    return this.selection.selected.length;
   }
 
   masterToggle(): void {
+    const selectableRows = this.getSelectableRows();
+    if (selectableRows.length === 0) {
+      return;
+    }
     if (this.isAllSelected()) {
       this.selection.clear();
     } else {
-      this.dataSource.data.forEach((row) => this.selection.select(row));
+      this.selection.clear();
+      selectableRows.forEach((row) => this.selection.select(row));
     }
     this.emitSelection();
+  }
+
+  isCheckboxDisabled(row: Record<string, unknown>): boolean {
+    if (this.isBaseCheckboxDisabled(row)) {
+      return true;
+    }
+    if (this.scanOnlySelection && !this.selection.isSelected(row)) {
+      return true;
+    }
+    return false;
+  }
+
+  isMasterDisabled(): boolean {
+    if (this.scanOnlySelection) {
+      return true;
+    }
+    if (this.checkboxDisabled === true) {
+      return true;
+    }
+    return this.getBaseSelectableRows().length === 0;
   }
 
   formatValue(value: unknown): string {
@@ -269,12 +365,21 @@ export class Table implements OnChanges, AfterViewInit {
     return 'info';
   }
 
-  trackByKey(_index: number, column: TableColumn): string {
+  trackByColumn(_index: number, column: TableColumn): string {
     return column.key;
+  }
+
+  trackByRow(_index: number, row: Record<string, unknown>): unknown {
+    if (this.rowTrackByKey) {
+      const keyValue = row?.[this.rowTrackByKey];
+      return keyValue ?? row;
+    }
+    return row;
   }
 
   private emitSelection(): void {
     this.selectionChange.emit(this.selection.selected);
+    this.applySelectionSort();
   }
 
   private normalizeColumns(): TableColumn[] {
@@ -295,6 +400,14 @@ export class Table implements OnChanges, AfterViewInit {
       key,
       label: this.titleize(key),
     }));
+  }
+
+  private getSelectableRows(): Record<string, unknown>[] {
+    return this.dataSource.data.filter((row) => !this.isCheckboxDisabled(row));
+  }
+
+  private getBaseSelectableRows(): Record<string, unknown>[] {
+    return this.dataSource.data.filter((row) => !this.isBaseCheckboxDisabled(row));
   }
 
   //this is used for displaying row data
@@ -397,6 +510,64 @@ export class Table implements OnChanges, AfterViewInit {
     return values.some((value) =>
       value.includes(' ') ? normalized.includes(value) : tokens.includes(value),
     );
+  }
+
+  private findScanMatch(value: string): Record<string, unknown> | undefined {
+    const key = this.scanKey || this.normalizedColumns[0]?.key;
+    if (!key) {
+      return undefined;
+    }
+    const lowerValue = value.toLowerCase();
+    return this.dataSource.data.find((row) => {
+      const cell = row?.[key];
+      if (cell === null || cell === undefined) {
+        return false;
+      }
+      const cellValue = String(cell).trim();
+      if (!cellValue) {
+        return false;
+      }
+      if (this.scanMatch === 'contains') {
+        return cellValue.toLowerCase().includes(lowerValue);
+      }
+      return cellValue === value;
+    });
+  }
+
+  private isBaseCheckboxDisabled(row: Record<string, unknown>): boolean {
+    if (typeof this.checkboxDisabled === 'function') {
+      return this.checkboxDisabled(row);
+    }
+    return Boolean(this.checkboxDisabled);
+  }
+
+  private applySelectionSort(): void {
+    if (this.selectionSort === 'none' || !this.displayCheckbox) {
+      return;
+    }
+    const baseData = this.baseData.length > 0 ? [...this.baseData] : [...this.dataSource.data];
+    const reordered = this.applySelectionSortToArray(baseData);
+    this.dataSource.data = reordered;
+  }
+
+  private applySelectionSortToArray(
+    data: Record<string, unknown>[],
+  ): Record<string, unknown>[] {
+    if (this.selectionSort === 'none' || !this.displayCheckbox) {
+      return data;
+    }
+    const selected: Record<string, unknown>[] = [];
+    const unselected: Record<string, unknown>[] = [];
+    data.forEach((row) => {
+      if (this.selection.isSelected(row)) {
+        selected.push(row);
+      } else {
+        unselected.push(row);
+      }
+    });
+    return this.selectionSort === 'top'
+      ? [...selected, ...unselected]
+      : [...unselected, ...selected];
   }
 }
 

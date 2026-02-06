@@ -4,9 +4,9 @@
   width: 100%;
   background: #ffffff;
   border-radius: 8px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.35);
   overflow: hidden;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
 }
 
 .pt-ui-table__header {
@@ -15,8 +15,62 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.85rem 1rem 0.6rem;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-  background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5ff 100%);
+}
+
+.pt-ui-table__header--scan {
+  justify-content: flex-start;
+}
+
+.pt-ui-table__scan-input {
+  flex: 1 1 260px;
+  max-width: 420px;
+  min-width: 250px;
+}
+
+.pt-ui-table__scan-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+}
+
+.pt-ui-table__scan-disabled {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #b91c1c;
+  background: rgba(248, 113, 113, 0.15);
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.pt-ui-table__selection {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #0f172a;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.pt-ui-table__selection-count {
+  color: #dc2626;
+  font-weight: 700;
+  margin: 0 0.15rem;
+}
+
+.pt-ui-table__selection-separator {
+  color: #dc2626;
+  font-weight: 700;
+  margin: 0 0.15rem;
+}
+
+.pt-ui-table__selection-total {
+  color: #dc2626;
+  font-weight: 700;
+  margin-left: 0.15rem;
 }
 
 .pt-ui-table__content {
@@ -46,7 +100,7 @@
   font-weight: 600;
   color: #0f172a;
   background: #e3e3e3;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
   z-index: 1;
 }
 
@@ -56,11 +110,15 @@
 }
 
 .pt-ui-table__table tr:hover td {
-  background: rgba(37, 99, 235, 0.06);
+  background: rgba(37, 99, 235, 0.05);
 }
 
 .pt-ui-table__table tr:nth-child(even) td {
-  background: rgba(148, 163, 184, 0.08);
+  background: #f8fafc;
+}
+
+.pt-ui-table__table tr:nth-child(odd) td {
+  background: #ffffff;
 }
 
 .pt-ui-table__actions {
@@ -151,6 +209,46 @@
 }
 
 mat-paginator {
-  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  border-top: 1px solid rgba(148, 163, 184, 0.35);
+  background: #ffffff;
+  color: #0f172a;
 }
 
+.pt-ui-table ::ng-deep .mat-mdc-paginator {
+  background: #ffffff;
+}
+
+.pt-ui-table ::ng-deep .mat-mdc-paginator-container {
+  padding: 0.5rem 1rem;
+  gap: 0.6rem;
+}
+
+.pt-ui-table ::ng-deep .mat-mdc-paginator-page-size-label,
+.pt-ui-table ::ng-deep .mat-mdc-paginator-range-label {
+  color: #475569;
+  font-weight: 600;
+}
+
+.pt-ui-table ::ng-deep .mat-mdc-icon-button {
+  color: #0f172a;
+}
+
+.pt-ui-table ::ng-deep .mat-mdc-select-trigger {
+  color: #0f172a;
+}
+
+.pt-ui-table ::ng-deep .mat-mdc-select-value {
+  color: #0f172a;
+}
+
+.pt-ui-table ::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-disabled,
+.pt-ui-table ::ng-deep .mat-checkbox-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pt-ui-table ::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-disabled .mdc-checkbox__background,
+.pt-ui-table ::ng-deep .mat-checkbox-disabled .mat-checkbox-frame {
+  border-color: rgba(148, 163, 184, 0.8);
+  background-color: rgba(148, 163, 184, 0.2);
+}

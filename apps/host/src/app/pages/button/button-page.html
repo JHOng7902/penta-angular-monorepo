@@ -46,26 +46,44 @@ export class ExampleComponent &#123;&#125;
     <div class="button-page__api">
       <div>
         <h4>Inputs</h4>
-        <ul>
-          <li><code>variant</code>: <code>primary</code> | <code>outline</code> | <code>ghost</code></li>
-          <li><code>size</code>: <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code> | <code>xxl</code></li>
-          <li><code>content</code>: <code>text</code> | <code>icon</code> | <code>text-icon</code></li>
-          <li><code>icon</code>: Material icon name (string)</li>
-          <li><code>buttonText</code>: text label (string)</li>
-          <li><code>color</code>: <code>primary</code> | <code>accent</code> | <code>warn</code> | <code>success</code> | <code>info</code> | <code>neutral</code> | <code>danger</code> | <code>fail</code></li>
-          <li><code>blink</code>: boolean</li>
-          <li><code>disabled</code>: boolean</li>
-          <li><code>type</code>: <code>button</code> | <code>submit</code> | <code>reset</code></li>
-          <li><code>ariaLabel</code>: string</li>
-          <li><code>tooltip</code>: string</li>
-          <li><code>tooltipPosition</code>: <code>above</code> | <code>below</code> | <code>left</code> | <code>right</code> | <code>before</code> | <code>after</code> | <code>start</code> | <code>end</code></li>
-        </ul>
+        <table class="button-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td><code>primary</code> | <code>outline</code> | <code>ghost</code></td><td>Visual emphasis style.</td></tr>
+            <tr><td><code>size</code></td><td><code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code> | <code>xxl</code></td><td>Controls font size and height.</td></tr>
+            <tr><td><code>content</code></td><td><code>text</code> | <code>icon</code> | <code>text-icon</code></td><td>Choose text, icon-only, or text + icon.</td></tr>
+            <tr><td><code>icon</code></td><td>string</td><td>Material icon name for icon or text-icon modes.</td></tr>
+            <tr><td><code>buttonText</code></td><td>string</td><td>Button label text.</td></tr>
+            <tr><td><code>color</code></td><td>string</td><td>Theme color (primary, success, info, danger, etc.).</td></tr>
+            <tr><td><code>blink</code></td><td>boolean</td><td>Enable attention blink animation.</td></tr>
+            <tr><td><code>disabled</code></td><td>boolean</td><td>Disable the button.</td></tr>
+            <tr><td><code>type</code></td><td><code>button</code> | <code>submit</code> | <code>reset</code></td><td>Native button type for forms.</td></tr>
+            <tr><td><code>ariaLabel</code></td><td>string</td><td>Accessibility label (especially for icon-only buttons).</td></tr>
+            <tr><td><code>tooltip</code></td><td>string</td><td>Tooltip text on hover.</td></tr>
+            <tr><td><code>tooltipPosition</code></td><td><code>above</code> | <code>below</code> | <code>left</code> | <code>right</code> | <code>before</code> | <code>after</code> | <code>start</code> | <code>end</code></td><td>Tooltip placement.</td></tr>
+          </tbody>
+        </table>
       </div>
       <div>
         <h4>Outputs</h4>
-        <ul>
-          <li><code>pressed</code>: emits <code>MouseEvent</code> on click</li>
-        </ul>
+        <table class="button-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>pressed</code></td><td>EventEmitter&lt;MouseEvent&gt;</td><td>Emits when the button is clicked.</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>

@@ -31,6 +31,14 @@ export class InputPage {
   lastKey = '';
   enterCount = 0;
   iconClickCount = 0;
+  scanValue = '';
+  scanResult = '';
+  scanCount = 0;
+  scanDisabled = false;
+  scanDebounceMs = 500;
+  scanMaxLength = 12;
+  scanAutoFocus = true;
+  scanBlink = true;
 
   toggleDisabled(event: Event): void {
     const target = event.target as HTMLInputElement | null;
@@ -48,5 +56,15 @@ export class InputPage {
 
   onInputIconClick(): void {
     this.iconClickCount += 1;
+  }
+
+  onScanSubmit(value: string): void {
+    this.scanResult = value;
+    this.scanCount += 1;
+  }
+
+  toggleScanDisabled(event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    this.scanDisabled = Boolean(target?.checked);
   }
 }

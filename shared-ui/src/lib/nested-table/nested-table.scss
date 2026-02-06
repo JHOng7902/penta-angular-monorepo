@@ -32,12 +32,16 @@
   padding: 0.85rem 1rem;
 }
 
+.pt-ui-nested-table__table td {
+  background: #ffffff;
+}
+
 .pt-ui-nested-table__table tr:hover td {
   background: rgba(37, 99, 235, 0.06);
 }
 
 .pt-ui-nested-table__table tr:nth-child(even) td {
-  background: rgba(148, 163, 184, 0.08);
+  background: #ffffff;
 }
 
 .pt-ui-nested-table__expand-header,
@@ -252,4 +256,16 @@
 .pt-ui-nested-table__detail .pt-ui-table__table td,
 .pt-ui-nested-table__detail .pt-ui-table__table th {
   padding: 0.65rem 0.85rem;
+}
+
+.pt-ui-nested-table ::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-disabled,
+.pt-ui-nested-table ::ng-deep .mat-checkbox-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pt-ui-nested-table ::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-disabled .mdc-checkbox__background,
+.pt-ui-nested-table ::ng-deep .mat-checkbox-disabled .mat-checkbox-frame {
+  border-color: rgba(148, 163, 184, 0.8);
+  background-color: rgba(148, 163, 184, 0.2);
 }

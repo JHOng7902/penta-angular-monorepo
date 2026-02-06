@@ -130,6 +130,38 @@
   gap: 1rem;
 }
 
+.toast-page__api-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  font-size: 0.9rem;
+}
+
+.toast-page__api-table th,
+.toast-page__api-table td {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+  vertical-align: top;
+}
+
+.toast-page__api-table th {
+  background: #f1f5f9;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.toast-page__api-table tbody tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+.toast-page__api-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
 .toast-page__api h4 {
   margin: 0 0 0.4rem;
 }

@@ -83,6 +83,13 @@ export class TablePage {
   ];
 
   lastAction = 'No actions yet.';
+  scanValue = '';
+  scanHeaderEnabled = true;
+
+  isCheckboxDisabled = (row: Record<string, unknown>) => {
+    const status = String(row?.['Status'] ?? '').toUpperCase();
+    return status === 'COMPLETED' || status === 'SCRAPPED';
+  };
 
   onView(row: Record<string, unknown>) {
     this.lastAction = `View clicked for LotNo ${row?.['LotNo'] ?? ''}`;
@@ -102,6 +109,16 @@ export class TablePage {
 
   onRowClick(row: Record<string, unknown>) {
     this.lastAction = `Row clicked for LotNo ${row?.['LotNo'] ?? ''}`;
+  }
+
+  onScan(value: string) {
+    this.scanValue = value;
+    this.lastAction = `Scan input: ${value}`;
+  }
+
+  toggleScanHeader(event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    this.scanHeaderEnabled = Boolean(target?.checked);
   }
 
   toggleIndex(event: Event): void {

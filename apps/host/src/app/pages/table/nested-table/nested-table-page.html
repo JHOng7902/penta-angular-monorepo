@@ -174,6 +174,33 @@
     ></pt-ui-nested-table>
   </section>
 
+  <section class="nested-table-page__section" id="example-disabled">
+    <h3>Disabled Checkboxes</h3>
+    <p class="nested-table-page__desc">
+      Disable selection based on row data (for example, completed or scrapped rows).
+    </p>
+    <pre class="nested-table-page__code" ngNonBindable><code>&lt;pt-ui-nested-table
+  [data]="nestedRows"
+  [columns]="columns"
+  [nestedKey]="'StationOrgans'"
+  [nestedColumns]="nestedColumns"
+  [displayCheckbox]="true"
+  [displayNestedCheckbox]="true"
+  [checkboxDisabled]="isParentCheckboxDisabled"
+  [nestedCheckboxDisabled]="isNestedCheckboxDisabled"
+&gt;&lt;/pt-ui-nested-table&gt;</code></pre>
+    <pt-ui-nested-table
+      [data]="nestedRows"
+      [columns]="columns"
+      [nestedKey]="'StationOrgans'"
+      [nestedColumns]="nestedColumns"
+      [displayCheckbox]="true"
+      [displayNestedCheckbox]="true"
+      [checkboxDisabled]="isParentCheckboxDisabled"
+      [nestedCheckboxDisabled]="isNestedCheckboxDisabled"
+    ></pt-ui-nested-table>
+  </section>
+
   <section class="nested-table-page__section" id="example-compact">
     <h3>Compact (Short Height)</h3>
     <p class="nested-table-page__desc">
@@ -215,37 +242,65 @@
 
   <section class="nested-table-page__section" id="api">
     <h3>Inputs &amp; Outputs</h3>
-    <ul class="nested-table-page__list">
-      <li><code>data</code>: array of parent rows</li>
-      <li><code>columns</code>: parent column list</li>
-      <li><code>nestedKey</code>: property name for child rows</li>
-      <li><code>nestedColumns</code>: child column list</li>
-      <li><code>displayCheckbox</code>: boolean</li>
-      <li><code>displayNestedCheckbox</code>: boolean</li>
-      <li><code>displayIndex</code>: boolean</li>
-      <li><code>displayNestedIndex</code>: boolean</li>
-      <li><code>enableSorting</code>: boolean</li>
-      <li><code>enableNestedSorting</code>: boolean</li>
-      <li><code>displayView</code>: boolean</li>
-      <li><code>displayEdit</code>: boolean</li>
-      <li><code>displayDelete</code>: boolean</li>
-      <li><code>displayNestedView</code>: boolean</li>
-      <li><code>displayNestedEdit</code>: boolean</li>
-      <li><code>displayNestedDelete</code>: boolean</li>
-      <li><code>stickyHeader</code>: boolean</li>
-      <li><code>tableHeight</code>: string (e.g. <code>50vh</code>)</li>
-      <li><code>nestedTableHeight</code>: string (e.g. <code>32vh</code>)</li>
-      <li><code>nestedStickyHeader</code>: boolean</li>
-      <li><code>expandIcon</code>: icon name for collapsed state</li>
-      <li><code>collapseIcon</code>: icon name for expanded state</li>
-    </ul>
-    <ul class="nested-table-page__list">
-      <li><code>view</code>: emits row data</li>
-      <li><code>edit</code>: emits row data</li>
-      <li><code>remove</code>: emits row data</li>
-      <li><code>nestedView</code>: emits child row data</li>
-      <li><code>nestedEdit</code>: emits child row data</li>
-      <li><code>nestedRemove</code>: emits child row data</li>
-    </ul>
+    <div class="nested-table-page__api">
+      <div>
+        <h4>Inputs</h4>
+        <table class="nested-table-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>data</code></td><td>array</td><td>Parent rows for the main table.</td></tr>
+            <tr><td><code>columns</code></td><td>string[]</td><td>Column list for parent rows.</td></tr>
+            <tr><td><code>nestedKey</code></td><td>string</td><td>Property name that holds child rows.</td></tr>
+            <tr><td><code>nestedColumns</code></td><td>string[]</td><td>Column list for child rows.</td></tr>
+            <tr><td><code>displayCheckbox</code></td><td>boolean</td><td>Show parent selection checkboxes.</td></tr>
+            <tr><td><code>displayNestedCheckbox</code></td><td>boolean</td><td>Show child selection checkboxes.</td></tr>
+            <tr><td><code>checkboxDisabled</code></td><td>boolean | (row) =&gt; boolean</td><td>Disable parent checkboxes globally or per row.</td></tr>
+            <tr><td><code>nestedCheckboxDisabled</code></td><td>boolean | (row) =&gt; boolean</td><td>Disable child checkboxes globally or per row.</td></tr>
+            <tr><td><code>displayIndex</code></td><td>boolean</td><td>Show parent row numbering.</td></tr>
+            <tr><td><code>displayNestedIndex</code></td><td>boolean</td><td>Show child row numbering.</td></tr>
+            <tr><td><code>enableSorting</code></td><td>boolean</td><td>Enable sorting for parent columns.</td></tr>
+            <tr><td><code>enableNestedSorting</code></td><td>boolean</td><td>Enable sorting for child columns.</td></tr>
+            <tr><td><code>displayView</code></td><td>boolean</td><td>Show parent view action button.</td></tr>
+            <tr><td><code>displayEdit</code></td><td>boolean</td><td>Show parent edit action button.</td></tr>
+            <tr><td><code>displayDelete</code></td><td>boolean</td><td>Show parent delete action button.</td></tr>
+            <tr><td><code>displayNestedView</code></td><td>boolean</td><td>Show child view action button.</td></tr>
+            <tr><td><code>displayNestedEdit</code></td><td>boolean</td><td>Show child edit action button.</td></tr>
+            <tr><td><code>displayNestedDelete</code></td><td>boolean</td><td>Show child delete action button.</td></tr>
+            <tr><td><code>stickyHeader</code></td><td>boolean</td><td>Sticky header for the parent table.</td></tr>
+            <tr><td><code>tableHeight</code></td><td>string</td><td>Height for the parent table container.</td></tr>
+            <tr><td><code>nestedTableHeight</code></td><td>string</td><td>Height for the nested table container.</td></tr>
+            <tr><td><code>nestedStickyHeader</code></td><td>boolean</td><td>Sticky header for the nested table.</td></tr>
+            <tr><td><code>expandIcon</code></td><td>string</td><td>Icon for collapsed state.</td></tr>
+            <tr><td><code>collapseIcon</code></td><td>string</td><td>Icon for expanded state.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>Outputs</h4>
+        <table class="nested-table-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>view</code></td><td>EventEmitter&lt;row&gt;</td><td>Emits parent row data when View is clicked.</td></tr>
+            <tr><td><code>edit</code></td><td>EventEmitter&lt;row&gt;</td><td>Emits parent row data when Edit is clicked.</td></tr>
+            <tr><td><code>remove</code></td><td>EventEmitter&lt;row&gt;</td><td>Emits parent row data when Delete is clicked.</td></tr>
+            <tr><td><code>nestedView</code></td><td>EventEmitter&lt;row&gt;</td><td>Emits child row data when View is clicked.</td></tr>
+            <tr><td><code>nestedEdit</code></td><td>EventEmitter&lt;row&gt;</td><td>Emits child row data when Edit is clicked.</td></tr>
+            <tr><td><code>nestedRemove</code></td><td>EventEmitter&lt;row&gt;</td><td>Emits child row data when Delete is clicked.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </section>
 </main>

@@ -124,6 +124,99 @@ export class ExampleComponent &#123;&#125;
     ></pt-ui-table>
   </section>
 
+  <section class="table-page__section" id="disabled-checkboxes">
+    <h3>Disabled Checkboxes</h3>
+    <p class="table-page__desc">
+      Disable selection based on row data (e.g., completed or scrapped rows).
+    </p>
+    <pre class="table-page__code" ngNonBindable><code>&lt;pt-ui-table
+  [data]="response.ResponseData"
+  [columns]="columns"
+  [displayCheckbox]="true"
+  [checkboxDisabled]="isCheckboxDisabled"
+&gt;&lt;/pt-ui-table&gt;</code></pre>
+    <pt-ui-table
+      [data]="response.ResponseData"
+      [columns]="columns"
+      [displayCheckbox]="true"
+      [checkboxDisabled]="isCheckboxDisabled"
+    ></pt-ui-table>
+  </section>
+
+  <section class="table-page__section" id="hide-header">
+    <h3>Hide Header Section</h3>
+    <p class="table-page__desc">
+      Use <code>displayHeader</code> to hide the summary + tools area above the table.
+    </p>
+    <pre class="table-page__code" ngNonBindable><code>&lt;pt-ui-table
+  [data]="response.ResponseData"
+  [columns]="columns"
+  [displayHeader]="false"
+&gt;&lt;/pt-ui-table&gt;</code></pre>
+    <pt-ui-table
+      [data]="response.ResponseData"
+      [columns]="columns"
+      [displayHeader]="false"
+    ></pt-ui-table>
+  </section>
+
+  <section class="table-page__section" id="scan-header">
+    <h3>Scan Header</h3>
+    <p class="table-page__desc">
+      Use <code>headerVariant="scan"</code> to show a scan input and selected count.
+      You can disable the scan input when requirements are not met.
+    </p>
+
+    <pre class="table-page__code" ngNonBindable><code>&lt;pt-ui-table
+  [data]="response.ResponseData"
+  [columns]="columns"
+  [displayCheckbox]="true"
+  headerVariant="scan"
+  selectionSort="top"
+  [scanDisabled]="!scanHeaderEnabled"
+  [scanOnlySelection]="true"
+  scanPlaceholder="Scan Label"
+  [scanAutoFocus]="true"
+  [scanDebounceMs]="500"
+  [scanSubmitOnEnter]="true"
+  [scanClearOnSubmit]="true"
+  [scanMaxLength]="20"
+  [scanBlink]="true"
+  scanKey="LotNo"
+  scanMatch="exact"
+  [clearScanOnMatch]="true"
+  (scan)="onScan($event)"
+&gt;&lt;/pt-ui-table&gt;</code></pre>
+    <label class="table-page__toggle">
+      <input
+        type="checkbox"
+        [checked]="scanHeaderEnabled"
+        (change)="toggleScanHeader($event)"
+      />
+      Enable scan input
+    </label>
+    <pt-ui-table
+      [data]="response.ResponseData"
+      [columns]="columns"
+      [displayCheckbox]="true"
+      headerVariant="scan"
+      selectionSort="top"
+      [scanDisabled]="!scanHeaderEnabled"
+      [scanOnlySelection]="true"
+      scanPlaceholder="Scan Label"
+      [scanAutoFocus]="true"
+      [scanDebounceMs]="500"
+      [scanSubmitOnEnter]="true"
+      [scanClearOnSubmit]="true"
+      [scanMaxLength]="20"
+      [scanBlink]="true"
+      scanKey="LotNo"
+      scanMatch="exact"
+      [clearScanOnMatch]="true"
+      (scan)="onScan($event)"
+    ></pt-ui-table>
+  </section>
+
   <section class="table-page__section" id="features">
     <h3>Features</h3>
     <ul class="table-page__list">
@@ -145,31 +238,69 @@ export class ExampleComponent &#123;&#125;
     <div class="table-page__api">
       <div>
         <h4>Inputs</h4>
-        <ul>
-          <li><code>data</code>: array of rows (ResponseData)</li>
-          <li><code>columns</code>: string[] or column config</li>
-          <li><code>displayCheckbox</code>: boolean</li>
-          <li><code>displayView</code>: boolean</li>
-          <li><code>displayEdit</code>: boolean</li>
-          <li><code>displayDelete</code>: boolean</li>
-          <li><code>displayIndex</code>: boolean</li>
-          <li><code>enableSorting</code>: boolean</li>
-          <li><code>tableHeight</code>: string (e.g. <code>50vh</code>)</li>
-          <li><code>stickyHeader</code>: boolean</li>
-          <li><code>displayPaginator</code>: boolean</li>
-          <li><code>pageSize</code>: number</li>
-          <li><code>pageSizeOptions</code>: number[]</li>
-        </ul>
+        <table class="table-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>data</code></td><td>array</td><td>Table rows (ResponseData). Columns are derived from these objects.</td></tr>
+            <tr><td><code>columns</code></td><td>string[] | config</td><td>Customize column order, labels, and visibility.</td></tr>
+            <tr><td><code>displayCheckbox</code></td><td>boolean</td><td>Shows row selection checkboxes.</td></tr>
+            <tr><td><code>checkboxDisabled</code></td><td>boolean | (row) =&gt; boolean</td><td>Disable all or specific row checkboxes.</td></tr>
+            <tr><td><code>displayHeader</code></td><td>boolean</td><td>Show/hide the header summary/tools area.</td></tr>
+            <tr><td><code>headerVariant</code></td><td><code>default</code> | <code>scan</code></td><td>Switch between summary header or scan header.</td></tr>
+            <tr><td><code>scanPlaceholder</code></td><td>string</td><td>Placeholder text for the scan input.</td></tr>
+            <tr><td><code>scanValue</code></td><td>string</td><td>Bind the scan input value.</td></tr>
+            <tr><td><code>scanDisabled</code></td><td>boolean</td><td>Disable the scan input when requirements are not met.</td></tr>
+            <tr><td><code>scanDisabledMessage</code></td><td>string</td><td>Message shown when scan input is disabled.</td></tr>
+            <tr><td><code>scanOnlySelection</code></td><td>boolean</td><td>Only allow selection via scanning.</td></tr>
+            <tr><td><code>selectionSort</code></td><td><code>none</code> | <code>top</code> | <code>bottom</code></td><td>Move checked rows to the top or bottom.</td></tr>
+            <tr><td><code>rowTrackByKey</code></td><td>string</td><td>Unique row key (ex: <code>LotNo</code>) for reordering.</td></tr>
+            <tr><td><code>scanAutoFocus</code></td><td>boolean</td><td>Auto-focus the scan input when visible.</td></tr>
+            <tr><td><code>scanDebounceMs</code></td><td>number</td><td>Delay before auto-submit after typing stops.</td></tr>
+            <tr><td><code>scanSubmitOnEnter</code></td><td>boolean</td><td>Submit scan when Enter is pressed.</td></tr>
+            <tr><td><code>scanClearOnSubmit</code></td><td>boolean</td><td>Clear scan input after submit.</td></tr>
+            <tr><td><code>scanMaxLength</code></td><td>number</td><td>Maximum characters accepted by scan input.</td></tr>
+            <tr><td><code>scanBlink</code></td><td>boolean</td><td>Enable blinking attention on scan input.</td></tr>
+            <tr><td><code>scanKey</code></td><td>string</td><td>Column key to match against when scanning.</td></tr>
+            <tr><td><code>scanMatch</code></td><td><code>exact</code> | <code>contains</code></td><td>Match mode for scanning.</td></tr>
+            <tr><td><code>clearScanOnMatch</code></td><td>boolean</td><td>Clear scan value after a match.</td></tr>
+            <tr><td><code>displayView</code></td><td>boolean</td><td>Show the view action button.</td></tr>
+            <tr><td><code>displayEdit</code></td><td>boolean</td><td>Show the edit action button.</td></tr>
+            <tr><td><code>displayDelete</code></td><td>boolean</td><td>Show the delete action button.</td></tr>
+            <tr><td><code>displayIndex</code></td><td>boolean</td><td>Show row numbering column.</td></tr>
+            <tr><td><code>enableSorting</code></td><td>boolean</td><td>Enable column sorting.</td></tr>
+            <tr><td><code>tableHeight</code></td><td>string</td><td>Set table container height (e.g. <code>50vh</code>).</td></tr>
+            <tr><td><code>stickyHeader</code></td><td>boolean</td><td>Keep the header fixed when scrolling.</td></tr>
+            <tr><td><code>displayPaginator</code></td><td>boolean</td><td>Show pagination controls.</td></tr>
+            <tr><td><code>pageSize</code></td><td>number</td><td>Default page size for paginator.</td></tr>
+            <tr><td><code>pageSizeOptions</code></td><td>number[]</td><td>Page size choices in paginator.</td></tr>
+          </tbody>
+        </table>
       </div>
       <div>
         <h4>Outputs</h4>
-        <ul>
-          <li><code>view</code>: emits row data</li>
-          <li><code>edit</code>: emits row data</li>
-          <li><code>remove</code>: emits row data</li>
-          <li><code>selectionChange</code>: emits selected rows</li>
-          <li><code>rowPressed</code>: emits row data on row click</li>
-        </ul>
+        <table class="table-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>view</code></td><td>EventEmitter&lt;row&gt;</td><td>Emits the row when View is clicked.</td></tr>
+            <tr><td><code>edit</code></td><td>EventEmitter&lt;row&gt;</td><td>Emits the row when Edit is clicked.</td></tr>
+            <tr><td><code>remove</code></td><td>EventEmitter&lt;row&gt;</td><td>Emits the row when Delete is clicked.</td></tr>
+            <tr><td><code>selectionChange</code></td><td>EventEmitter&lt;row[]&gt;</td><td>Emits the array of selected rows.</td></tr>
+            <tr><td><code>scan</code></td><td>EventEmitter&lt;string&gt;</td><td>Emits the scan input string on scan submit/change.</td></tr>
+            <tr><td><code>rowPressed</code></td><td>EventEmitter&lt;row&gt;</td><td>Emits the row when the row is clicked.</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>

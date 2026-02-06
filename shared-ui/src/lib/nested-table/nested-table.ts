@@ -50,6 +50,12 @@ export class NestedTable implements OnChanges, AfterViewInit {
   @Input() displayNestedIndex = false;
   @Input() displayCheckbox = false;
   @Input() displayNestedCheckbox = false;
+  @Input() checkboxDisabled:
+    | boolean
+    | ((row: Record<string, unknown>) => boolean) = false;
+  @Input() nestedCheckboxDisabled:
+    | boolean
+    | ((row: Record<string, unknown>) => boolean) = false;
   @Input() enableSorting = false;
   @Input() enableNestedSorting = false;
   @Input() tableHeight?: string;
@@ -91,7 +97,7 @@ export class NestedTable implements OnChanges, AfterViewInit {
     if (changes['displayView'] || changes['displayEdit'] || changes['displayDelete']) {
       this.displayedColumns = this.buildDisplayedColumns();
     }
-    if (changes['displayCheckbox']) {
+    if (changes['displayCheckbox'] || changes['checkboxDisabled']) {
       this.displayedColumns = this.buildDisplayedColumns();
       this.selection.clear();
       this.emitSelection();
@@ -115,24 +121,50 @@ export class NestedTable implements OnChanges, AfterViewInit {
 
   toggleSelection(row: Record<string, unknown>, event: MatCheckboxChange): void {
     void event;
+    if (this.isCheckboxDisabled(row)) {
+      return;
+    }
     this.selection.toggle(row);
     this.emitSelection();
   }
 
   isAllSelected(): boolean {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numRows > 0 && numSelected === numRows;
+    const selectableRows = this.getSelectableRows();
+    const numRows = selectableRows.length;
+    if (numRows === 0) {
+      return false;
+    }
+    const numSelected = selectableRows.filter((row) => this.selection.isSelected(row)).length;
+    return numSelected === numRows;
   }
 
   masterToggle(event: MatCheckboxChange): void {
     void event;
+    const selectableRows = this.getSelectableRows();
+    if (selectableRows.length === 0) {
+      return;
+    }
     if (this.isAllSelected()) {
       this.selection.clear();
     } else {
-      this.dataSource.data.forEach((row) => this.selection.select(row));
+      this.selection.clear();
+      selectableRows.forEach((row) => this.selection.select(row));
     }
     this.emitSelection();
+  }
+
+  isCheckboxDisabled(row: Record<string, unknown>): boolean {
+    if (typeof this.checkboxDisabled === 'function') {
+      return this.checkboxDisabled(row);
+    }
+    return Boolean(this.checkboxDisabled);
+  }
+
+  isMasterDisabled(): boolean {
+    if (this.checkboxDisabled === true) {
+      return true;
+    }
+    return this.getSelectableRows().length === 0;
   }
 
   isExpanded(row: Record<string, unknown>): boolean {
@@ -393,6 +425,10 @@ export class NestedTable implements OnChanges, AfterViewInit {
 
   private emitSelection(): void {
     this.selectionChange.emit(this.selection.selected);
+  }
+
+  private getSelectableRows(): Record<string, unknown>[] {
+    return this.dataSource.data.filter((row) => !this.isCheckboxDisabled(row));
   }
 
   private keyTokens(value: string): string[] {

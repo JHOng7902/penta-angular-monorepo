@@ -1,18 +1,52 @@
 <div class="pt-ui-table" [style.height]="tableHeight">
-  <div class="pt-ui-table__header">
-    <div class="pt-ui-table__summary">
-      In Total there are ( {{ dataSource.data.length }} ) entries
-    </div>
-    <div class="pt-ui-table__tools">
-      <ng-content select="[table-tools]"></ng-content>
-    </div>
-  </div>
+  @if (displayHeader) {
+    @if (headerVariant === 'scan') {
+      <div class="pt-ui-table__header pt-ui-table__header--scan">
+        <div class="pt-ui-table__scan-group">
+          <pt-ui-input
+            class="pt-ui-table__scan-input"
+            labelPosition="hidden"
+            [placeholder]="scanPlaceholder"
+            [value]="scanValue"
+            [disabled]="scanDisabled"
+            [scanMode]="true"
+            [scanAutoFocus]="scanAutoFocus"
+            [scanDebounceMs]="scanDebounceMs"
+            [scanSubmitOnEnter]="scanSubmitOnEnter"
+            [scanClearOnSubmit]="scanClearOnSubmit"
+            [scanMaxLength]="scanMaxLength"
+            [blink]="scanBlink && !scanDisabled"
+            (valueChange)="onScanValueChange($event)"
+            (scanSubmit)="onScanSubmit($event)"
+          ></pt-ui-input>
+          @if (scanDisabled) {
+            <span class="pt-ui-table__scan-disabled">{{ scanDisabledMessage }}</span>
+          }
+          <div class="pt-ui-table__selection">
+            <span class="pt-ui-table__selection-count">{{ selectedCount }}</span>
+            <span class="pt-ui-table__selection-separator">/</span>
+            <span class="pt-ui-table__selection-total">{{ dataSource.data.length }}</span>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="pt-ui-table__header">
+        <div class="pt-ui-table__summary">
+          In Total there are ( {{ dataSource.data.length }} ) entries
+        </div>
+        <div class="pt-ui-table__tools">
+          <ng-content select="[table-tools]"></ng-content>
+        </div>
+      </div>
+    }
+  }
   <div class="pt-ui-table__content">
     <table
       mat-table
       [dataSource]="dataSource"
       class="pt-ui-table__table"
       matSort
+      [trackBy]="trackByRow"
       [matSortDisabled]="!enableSorting"
     >
       @if (displayCheckbox) {
@@ -21,6 +55,7 @@
             <mat-checkbox
               [checked]="isAllSelected()"
               [indeterminate]="selection.hasValue() && !isAllSelected()"
+              [disabled]="isMasterDisabled()"
               (change)="masterToggle()"
               (click)="$event.stopPropagation()"
             ></mat-checkbox>
@@ -28,6 +63,7 @@
           <td mat-cell *matCellDef="let row">
             <mat-checkbox
               [checked]="selection.isSelected(row)"
+              [disabled]="isCheckboxDisabled(row)"
               (change)="toggleRow(row)"
               (click)="$event.stopPropagation()"
             ></mat-checkbox>
@@ -81,7 +117,7 @@
         </ng-container>
       }
 
-      @for (column of normalizedColumns; track trackByKey($index, column)) {
+      @for (column of normalizedColumns; track trackByColumn($index, column)) {
         <ng-container [matColumnDef]="column.key">
           @if (enableSorting) {
             <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.key">
@@ -123,4 +159,3 @@
     ></mat-paginator>
   }
 </div>
-

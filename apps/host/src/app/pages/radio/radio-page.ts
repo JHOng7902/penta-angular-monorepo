@@ -20,13 +20,13 @@ export class RadioPage {
   lockRestricted = true;
 
   groupCodeSample = `<pt-ui-radio-group
-  label=\"Shift\"
-  [options]=\"groupOptions\"
-  [value]=\"selectedValue\"
-  [required]=\"requiredToggle\"
-  [disabled]=\"disabledToggle\"
-  [optionDisabled]=\"isOptionDisabled\"
-  (valueChange)=\"selectedValue = $event\"
+  label="Shift"
+  [options]="groupOptions"
+  [value]="selectedValue"
+  [required]="requiredToggle"
+  [disabled]="disabledToggle"
+  [optionDisabled]="isOptionDisabled"
+  (valueChange)="selectedValue = $event"
 ></pt-ui-radio-group>`;
 
   groupOptions: RadioGroupOption[] = [

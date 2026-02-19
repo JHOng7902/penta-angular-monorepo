@@ -1,11 +1,11 @@
 <div class="pt-ui-radio-group" [class.is-horizontal]="isHorizontal">
   @if (label) {
-    <label class="pt-ui-radio-group__label" [attr.id]="groupId">
+    <div class="pt-ui-radio-group__label" [attr.id]="groupId">
       {{ label }}
       @if (required) {
         <span class="pt-ui-radio-group__required">*</span>
       }
-    </label>
+    </div>
   }
   <mat-radio-group
     class="pt-ui-radio-group__options"

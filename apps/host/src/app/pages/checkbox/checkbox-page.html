@@ -1,0 +1,266 @@
+<main class="checkbox-page">
+  <header class="checkbox-page__hero">
+    <h2>Checkbox Component</h2>
+    <p>
+      The shared <strong>pt-ui-checkbox</strong> wraps Material's checkbox with
+      consistent styling and helpful inputs/outputs.
+    </p>
+  </header>
+
+  <section class="checkbox-page__section" id="import-use">
+    <h3>Import &amp; Use</h3>
+    <ol class="checkbox-page__steps">
+      <li>Import <code>CheckboxComponent</code> from the shared library.</li>
+      <li>Add it to the <code>imports</code> array of your standalone component.</li>
+      <li>Bind using <code>[checked]</code> + <code>(checkedChange)</code>.</li>
+    </ol>
+    <pre class="checkbox-page__code" ngNonBindable><code>import &#123; CheckboxComponent &#125; from '@penta/shared-ui';
+
+@Component(&#123;
+  standalone: true,
+  imports: [CheckboxComponent],
+&#125;)
+export class ExampleComponent &#123;&#125;
+
+&lt;pt-ui-checkbox
+  label="Accept terms"
+  [checked]="accepted"
+  (checkedChange)="accepted = $event"
+&gt;&lt;/pt-ui-checkbox&gt;</code></pre>
+  </section>
+
+  <section class="checkbox-page__section" id="basic">
+    <h3>Basic Usage</h3>
+    <p class="checkbox-page__desc">
+      A simple checkbox with two-way binding using <code>checked</code> and
+      <code>checkedChange</code>.
+    </p>
+    <div class="checkbox-page__row">
+      <pt-ui-checkbox
+        label="Enable notifications"
+        [checked]="basicChecked"
+        (checkedChange)="onBasicChanged($event)"
+      ></pt-ui-checkbox>
+      <div class="checkbox-page__notice">
+        <strong>Checked:</strong> {{ basicChecked }}
+      </div>
+    </div>
+    <pre class="checkbox-page__code" ngNonBindable><code>&lt;pt-ui-checkbox
+  label="Enable notifications"
+  [checked]="basicChecked"
+  (checkedChange)="basicChecked = $event"
+&gt;&lt;/pt-ui-checkbox&gt;</code></pre>
+  </section>
+
+  <section class="checkbox-page__section" id="states">
+    <h3>Checked + Indeterminate + Disabled</h3>
+    <p class="checkbox-page__desc">
+      Demonstrates the three common states: checked, indeterminate, and disabled.
+    </p>
+    <div class="checkbox-page__grid">
+      <pt-ui-checkbox label="Checked" [checked]="checkedValue"></pt-ui-checkbox>
+      <pt-ui-checkbox label="Indeterminate" [indeterminate]="indeterminateValue"></pt-ui-checkbox>
+      <pt-ui-checkbox label="Disabled" [disabled]="true" [checked]="disabledValue"></pt-ui-checkbox>
+    </div>
+    <pre class="checkbox-page__code" ngNonBindable><code>&lt;pt-ui-checkbox label="Checked" [checked]="true"&gt;&lt;/pt-ui-checkbox&gt;
+&lt;pt-ui-checkbox label="Indeterminate" [indeterminate]="true"&gt;&lt;/pt-ui-checkbox&gt;
+&lt;pt-ui-checkbox label="Disabled" [disabled]="true"&gt;&lt;/pt-ui-checkbox&gt;</code></pre>
+  </section>
+
+  <section class="checkbox-page__section" id="label-position">
+    <h3>Label Position</h3>
+    <p class="checkbox-page__desc">
+      Switch the label between left (<code>before</code>) and right (<code>after</code>).
+    </p>
+    <div class="checkbox-page__row">
+      <pt-ui-checkbox
+        label="Label before"
+        [checked]="labelPosition === 'before'"
+        (changed)="toggleLabelPosition($event)"
+      ></pt-ui-checkbox>
+      <pt-ui-checkbox
+        label="Sample checkbox"
+        [labelPosition]="labelPosition"
+        [checked]="true"
+      ></pt-ui-checkbox>
+    </div>
+    <pre class="checkbox-page__code" ngNonBindable><code>&lt;pt-ui-checkbox
+  label="Sample checkbox"
+  labelPosition="before"
+  [checked]="true"
+&gt;&lt;/pt-ui-checkbox&gt;</code></pre>
+  </section>
+
+  <section class="checkbox-page__section" id="group">
+    <h3>Select All Group</h3>
+    <p class="checkbox-page__desc">
+      Demonstrates <code>checked</code> + <code>indeterminate</code> + disabled items.
+    </p>
+    <div class="checkbox-page__stack">
+      <pt-ui-checkbox
+        label="Select All"
+        [checked]="allChecked"
+        [indeterminate]="allIndeterminate"
+        (changed)="toggleAll($event)"
+      ></pt-ui-checkbox>
+      <div class="checkbox-page__divider"></div>
+      @for (item of groupItems; track item.label) {
+        <pt-ui-checkbox
+          [label]="item.label"
+          [checked]="item.checked"
+          [disabled]="!!item.disabled"
+          (changed)="onItemChange($index, $event)"
+        ></pt-ui-checkbox>
+      }
+    </div>
+    <pre class="checkbox-page__code" ngNonBindable><code>&lt;pt-ui-checkbox
+  label="Select All"
+  [checked]="allChecked"
+  [indeterminate]="allIndeterminate"
+  (changed)="toggleAll($event)"
+&gt;&lt;/pt-ui-checkbox&gt;</code></pre>
+  </section>
+
+  <section class="checkbox-page__section" id="options">
+    <h3>Extra Options</h3>
+    <p class="checkbox-page__desc">
+      Configure ripple and required state, then apply them to a checkbox.
+    </p>
+    <div class="checkbox-page__notice">
+      <strong>Current settings:</strong>
+      Ripple {{ disableRipple ? 'Off' : 'On' }} |
+      Required {{ required ? 'On' : 'Off' }}
+    </div>
+    <div class="checkbox-page__grid">
+      <pt-ui-checkbox
+        label="Disable ripple"
+        [checked]="disableRipple"
+        (checkedChange)="disableRipple = $event"
+      ></pt-ui-checkbox>
+      <pt-ui-checkbox
+        label="Required"
+        [checked]="required"
+        (checkedChange)="required = $event"
+      ></pt-ui-checkbox>
+    </div>
+    <div class="checkbox-page__row">
+      <pt-ui-checkbox
+        [label]="required ? 'Option (required)' : 'Option'"
+        [disableRipple]="disableRipple"
+        [required]="required"
+        (changed)="onChanged($event)"
+      ></pt-ui-checkbox>
+    </div>
+    <pre class="checkbox-page__code" ngNonBindable><code>&lt;pt-ui-checkbox
+  label="Option"
+  [disableRipple]="true"
+  [required]="true"
+&gt;&lt;/pt-ui-checkbox&gt;</code></pre>
+  </section>
+
+  <section class="checkbox-page__section" id="events">
+    <h3>Events</h3>
+    <p class="checkbox-page__desc">
+      Listen to <code>checkedChange</code>, <code>changed</code>, or <code>pressed</code>.
+    </p>
+    <div class="checkbox-page__row">
+      <pt-ui-checkbox
+        label="Event demo"
+        [checked]="basicChecked"
+        (checkedChange)="onBasicChanged($event)"
+        (changed)="onChanged($event)"
+        (pressed)="lastEvent = 'Pressed checkbox'"
+      ></pt-ui-checkbox>
+      <div class="checkbox-page__notice">
+        <strong>Last event:</strong> {{ lastEvent }}
+      </div>
+    </div>
+    <pre class="checkbox-page__code" ngNonBindable><code>&lt;pt-ui-checkbox
+  label="Event demo"
+  (checkedChange)="onChecked($event)"
+  (changed)="onChanged($event)"
+  (pressed)="onPressed($event)"
+&gt;&lt;/pt-ui-checkbox&gt;</code></pre>
+  </section>
+
+  <section class="checkbox-page__section" id="customize">
+    <h3>Customize Styles</h3>
+    <p class="checkbox-page__desc">
+      Wrap checkboxes in a class and override styles locally. For component-scoped
+      styles, use <code>::ng-deep</code> or place overrides in a global stylesheet.
+    </p>
+    <div class="checkbox-page__stack checkbox-page__custom-theme">
+      <pt-ui-checkbox label="Large checkbox" [checked]="true"></pt-ui-checkbox>
+      <pt-ui-checkbox label="Accent label" [checked]="false"></pt-ui-checkbox>
+    </div>
+    <pre class="checkbox-page__code" ngNonBindable><code>&lt;div class="checkbox-page__custom-theme"&gt;
+  &lt;pt-ui-checkbox label="Large checkbox" [checked]="true"&gt;&lt;/pt-ui-checkbox&gt;
+  &lt;pt-ui-checkbox label="Accent label"&gt;&lt;/pt-ui-checkbox&gt;
+&lt;/div&gt;
+
+&#58;host &#58;:ng-deep .checkbox-page__custom-theme .pt-ui-checkbox &#123;
+  color: #0f172a;
+&#125;
+
+&#58;host &#58;:ng-deep .checkbox-page__custom-theme .pt-ui-checkbox &#58;:ng-deep .mdc-checkbox &#123;
+  transform: scale(1.15);
+&#125;
+
+&#58;host &#58;:ng-deep .checkbox-page__custom-theme .pt-ui-checkbox__label &#123;
+  color: #ea580c;
+&#125;</code></pre>
+  </section>
+
+  <section class="checkbox-page__section" id="api">
+    <h3>Inputs &amp; Outputs</h3>
+    <div class="checkbox-page__api">
+      <div>
+        <h4>Inputs</h4>
+        <table class="checkbox-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>label</code></td><td>string</td><td>Text shown next to the checkbox.</td></tr>
+            <tr><td><code>checked</code></td><td>boolean</td><td>Controls the checked state.</td></tr>
+            <tr><td><code>indeterminate</code></td><td>boolean</td><td>Tri-state visual when partially selected.</td></tr>
+            <tr><td><code>disabled</code></td><td>boolean</td><td>Disable interaction.</td></tr>
+            <tr><td><code>required</code></td><td>boolean</td><td>Marks the checkbox as required.</td></tr>
+            <tr><td><code>labelPosition</code></td><td><code>before</code> | <code>after</code></td><td>Label placement relative to the box.</td></tr>
+            <tr><td><code>name</code></td><td>string</td><td>Native name attribute.</td></tr>
+            <tr><td><code>value</code></td><td>string</td><td>Native value attribute.</td></tr>
+            <tr><td><code>id</code></td><td>string</td><td>Custom id attribute.</td></tr>
+            <tr><td><code>tabIndex</code></td><td>number</td><td>Custom tab index.</td></tr>
+            <tr><td><code>disableRipple</code></td><td>boolean</td><td>Disable Material ripple effect.</td></tr>
+            <tr><td><code>ariaLabel</code></td><td>string</td><td>Accessibility label.</td></tr>
+            <tr><td><code>ariaLabelledby</code></td><td>string</td><td>Accessibility labelled-by reference.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>Outputs</h4>
+        <table class="checkbox-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>checkedChange</code></td><td>EventEmitter&lt;boolean&gt;</td><td>Emits when checked state changes.</td></tr>
+            <tr><td><code>changed</code></td><td>EventEmitter&lt;MatCheckboxChange&gt;</td><td>Emits Material change payload.</td></tr>
+            <tr><td><code>indeterminateChanged</code></td><td>EventEmitter&lt;boolean&gt;</td><td>Emits when indeterminate changes.</td></tr>
+            <tr><td><code>pressed</code></td><td>EventEmitter&lt;MouseEvent&gt;</td><td>Emits on click.</td></tr>
+            <tr><td><code>focused</code></td><td>EventEmitter&lt;FocusEvent&gt;</td><td>Emits on focus.</td></tr>
+            <tr><td><code>blurred</code></td><td>EventEmitter&lt;FocusEvent&gt;</td><td>Emits on blur.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>

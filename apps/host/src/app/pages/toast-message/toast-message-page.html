@@ -191,6 +191,48 @@ toastService.show('success', 'Profile updated');
     </div>
   </section>
 
+  <section class="toast-page__section" id="customize">
+    <h3>Customize Styles</h3>
+    <p class="toast-page__desc">
+      Wrap the toast outlet in a class and override the toast styles locally.
+      For component-scoped styles, use <code>::ng-deep</code> or move overrides to a global stylesheet.
+    </p>
+    <div class="toast-page__notice toast-page__custom-theme">
+      <strong>Example override:</strong> soften background, add blur, and change accent color.
+    </div>
+    <div class="toast-page__actions">
+      <pt-ui-button
+        buttonText="Show Themed Toast"
+        color="info"
+        (pressed)="showCustomToast('info')"
+      ></pt-ui-button>
+      <pt-ui-button
+        variant="outline"
+        buttonText="Clear Preview"
+        (pressed)="clearCustomToasts()"
+      ></pt-ui-button>
+    </div>
+    <div class="toast-page__custom-preview toast-page__custom-theme">
+      <pt-ui-toast-message
+        [toasts]="customPreviewToasts"
+        position="top-right"
+      ></pt-ui-toast-message>
+    </div>
+    <pre class="toast-page__code" ngNonBindable><code>&lt;div class="toast-page__custom-theme"&gt;
+  &lt;pt-ui-toast-message [useService]="true"&gt;&lt;/pt-ui-toast-message&gt;
+&lt;/div&gt;
+
+&#58;host &#58;:ng-deep .toast-page__custom-theme .pt-ui-toast__item &#123;
+  background: rgba(15, 23, 42, 0.85);
+  color: #e2e8f0;
+  backdrop-filter: blur(8px);
+&#125;
+
+&#58;host &#58;:ng-deep .toast-page__custom-theme .pt-ui-toast__progress &#123;
+  background: #22d3ee;
+&#125;</code></pre>
+  </section>
+
   <section class="toast-page__section" id="api">
     <h3>Inputs &amp; Outputs</h3>
     <p class="toast-page__desc">

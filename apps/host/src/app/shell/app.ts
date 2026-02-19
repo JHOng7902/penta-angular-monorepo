@@ -1,13 +1,20 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
+import { AppHeader } from '../core/header/app-header';
+import { SideNav } from '../core/side-nav/side-nav';
 
 @Component({
   standalone: true,
-  imports: [RouterLink, RouterOutlet],
+  imports: [RouterOutlet, AppHeader, SideNav],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
-  protected title = 'host';
+  public title = 'host';
+  public isSidebarCollapsed = false;
+
+  public onToggleSidebar(): void {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+  }
 }

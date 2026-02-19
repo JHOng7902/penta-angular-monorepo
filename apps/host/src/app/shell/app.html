@@ -1,19 +1,12 @@
-<div class="app-shell">
-  <header class="app-header">
-    <div class="app-header__brand">
-      <span class="app-header__badge">Penta UI</span>
-      <h1>Shared Components Lab</h1>
-    </div>
-    <nav class="app-header__nav">
-      <a routerLink="/">Shared UI</a>
-      <a routerLink="/button">Buttons</a>
-      <a routerLink="/input">Inputs</a>
-      <a routerLink="/toast">Toasts</a>
-      <a routerLink="/table">Tables</a>
-      <a routerLink="/table/nested">Nested Tables</a>
-    </nav>
-  </header>
-  <main class="app-main">
-    <router-outlet></router-outlet>
-  </main>
+<div class="app-shell" [class.is-collapsed]="isSidebarCollapsed">
+  <app-header
+    [isSidebarCollapsed]="isSidebarCollapsed"
+    (toggleSidebar)="onToggleSidebar()"
+  ></app-header>
+  <div class="app-layout">
+    <app-side-nav></app-side-nav>
+    <main class="app-main">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 </div>

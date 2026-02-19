@@ -143,6 +143,31 @@ export class ExampleComponent &#123;&#125;
 &lt;pt-ui-button buttonText="Danger" color="danger"&gt;&lt;/pt-ui-button&gt;</code></pre>
     </section>
 
+    <section class="button-page__section" id="customize">
+        <h3>Customize Styles</h3>
+    <p class="button-page__desc">
+      If the default design isn't a fit, wrap buttons in a class and override the
+      CSS variables or styles locally. For component-scoped styles, use
+      <code>::ng-deep</code> or move the overrides to a global stylesheet.
+    </p>
+    <div class="button-row button-page__custom-theme">
+      <pt-ui-button buttonText="Brand Action" content="text-icon" icon="auto_awesome"></pt-ui-button>
+      <pt-ui-button buttonText="Secondary" variant="outline"></pt-ui-button>
+      <pt-ui-button buttonText="Ghost" variant="ghost"></pt-ui-button>
+    </div>
+    <pre class="button-page__code"><code [innerText]="customizeCodeSample"></code></pre>
+
+    <p class="button-page__desc">
+      Another example with a darker, more minimal look:
+    </p>
+    <div class="button-row button-page__custom-theme-alt">
+      <pt-ui-button buttonText="Night Action" content="text-icon" icon="nightlight"></pt-ui-button>
+      <pt-ui-button buttonText="Outline" variant="outline"></pt-ui-button>
+      <pt-ui-button buttonText="Ghost" variant="ghost"></pt-ui-button>
+    </div>
+    <pre class="button-page__code"><code [innerText]="customizeCodeSampleAlt"></code></pre>
+    </section>
+
     <section class="button-page__section" id="sizes">
         <h3>Sizes</h3>
     <p class="button-page__desc">

@@ -1,0 +1,26 @@
+<aside class="app-sidebar">
+  <div class="app-sidebar__panel">
+    <div class="app-sidebar__header">
+      <a
+        class="app-sidebar__home"
+        routerLink="/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        data-short="UI"
+      >
+        Shared UI
+      </a>
+      <span class="app-sidebar__caption">Component Library</span>
+    </div>
+    <nav class="app-sidebar__nav">
+      <a routerLink="/button" routerLinkActive="is-active" data-short="BT">Buttons</a>
+      <a routerLink="/checkbox" routerLinkActive="is-active" data-short="CB">Checkboxes</a>
+      <a routerLink="/input" routerLinkActive="is-active" data-short="IN">Inputs</a>
+      <a routerLink="/radio" routerLinkActive="is-active" data-short="RD">Radios</a>
+      <a routerLink="/select" routerLinkActive="is-active" data-short="SL">Selects</a>
+      <a routerLink="/toast" routerLinkActive="is-active" data-short="TS">Toasts</a>
+      <a routerLink="/table" routerLinkActive="is-active" data-short="TB">Tables</a>
+      <a routerLink="/nested-table" routerLinkActive="is-active" data-short="NT">Nested Tables</a>
+    </nav>
+  </div>
+</aside>

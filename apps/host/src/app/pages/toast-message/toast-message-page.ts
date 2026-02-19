@@ -4,6 +4,7 @@ import {
   Button,
   ToastMessage,
   ToastMessageService,
+  ToastMessageItem,
   ToastMessageType,
 } from '@penta/shared-ui';
 
@@ -58,6 +59,8 @@ export class ToastMessagePage {
     system: 4500,
   };
   maxToasts = 6;
+  customPreviewToasts: ToastMessageItem[] = [];
+  private customToastTimeouts = new Map<string, number>();
 
   private toastService = inject(ToastMessageService);
 
@@ -72,6 +75,31 @@ export class ToastMessagePage {
 
   showTypeToast(type: ToastMessageType): void {
     this.showToast(type);
+  }
+
+  showCustomToast(type: ToastMessageType = 'info'): void {
+    const toast: ToastMessageItem = {
+      type,
+      message: 'Custom themed preview toast.',
+      durationMs: 0,
+      closable: true,
+    };
+    this.customPreviewToasts = [toast, ...this.customPreviewToasts].slice(0, 3);
+  }
+
+  clearCustomToasts(): void {
+    this.customPreviewToasts = [];
+    this.customToastTimeouts.forEach((handle) => clearTimeout(handle));
+    this.customToastTimeouts.clear();
+  }
+
+  private removeCustomToast(id: string): void {
+    const handle = this.customToastTimeouts.get(id);
+    if (handle !== undefined) {
+      clearTimeout(handle);
+      this.customToastTimeouts.delete(id);
+    }
+    this.customPreviewToasts = this.customPreviewToasts.filter((toast) => toast.id !== id);
   }
 
   clearToasts(): void {

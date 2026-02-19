@@ -77,32 +77,6 @@ export class ExampleComponent &#123;&#125;
     </div>
   </section>
 
-  <section class="table-page__section" id="header-tools">
-    <h3>Header Tools Slot</h3>
-    <p class="table-page__desc">
-      You can inject your own buttons or inputs into the table header (right side)
-      by placing elements with the <code>table-tools</code> attribute inside
-      <code>&lt;pt-ui-table&gt;</code>.
-    </p>
-    <pre class="table-page__code" ngNonBindable><code>&lt;pt-ui-table [data]="response.ResponseData"&gt;
-  &lt;div table-tools&gt;
-    &lt;input type="text" placeholder="Search..." /&gt;
-    &lt;button type="button"&gt;Export&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/pt-ui-table&gt;</code></pre>
-    <pt-ui-table
-      [data]="response.ResponseData"
-      [columns]="columns"
-      [displayIndex]="true"
-      [enableSorting]="true"
-    >
-      <div table-tools class="table-page__tools">
-        <pt-ui-input type="text" placeholder="Search..." />
-        <pt-ui-button type="button" size="sm"  buttonText="Export" color="info"></pt-ui-button>
-      </div>
-    </pt-ui-table>
-  </section>
-
   <section class="table-page__section" id="index-column">
     <h3>Index Column</h3>
     <p class="table-page__desc">
@@ -141,6 +115,32 @@ export class ExampleComponent &#123;&#125;
       [displayCheckbox]="true"
       [checkboxDisabled]="isCheckboxDisabled"
     ></pt-ui-table>
+  </section>
+
+  <section class="table-page__section" id="header-tools">
+    <h3>Header Tools Slot</h3>
+    <p class="table-page__desc">
+      You can inject your own buttons or inputs into the table header (right side)
+      by placing elements with the <code>table-tools</code> attribute inside
+      <code>&lt;pt-ui-table&gt;</code>.
+    </p>
+    <pre class="table-page__code" ngNonBindable><code>&lt;pt-ui-table [data]="response.ResponseData"&gt;
+  &lt;div table-tools&gt;
+    &lt;input type="text" placeholder="Search..." /&gt;
+    &lt;button type="button"&gt;Export&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/pt-ui-table&gt;</code></pre>
+    <pt-ui-table
+      [data]="response.ResponseData"
+      [columns]="columns"
+      [displayIndex]="true"
+      [enableSorting]="true"
+    >
+      <div table-tools class="table-page__tools">
+        <pt-ui-input type="text" placeholder="Search..." />
+        <pt-ui-button type="button" size="sm"  buttonText="Export" color="info"></pt-ui-button>
+      </div>
+    </pt-ui-table>
   </section>
 
   <section class="table-page__section" id="hide-header">
@@ -217,6 +217,87 @@ export class ExampleComponent &#123;&#125;
     ></pt-ui-table>
   </section>
 
+  <section class="table-page__section" id="status-badges-default">
+    <h3>Default Status Badges</h3>
+    <p class="table-page__desc">
+      These badges are generated automatically based on the status text.
+      The table lists the accepted status values that map to each default badge.
+    </p>
+    <pt-ui-table
+      [data]="defaultStatusRows"
+      [columns]="defaultStatusColumns"
+      [displayHeader]="false"
+    ></pt-ui-table>
+  </section>
+
+  <section class="table-page__section" id="status-badges-overrides">
+    <h3>Override with Service</h3>
+    <p class="table-page__desc">
+      Use a service-backed <code>statusResolver</code> to control badge classes and icons.
+      This lets you centralize status rules for multiple tables.
+    </p>
+    <div class="table-page__status-demo">
+      <pt-ui-table
+        [data]="response.ResponseData"
+        [columns]="columns"
+        [statusResolver]="statusResolver"
+      ></pt-ui-table>
+    </div>
+    <pre class="table-page__code" ngNonBindable><code>&lt;pt-ui-table
+  [data]="response.ResponseData"
+  [statusResolver]="statusResolver"
+&gt;&lt;/pt-ui-table&gt;
+
+statusResolver = (value: string) =&gt; this.statusBadgeService.resolve(value);</code></pre>
+    <pre class="table-page__code" ngNonBindable><code>import &#123; Injectable &#125; from '@angular/core';
+import &#123; StatusOverride &#125; from '@penta/shared-ui';
+
+@Injectable(&#123; providedIn: 'root' &#125;)
+export class StatusBadgeService &#123;
+  resolve(status: string): StatusOverride | undefined &#123;
+    switch (String(status).toLowerCase()) &#123;
+      case 'completed':
+        return &#123; class: 'status-custom-success', icon: 'verified' &#125;;
+      case 'processing':
+      case 'in progress':
+        return &#123; class: 'status-custom-progress', icon: 'autorenew' &#125;;
+      case 'scrapped':
+        return &#123; class: 'status-custom-danger', icon: 'report' &#125;;
+      default:
+        return undefined;
+    &#125;
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section class="table-page__section" id="customize">
+    <h3>Customize Styles</h3>
+    <p class="table-page__desc">
+      Wrap the table in a class and override styles locally. For component-scoped
+      styles, use <code>::ng-deep</code> or move overrides to a global stylesheet.
+    </p>
+    <div class="table-page__custom-theme">
+      <pt-ui-table
+        [data]="response.ResponseData"
+        [columns]="columns"
+        [displayIndex]="true"
+      ></pt-ui-table>
+    </div>
+    <pre class="table-page__code" ngNonBindable><code>&lt;div class="table-page__custom-theme"&gt;
+  &lt;pt-ui-table [data]="response.ResponseData"&gt;&lt;/pt-ui-table&gt;
+&lt;/div&gt;
+
+&#58;host &#58;:ng-deep .table-page__custom-theme .pt-ui-table__table th,
+&#58;host &#58;:ng-deep .table-page__custom-theme .pt-ui-table__table .mat-mdc-header-cell &#123;
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+&#125;
+
+&#58;host &#58;:ng-deep .table-page__custom-theme .pt-ui-table__table tr:nth-child(even) td &#123;
+  background: #ecfeff !important;
+&#125;</code></pre>
+  </section>
+
   <section class="table-page__section" id="features">
     <h3>Features</h3>
     <ul class="table-page__list">
@@ -279,6 +360,8 @@ export class ExampleComponent &#123;&#125;
             <tr><td><code>displayPaginator</code></td><td>boolean</td><td>Show pagination controls.</td></tr>
             <tr><td><code>pageSize</code></td><td>number</td><td>Default page size for paginator.</td></tr>
             <tr><td><code>pageSizeOptions</code></td><td>number[]</td><td>Page size choices in paginator.</td></tr>
+            <tr><td><code>statusConfig</code></td><td>Record&lt;string, &#123; class?: string; icon?: string &#125;&gt;</td><td>Override status badge class/icon by status label.</td></tr>
+            <tr><td><code>statusResolver</code></td><td>(value, row, key?) =&gt; &#123; class?: string; icon?: string &#125; | string</td><td>Resolve status badge class/icon via a callback (service-friendly).</td></tr>
           </tbody>
         </table>
       </div>

@@ -1,0 +1,333 @@
+<main class="select-page">
+  <header class="select-page__hero">
+    <h2>Select Component</h2>
+    <p>
+      The shared <strong>pt-ui-select</strong> supports single or multiple selection,
+      optional filtering, label positioning, clear action, and disabled options.
+    </p>
+  </header>
+
+  <section class="select-page__section" id="import-use">
+    <h3>Import &amp; Use</h3>
+    <ol class="select-page__steps">
+      <li>Import <code>SelectComponent</code> from the shared library.</li>
+      <li>Add it to the <code>imports</code> array of your standalone component.</li>
+      <li>Bind using <code>[(value)]</code> or <code>[value]</code> + <code>(valueChange)</code>.</li>
+    </ol>
+    <pre class="select-page__code" ngNonBindable><code>import &#123; SelectComponent &#125; from '@penta/shared-ui';
+
+@Component(&#123;
+  standalone: true,
+  imports: [SelectComponent],
+&#125;)
+export class ExampleComponent &#123;&#125;
+
+&lt;pt-ui-select label="Station" [options]="options" [(value)]="station"&gt;&lt;/pt-ui-select&gt;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="basic">
+    <h3>Single Select</h3>
+    <p class="select-page__desc">
+      Use the default mode for a single selection with a placeholder.
+    </p>
+    <pt-ui-select
+      label="Basic Select"
+      placeholder="Pick one"
+      [options]="options"
+      [(value)]="basicValue"
+    ></pt-ui-select>
+    <div class="select-page__notice">
+      <strong>Selected:</strong> {{ basicValue || '-' }}
+    </div>
+    <pre class="select-page__code" ngNonBindable><code>&lt;pt-ui-select
+  label="Basic Select"
+  [options]="options"
+  [(value)]="basicValue"
+&gt;&lt;/pt-ui-select&gt;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="multiple">
+    <h3>Multiple Select</h3>
+    <p class="select-page__desc">
+      Enable <code>multiple</code> to select more than one option.
+    </p>
+    <pt-ui-select
+      label="Multi Select"
+      [options]="options"
+      [multiple]="true"
+      [showClear]="true"
+      [(value)]="multiValue"
+    ></pt-ui-select>
+    <div class="select-page__notice">
+      <strong>Selected:</strong>
+      {{ multiValue.length ? multiValue.join(', ') : '-' }}
+    </div>
+    <pre class="select-page__code" ngNonBindable><code>&lt;pt-ui-select
+  [options]="options"
+  [multiple]="true"
+  [(value)]="multiValue"
+&gt;&lt;/pt-ui-select&gt;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="filter">
+    <h3>Filter Input</h3>
+    <p class="select-page__desc">
+      Set <code>showFilter</code> to render an input for filtering the option list.
+    </p>
+    <pt-ui-select
+      label="Filterable Select"
+      [options]="options"
+      [showFilter]="true"
+      placeholder="Search options"
+      [(value)]="filterValue"
+    ></pt-ui-select>
+    <div class="select-page__notice">
+      <strong>Selected:</strong> {{ filterValue || '-' }}
+    </div>
+    <pre class="select-page__code" ngNonBindable><code>&lt;pt-ui-select
+  [options]="options"
+  [showFilter]="true"
+  [(value)]="filterValue"
+&gt;&lt;/pt-ui-select&gt;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="no-description">
+    <h3>Option Without Description</h3>
+    <p class="select-page__desc">
+      Options without <code>description</code> only render the label row.
+    </p>
+    <pt-ui-select
+      label="Label-only Option"
+      [options]="options"
+      placeholder="Choose Delta"
+      [(value)]="basicValue"
+    ></pt-ui-select>
+    <div class="select-page__notice">
+      <strong>Selected:</strong> {{ basicValue || '-' }}
+    </div>
+    <pre class="select-page__code" ngNonBindable><code>// Delta has no description
+&lt;pt-ui-select [options]="options"&gt;&lt;/pt-ui-select&gt;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="label-positions">
+    <h3>Label Positions</h3>
+    <p class="select-page__desc">
+      Control label placement with <code>labelPosition</code>: <code>top</code>,
+      <code>left</code>, or <code>hidden</code>.
+    </p>
+    <div class="select-page__grid">
+      <pt-ui-select
+        label="Top Label"
+        labelPosition="top"
+        [options]="options"
+        [(value)]="basicValue"
+      ></pt-ui-select>
+      <pt-ui-select
+        label="Left Label"
+        labelPosition="left"
+        [options]="options"
+        [(value)]="leftLabelValue"
+      ></pt-ui-select>
+      <pt-ui-select
+        label="Hidden Label"
+        labelPosition="hidden"
+        placeholder="No label shown"
+        [options]="options"
+        [(value)]="hiddenLabelValue"
+      ></pt-ui-select>
+    </div>
+    <pre class="select-page__code" ngNonBindable><code>&lt;pt-ui-select label="Left Label" labelPosition="left"&gt;&lt;/pt-ui-select&gt;
+&lt;pt-ui-select labelPosition="hidden" placeholder="No label"&gt;&lt;/pt-ui-select&gt;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="required">
+    <h3>Required Indicator</h3>
+    <p class="select-page__desc">
+      Set <code>required</code> to display the red asterisk on the label.
+    </p>
+    <pt-ui-select
+      label="Required Select"
+      [required]="true"
+      [options]="options"
+      [(value)]="requiredValue"
+    ></pt-ui-select>
+    <pre class="select-page__code" ngNonBindable><code>&lt;pt-ui-select label="Required" [required]="true"&gt;&lt;/pt-ui-select&gt;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="disabled">
+    <h3>Disabled State</h3>
+    <p class="select-page__desc">
+      Bind <code>disabled</code> to any condition. Toggle below to see it update.
+    </p>
+    <label class="select-page__toggle">
+      <input type="checkbox" [checked]="disabledToggle" (change)="toggleDisabled($event)" />
+      Disable select
+    </label>
+    <pt-ui-select
+      label="Conditionally Disabled"
+      [options]="options"
+      [disabled]="disabledToggle"
+      [(value)]="disabledValue"
+    ></pt-ui-select>
+    <pre class="select-page__code" ngNonBindable><code>&lt;pt-ui-select [disabled]="isLocked"&gt;&lt;/pt-ui-select&gt;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="clear">
+    <h3>Clear Action</h3>
+    <p class="select-page__desc">
+      Enable <code>showClear</code> to show a clear icon when a value is selected.
+    </p>
+    <pt-ui-select
+      label="Clearable Select"
+      [options]="options"
+      [showClear]="true"
+      [(value)]="clearValue"
+    ></pt-ui-select>
+    <pre class="select-page__code" ngNonBindable><code>&lt;pt-ui-select [showClear]="true"&gt;&lt;/pt-ui-select&gt;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="chips">
+    <h3>Selected As Chips</h3>
+    <p class="select-page__desc">
+      Set <code>displayAsChips</code> to render the selected items as chips in the trigger.
+    </p>
+    <label class="select-page__toggle">
+      <input type="checkbox" [checked]="chipsToggle" (change)="chipsToggle = !chipsToggle" />
+      Display selections as chips
+    </label>
+    <pt-ui-select
+      label="Chip Select"
+      [options]="options"
+      [multiple]="true"
+      [displayAsChips]="chipsToggle"
+      [(value)]="chipValue"
+    ></pt-ui-select>
+    <div class="select-page__notice">
+      <strong>Selected:</strong>
+      {{ chipValue.length ? chipValue.join(', ') : '-' }}
+    </div>
+    <pre class="select-page__code" ngNonBindable><code>&lt;pt-ui-select
+  [options]="options"
+  [multiple]="true"
+  [displayAsChips]="true"
+&gt;&lt;/pt-ui-select&gt;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="option-disabled">
+    <h3>Disabled Options</h3>
+    <p class="select-page__desc">
+      Options can be disabled via the option data or a conditional callback.
+    </p>
+    <label class="select-page__toggle">
+      <input type="checkbox" [checked]="lockRestricted" (change)="toggleRestricted($event)" />
+      Disable "Restricted" option
+    </label>
+    <pt-ui-select
+      label="Options With Disabled States"
+      [options]="options"
+      [optionDisabled]="optionDisabled"
+      [showFilter]="true"
+      [(value)]="basicValue"
+    ></pt-ui-select>
+    <pre class="select-page__code" ngNonBindable><code>&lt;pt-ui-select
+  [options]="options"
+  [optionDisabled]="optionDisabled"
+&gt;&lt;/pt-ui-select&gt;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="customize">
+    <h3>Customize Styles</h3>
+    <p class="select-page__desc">
+      Wrap selects in a class and override styles locally. For component-scoped
+      styles, use <code>::ng-deep</code> or move overrides to a global stylesheet.
+    </p>
+    <div class="select-page__grid select-page__custom-theme">
+      <pt-ui-select
+        label="Branded Select"
+        [options]="options"
+        [showFilter]="true"
+        [showClear]="true"
+        panelClass="select-page__panel-theme"
+      ></pt-ui-select>
+    </div>
+    <pre class="select-page__code" ngNonBindable><code>&lt;div class="select-page__custom-theme"&gt;
+  &lt;pt-ui-select label="Branded Select" [options]="options" panelClass="select-page__panel-theme"&gt;&lt;/pt-ui-select&gt;
+&lt;/div&gt;
+
+&#58;host &#58;:ng-deep .select-page__custom-theme .pt-ui-select__field .mat-mdc-select-trigger &#123;
+  border-color: #14b8a6 !important;
+  background: #f0fdfa !important;
+&#125;
+
+&#58;host &#58;:ng-deep .select-page__custom-theme .pt-ui-select__value &#123;
+  color: #0f766e;
+&#125;
+
+&#58;host &#58;:ng-deep .select-page__custom-theme .mat-mdc-select-arrow &#123;
+  color: #0f766e;
+&#125;
+
+&#58;host &#58;:ng-deep .select-page__panel-theme .pt-ui-select__filter-wrap &#123;
+  background: #ecfeff;
+  border-color: rgba(20, 184, 166, 0.5);
+&#125;
+
+&#58;host &#58;:ng-deep .select-page__panel-theme .mat-mdc-option.mat-mdc-option-selected &#123;
+  background: rgba(20, 184, 166, 0.16);
+&#125;</code></pre>
+  </section>
+
+  <section class="select-page__section" id="api">
+    <h3>Inputs &amp; Outputs</h3>
+    <div class="select-page__api">
+      <div>
+        <h4>Inputs</h4>
+        <table class="select-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>label</code></td><td>string</td><td>Label text shown above/left of the select.</td></tr>
+            <tr><td><code>placeholder</code></td><td>string</td><td>Placeholder text shown when no selection.</td></tr>
+            <tr><td><code>options</code></td><td><code>SelectOption[]</code></td><td>Option list with label/value/disabled.</td></tr>
+            <tr><td><code>value</code></td><td>unknown | unknown[]</td><td>Current selected value(s).</td></tr>
+            <tr><td><code>multiple</code></td><td>boolean</td><td>Enable multi-select.</td></tr>
+            <tr><td><code>showFilter</code></td><td>boolean</td><td>Show filter input within the dropdown.</td></tr>
+            <tr><td><code>filterPlaceholder</code></td><td>string</td><td>Placeholder for filter input.</td></tr>
+            <tr><td><code>labelPosition</code></td><td><code>top</code> | <code>left</code> | <code>hidden</code></td><td>Controls label placement.</td></tr>
+            <tr><td><code>required</code></td><td>boolean</td><td>Shows required asterisk on the label.</td></tr>
+            <tr><td><code>disabled</code></td><td>boolean</td><td>Disables the select.</td></tr>
+            <tr><td><code>showClear</code></td><td>boolean</td><td>Show clear icon when a value exists.</td></tr>
+            <tr><td><code>displayAsChips</code></td><td>boolean</td><td>Render selected values as chips.</td></tr>
+            <tr><td><code>chipRemovable</code></td><td>boolean</td><td>Show remove icon on chips.</td></tr>
+            <tr><td><code>panelClass</code></td><td>string | string[]</td><td>Add custom class(es) to the dropdown panel.</td></tr>
+            <tr><td><code>optionDisabled</code></td><td>boolean | ((option) =&gt; boolean)</td><td>Disable options conditionally.</td></tr>
+            <tr><td><code>compareWith</code></td><td>(a, b) =&gt; boolean</td><td>Custom value comparison for objects.</td></tr>
+            <tr><td><code>id</code></td><td>string</td><td>Custom id for the control.</td></tr>
+            <tr><td><code>name</code></td><td>string</td><td>Custom name attribute for forms.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>Outputs</h4>
+        <table class="select-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>valueChange</code></td><td>EventEmitter&lt;unknown | unknown[]&gt;</td><td>Emits when selection changes.</td></tr>
+            <tr><td><code>cleared</code></td><td>EventEmitter&lt;void&gt;</td><td>Emits when clear icon is clicked.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>

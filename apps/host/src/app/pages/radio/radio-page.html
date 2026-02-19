@@ -1,0 +1,269 @@
+<main class="radio-page">
+  <header class="radio-page__hero">
+    <h2>Radio Component</h2>
+    <p>
+      Use <strong>pt-ui-radio</strong> for a single yes/no choice. Use
+      <strong>pt-ui-radio-group</strong> to present multiple options where only one can be selected.
+    </p>
+  </header>
+
+  <section class="radio-page__section" id="import-use">
+    <h3>Import &amp; Use</h3>
+    <ol class="radio-page__steps">
+      <li>Import <code>RadioComponent</code> and/or <code>RadioGroupComponent</code> from the shared library.</li>
+      <li>Add them to the <code>imports</code> array of your standalone component.</li>
+      <li>For single radios, bind <code>[checked]</code> and handle <code>(changed)</code>.</li>
+      <li>For groups, bind <code>[value]</code> / <code>(valueChange)</code> (or <code>[(value)]</code>).</li>
+    </ol>
+    <pre class="radio-page__code" ngNonBindable><code>import &#123; RadioComponent, RadioGroupComponent &#125; from '@penta/shared-ui';
+
+@Component(&#123;
+  standalone: true,
+  imports: [RadioComponent],
+&#125;)
+export class ExampleComponent &#123;&#125;
+
+&lt;pt-ui-radio
+  label="Primary"
+  [checked]="selected"
+  (changed)="selected = $event.source.checked"
+&gt;&lt;/pt-ui-radio&gt;
+
+&lt;pt-ui-radio-group
+  label="Shift"
+  [options]="options"
+  [(value)]="selectedValue"
+&gt;&lt;/pt-ui-radio-group&gt;</code></pre>
+  </section>
+
+  <section class="radio-page__section" id="basic">
+    <h3>Basic Usage</h3>
+    <p class="radio-page__desc">
+      A single radio is best for “yes/no” or “enable/disable” choices.
+    </p>
+    <div class="radio-page__row">
+      <pt-ui-radio
+        label="Enable priority"
+        [checked]="basicChecked"
+        (changed)="onBasicChanged($event)"
+      ></pt-ui-radio>
+      <div class="radio-page__notice">
+        <strong>Checked:</strong> {{ basicChecked }}
+      </div>
+    </div>
+    <pre class="radio-page__code" ngNonBindable><code>&lt;pt-ui-radio
+  label="Enable priority"
+  [checked]="basicChecked"
+  (changed)="onBasicChanged($event)"
+&gt;&lt;/pt-ui-radio&gt;</code></pre>
+  </section>
+
+  <section class="radio-page__section" id="required">
+    <h3>Required Indicator</h3>
+    <p class="radio-page__desc">
+      Set <code>required</code> to show the asterisk and apply native required validation.
+    </p>
+    <div class="radio-page__row">
+      <label class="radio-page__toggle">
+        <input type="checkbox" [checked]="requiredToggle" (change)="requiredToggle = !requiredToggle" />
+        Required
+      </label>
+      <pt-ui-radio
+        [label]="requiredToggle ? 'Required option' : 'Optional option'"
+        [required]="requiredToggle"
+        [checked]="true"
+      ></pt-ui-radio>
+    </div>
+    <pre class="radio-page__code" ngNonBindable><code>&lt;pt-ui-radio label="Required option" [required]="true"&gt;&lt;/pt-ui-radio&gt;</code></pre>
+  </section>
+
+  <section class="radio-page__section" id="disabled">
+    <h3>Disabled State</h3>
+    <p class="radio-page__desc">
+      Bind <code>disabled</code> to a condition so the control can be locked when needed.
+    </p>
+    <label class="radio-page__toggle">
+      <input type="checkbox" [checked]="disabledToggle" (change)="disabledToggle = !disabledToggle" />
+      Disable radio
+    </label>
+    <pt-ui-radio
+      label="Conditionally Disabled"
+      [disabled]="disabledToggle"
+      [checked]="true"
+    ></pt-ui-radio>
+    <pre class="radio-page__code" ngNonBindable><code>&lt;pt-ui-radio [disabled]="isLocked"&gt;&lt;/pt-ui-radio&gt;</code></pre>
+  </section>
+
+  <section class="radio-page__section" id="group">
+    <h3>Radio Group</h3>
+    <p class="radio-page__desc">
+      <code>pt-ui-radio-group</code> renders a list of options where only one value can be chosen.
+      It accepts an options array, a selected value, and optional disabled rules per option.
+    </p>
+    <div class="radio-page__row">
+      <label class="radio-page__toggle">
+        <input type="checkbox" [checked]="lockRestricted" (change)="lockRestricted = !lockRestricted" />
+        Disable "Restricted" option
+      </label>
+      <label class="radio-page__toggle">
+        <input type="checkbox" [checked]="groupDisabledToggle" (change)="groupDisabledToggle = !groupDisabledToggle" />
+        Disable radio group
+      </label>
+    </div>
+    <pt-ui-radio-group
+      label="Shift"
+      [options]="groupOptions"
+      [value]="selectedValue"
+      [required]="requiredToggle"
+      [disabled]="groupDisabledToggle"
+      [optionDisabled]="isOptionDisabled"
+      (valueChange)="selectedValue = $event"
+      (changed)="onSelected($event)"
+    ></pt-ui-radio-group>
+    <div class="radio-page__notice">
+      <strong>Selected:</strong> {{ selectedValue }}
+    </div>
+    <pre class="radio-page__code"><code [innerText]="groupCodeSample"></code></pre>
+  </section>
+
+  <section class="radio-page__section" id="events">
+    <h3>Events</h3>
+    <p class="radio-page__desc">
+      Use events to track interaction or update other UI.
+    </p>
+    <div class="radio-page__row">
+      <pt-ui-radio
+        label="Event demo"
+        [checked]="basicChecked"
+        (checkedChange)="basicChecked = $event"
+        (changed)="lastEvent = 'Changed: ' + $event.source.checked"
+        (pressed)="lastEvent = 'Pressed radio'"
+      ></pt-ui-radio>
+      <div class="radio-page__notice">
+        <strong>Last event:</strong> {{ lastEvent }}
+      </div>
+    </div>
+    <pre class="radio-page__code" ngNonBindable><code>&lt;pt-ui-radio
+  label="Event demo"
+  (checkedChange)="basicChecked = $event"
+  (changed)="onChanged($event)"
+  (pressed)="onPressed($event)"
+&gt;&lt;/pt-ui-radio&gt;</code></pre>
+  </section>
+
+  <section class="radio-page__section" id="customize">
+    <h3>Customize Styles</h3>
+    <p class="radio-page__desc">
+      Wrap radios in a class and override styles locally. For component-scoped
+      styles, use <code>::ng-deep</code> or move overrides to a global stylesheet.
+    </p>
+    <div class="radio-page__stack radio-page__custom-theme">
+      <pt-ui-radio label="Branded Radio" [checked]="true"></pt-ui-radio>
+      <pt-ui-radio label="Secondary Radio"></pt-ui-radio>
+    </div>
+    <pre class="radio-page__code" ngNonBindable><code>&lt;div class="radio-page__custom-theme"&gt;
+  &lt;pt-ui-radio label="Branded Radio"&gt;&lt;/pt-ui-radio&gt;
+&lt;/div&gt;
+
+&#58;host &#58;:ng-deep .radio-page__custom-theme .pt-ui-radio &#58;:ng-deep .mdc-radio &#123;
+  transform: scale(1.1);
+&#125;
+
+&#58;host &#58;:ng-deep .radio-page__custom-theme .pt-ui-radio__label &#123;
+  color: #2563eb;
+  font-weight: 700;
+&#125;</code></pre>
+  </section>
+
+  <section class="radio-page__section" id="api">
+    <h3>Inputs &amp; Outputs</h3>
+    <div class="radio-page__api">
+      <div>
+        <h4>Inputs</h4>
+        <table class="radio-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>label</code></td><td>string</td><td>Text shown next to the radio.</td></tr>
+            <tr><td><code>checked</code></td><td>boolean</td><td>Controls the checked state.</td></tr>
+            <tr><td><code>disabled</code></td><td>boolean</td><td>Disable interaction.</td></tr>
+            <tr><td><code>required</code></td><td>boolean</td><td>Marks the radio as required.</td></tr>
+            <tr><td><code>labelPosition</code></td><td><code>before</code> | <code>after</code></td><td>Label placement relative to the control.</td></tr>
+            <tr><td><code>name</code></td><td>string</td><td>Native name attribute.</td></tr>
+            <tr><td><code>value</code></td><td>string</td><td>Native value attribute.</td></tr>
+            <tr><td><code>id</code></td><td>string</td><td>Custom id attribute.</td></tr>
+            <tr><td><code>tabIndex</code></td><td>number</td><td>Custom tab index.</td></tr>
+            <tr><td><code>disableRipple</code></td><td>boolean</td><td>Disable Material ripple effect.</td></tr>
+            <tr><td><code>ariaLabel</code></td><td>string</td><td>Accessibility label.</td></tr>
+            <tr><td><code>ariaLabelledby</code></td><td>string</td><td>Accessibility labelled-by reference.</td></tr>
+            <tr><td><code>color</code></td><td><code>primary</code> | <code>accent</code> | <code>warn</code></td><td>Material color theme.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>Outputs</h4>
+        <table class="radio-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>checkedChange</code></td><td>EventEmitter&lt;boolean&gt;</td><td>Emits when checked state changes.</td></tr>
+            <tr><td><code>changed</code></td><td>EventEmitter&lt;MatRadioChange&gt;</td><td>Emits Material change payload.</td></tr>
+            <tr><td><code>pressed</code></td><td>EventEmitter&lt;MouseEvent&gt;</td><td>Emits on click.</td></tr>
+            <tr><td><code>focused</code></td><td>EventEmitter&lt;FocusEvent&gt;</td><td>Emits on focus.</td></tr>
+            <tr><td><code>blurred</code></td><td>EventEmitter&lt;FocusEvent&gt;</td><td>Emits on blur.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>Radio Group Inputs</h4>
+        <table class="radio-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>label</code></td><td>string</td><td>Group label shown above the options.</td></tr>
+            <tr><td><code>options</code></td><td><code>RadioGroupOption[]</code></td><td>Array of options with label/value.</td></tr>
+            <tr><td><code>value</code></td><td>unknown</td><td>Selected value.</td></tr>
+            <tr><td><code>required</code></td><td>boolean</td><td>Marks the group as required.</td></tr>
+            <tr><td><code>disabled</code></td><td>boolean</td><td>Disable the entire group.</td></tr>
+            <tr><td><code>direction</code></td><td><code>vertical</code> | <code>horizontal</code></td><td>Layout direction.</td></tr>
+            <tr><td><code>labelPosition</code></td><td><code>before</code> | <code>after</code></td><td>Label placement relative to the control.</td></tr>
+            <tr><td><code>optionDisabled</code></td><td>boolean | ((option) =&gt; boolean)</td><td>Disable options conditionally.</td></tr>
+            <tr><td><code>name</code></td><td>string</td><td>Native name attribute.</td></tr>
+            <tr><td><code>color</code></td><td><code>primary</code> | <code>accent</code> | <code>warn</code></td><td>Material color theme.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>Radio Group Outputs</h4>
+        <table class="radio-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>valueChange</code></td><td>EventEmitter&lt;unknown&gt;</td><td>Emits when selection changes.</td></tr>
+            <tr><td><code>changed</code></td><td>EventEmitter&lt;MatRadioChange&gt;</td><td>Emits Material change payload.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>

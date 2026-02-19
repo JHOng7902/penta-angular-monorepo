@@ -314,6 +314,39 @@ export class ExampleComponent &#123;&#125;
     <pre class="input-page__code" ngNonBindable><code>&lt;pt-ui-input [(value)]="name"&gt;&lt;/pt-ui-input&gt;</code></pre>
   </section>
 
+  <section class="input-page__section" id="customize">
+    <h3>Customize Styles</h3>
+    <p class="input-page__desc">
+      Wrap inputs in a class and override styles locally. For component-scoped
+      styles, use <code>::ng-deep</code> or move overrides to a global stylesheet.
+    </p>
+    <div class="input-page__grid input-page__custom-theme">
+      <pt-ui-input label="Branded Input" placeholder="Custom look"></pt-ui-input>
+      <pt-ui-input label="Soft Input" placeholder="Muted" [showClear]="true"></pt-ui-input>
+    </div>
+    <pre class="input-page__code" ngNonBindable><code>&lt;div class="input-page__custom-theme"&gt;
+  &lt;pt-ui-input label="Branded Input"&gt;&lt;/pt-ui-input&gt;
+&lt;/div&gt;
+
+&#58;host &#58;:ng-deep .input-page__custom-theme .pt-ui-input__label &#123;
+  color: #4338ca;
+&#125;
+
+&#58;host &#58;:ng-deep .input-page__custom-theme .pt-ui-input__field input,
+&#58;host &#58;:ng-deep .input-page__custom-theme .pt-ui-input__field textarea &#123;
+  border-color: #a5b4fc !important;
+  background: #eef2ff !important;
+  border-radius: 12px;
+  color: #1e1b4b;
+&#125;
+
+&#58;host &#58;:ng-deep .input-page__custom-theme .pt-ui-input__field input&#58;focus,
+&#58;host &#58;:ng-deep .input-page__custom-theme .pt-ui-input__field textarea&#58;focus &#123;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important;
+&#125;</code></pre>
+  </section>
+
   <section class="input-page__section" id="api">
     <h3>Inputs &amp; Outputs</h3>
     <div class="input-page__api">

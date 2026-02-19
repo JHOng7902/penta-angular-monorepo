@@ -174,33 +174,6 @@
     ></pt-ui-nested-table>
   </section>
 
-  <section class="nested-table-page__section" id="example-disabled">
-    <h3>Disabled Checkboxes</h3>
-    <p class="nested-table-page__desc">
-      Disable selection based on row data (for example, completed or scrapped rows).
-    </p>
-    <pre class="nested-table-page__code" ngNonBindable><code>&lt;pt-ui-nested-table
-  [data]="nestedRows"
-  [columns]="columns"
-  [nestedKey]="'StationOrgans'"
-  [nestedColumns]="nestedColumns"
-  [displayCheckbox]="true"
-  [displayNestedCheckbox]="true"
-  [checkboxDisabled]="isParentCheckboxDisabled"
-  [nestedCheckboxDisabled]="isNestedCheckboxDisabled"
-&gt;&lt;/pt-ui-nested-table&gt;</code></pre>
-    <pt-ui-nested-table
-      [data]="nestedRows"
-      [columns]="columns"
-      [nestedKey]="'StationOrgans'"
-      [nestedColumns]="nestedColumns"
-      [displayCheckbox]="true"
-      [displayNestedCheckbox]="true"
-      [checkboxDisabled]="isParentCheckboxDisabled"
-      [nestedCheckboxDisabled]="isNestedCheckboxDisabled"
-    ></pt-ui-nested-table>
-  </section>
-
   <section class="nested-table-page__section" id="example-compact">
     <h3>Compact (Short Height)</h3>
     <p class="nested-table-page__desc">
@@ -240,6 +213,139 @@
     ></pt-ui-nested-table>
   </section>
 
+  <section class="nested-table-page__section" id="example-disabled">
+    <h3>Disabled Checkboxes</h3>
+    <p class="nested-table-page__desc">
+      Disable selection based on row data (for example, completed or scrapped rows).
+    </p>
+    <pre class="nested-table-page__code" ngNonBindable><code>&lt;pt-ui-nested-table
+  [data]="nestedRows"
+  [columns]="columns"
+  [nestedKey]="'StationOrgans'"
+  [nestedColumns]="nestedColumns"
+  [displayCheckbox]="true"
+  [displayNestedCheckbox]="true"
+  [checkboxDisabled]="isParentCheckboxDisabled"
+  [nestedCheckboxDisabled]="isNestedCheckboxDisabled"
+&gt;&lt;/pt-ui-nested-table&gt;</code></pre>
+    <pt-ui-nested-table
+      [data]="nestedRows"
+      [columns]="columns"
+      [nestedKey]="'StationOrgans'"
+      [nestedColumns]="nestedColumns"
+      [displayCheckbox]="true"
+      [displayNestedCheckbox]="true"
+      [checkboxDisabled]="isParentCheckboxDisabled"
+      [nestedCheckboxDisabled]="isNestedCheckboxDisabled"
+    ></pt-ui-nested-table>
+  </section>
+
+  <section class="nested-table-page__section" id="status-badges-default">
+    <h3>Default Status Badges</h3>
+    <p class="nested-table-page__desc">
+      These badges are generated automatically based on the status text.
+      The table lists the accepted status values that map to each default badge.
+    </p>
+    <pt-ui-table
+      [data]="defaultStatusRows"
+      [columns]="defaultStatusColumns"
+      [displayHeader]="false"
+    ></pt-ui-table>
+  </section>
+
+  <section class="nested-table-page__section" id="status-badges-overrides">
+    <h3>Override with Service</h3>
+    <p class="nested-table-page__desc">
+      Use a service-backed <code>statusResolver</code> for parent and nested rows to
+      centralize badge rules.
+    </p>
+    <div class="nested-table-page__status-demo">
+      <pt-ui-nested-table
+        [data]="nestedRows"
+        [columns]="columns"
+        [nestedKey]="'StationOrgans'"
+        [nestedColumns]="nestedColumns"
+        [statusResolver]="statusResolver"
+        [nestedStatusResolver]="statusResolver"
+        [displayIndex]="true"
+        [displayNestedIndex]="true"
+        [enableSorting]="true"
+        [enableNestedSorting]="true"
+        tableHeight="36vh"
+        nestedTableHeight="22vh"
+        [stickyHeader]="true"
+        [nestedStickyHeader]="true"
+      ></pt-ui-nested-table>
+    </div>
+    <pre class="nested-table-page__code" ngNonBindable><code>&lt;pt-ui-nested-table
+  [data]="nestedRows"
+  [statusResolver]="statusResolver"
+  [nestedStatusResolver]="statusResolver"
+&gt;&lt;/pt-ui-nested-table&gt;
+
+statusResolver = (value: string) =&gt; this.statusBadgeService.resolve(value);</code></pre>
+    <pre class="nested-table-page__code" ngNonBindable><code>import &#123; Injectable &#125; from '@angular/core';
+import &#123; StatusOverride &#125; from '@penta/shared-ui';
+
+@Injectable(&#123; providedIn: 'root' &#125;)
+export class StatusBadgeService &#123;
+  resolve(status: string): StatusOverride | undefined &#123;
+    switch (String(status).toLowerCase()) &#123;
+      case 'completed':
+        return &#123; class: 'status-custom-success', icon: 'verified' &#125;;
+      case 'processing':
+      case 'in progress':
+        return &#123; class: 'status-custom-progress', icon: 'autorenew' &#125;;
+      case 'scrapped':
+        return &#123; class: 'status-custom-danger', icon: 'report' &#125;;
+      default:
+        return undefined;
+    &#125;
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section class="nested-table-page__section" id="customize">
+    <h3>Customize Styles</h3>
+    <p class="nested-table-page__desc">
+      Wrap the nested table in a class and override styles locally. Use
+      <code>::ng-deep</code> (or a global stylesheet) to reach the inner table.
+    </p>
+    <div class="nested-table-page__custom-theme">
+      <pt-ui-nested-table
+        [data]="nestedRows"
+        [columns]="columns"
+        [nestedKey]="'StationOrgans'"
+        [nestedColumns]="nestedColumns"
+        [displayIndex]="true"
+        [enableSorting]="true"
+        [enableNestedSorting]="true"
+        tableHeight="32vh"
+        nestedTableHeight="20vh"
+        [stickyHeader]="true"
+        [nestedStickyHeader]="true"
+      ></pt-ui-nested-table>
+    </div>
+    <pre class="nested-table-page__code" ngNonBindable><code>&lt;div class="nested-table-page__custom-theme"&gt;
+  &lt;pt-ui-nested-table
+    [data]="nestedRows"
+    [columns]="columns"
+    [nestedKey]="'StationOrgans'"
+    [nestedColumns]="nestedColumns"
+  &gt;&lt;/pt-ui-nested-table&gt;
+&lt;/div&gt;
+
+&#58;host &#58;:ng-deep .nested-table-page__custom-theme .pt-ui-nested-table__table th,
+&#58;host &#58;:ng-deep .nested-table-page__custom-theme .pt-ui-nested-table__table .mat-mdc-header-cell &#123;
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+&#125;
+
+&#58;host &#58;:ng-deep .nested-table-page__custom-theme .pt-ui-nested-table__detail-label &#123;
+  color: #1d4ed8;
+&#125;</code></pre>
+  </section>
+
   <section class="nested-table-page__section" id="api">
     <h3>Inputs &amp; Outputs</h3>
     <div class="nested-table-page__api">
@@ -276,6 +382,10 @@
             <tr><td><code>tableHeight</code></td><td>string</td><td>Height for the parent table container.</td></tr>
             <tr><td><code>nestedTableHeight</code></td><td>string</td><td>Height for the nested table container.</td></tr>
             <tr><td><code>nestedStickyHeader</code></td><td>boolean</td><td>Sticky header for the nested table.</td></tr>
+            <tr><td><code>statusConfig</code></td><td>Record&lt;string, &#123; class?: string; icon?: string &#125;&gt;</td><td>Override parent status badges by status label.</td></tr>
+            <tr><td><code>nestedStatusConfig</code></td><td>Record&lt;string, &#123; class?: string; icon?: string &#125;&gt;</td><td>Override nested status badges by status label.</td></tr>
+            <tr><td><code>statusResolver</code></td><td>(value, row, key?) =&gt; &#123; class?: string; icon?: string &#125; | string</td><td>Resolve parent status badges via a callback.</td></tr>
+            <tr><td><code>nestedStatusResolver</code></td><td>(value, row, key?) =&gt; &#123; class?: string; icon?: string &#125; | string</td><td>Resolve nested status badges via a callback.</td></tr>
             <tr><td><code>expandIcon</code></td><td>string</td><td>Icon for collapsed state.</td></tr>
             <tr><td><code>collapseIcon</code></td><td>string</td><td>Icon for expanded state.</td></tr>
           </tbody>

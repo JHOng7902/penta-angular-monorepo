@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
-import { NestedTable } from '@penta/shared-ui';
+import { Component, inject } from '@angular/core';
+import { NestedTable, Table } from '@penta/shared-ui';
+import { StatusBadgeService } from '../status-badge.service';
 
 @Component({
   selector: 'app-nested-table-page',
   standalone: true,
-  imports: [NestedTable],
+  imports: [NestedTable, Table],
   templateUrl: './nested-table-page.html',
   styleUrl: './nested-table-page.scss',
 })
 export class NestedTablePage {
+  private statusBadgeService = inject(StatusBadgeService);
+
   displayView = true;
   displayEdit = true;
   displayDelete = true;
@@ -26,6 +29,20 @@ export class NestedTablePage {
   stickyHeader = true;
   nestedStickyHeader = true;
   lastAction = 'No actions yet.';
+  statusResolver = (value: string) => this.statusBadgeService.resolve(value);
+
+  defaultStatusRows = [
+    { Status: 'OPEN', AcceptableValues: 'open, new' },
+    { Status: 'STARTED', AcceptableValues: 'start, started' },
+    { Status: 'PROCESSING', AcceptableValues: 'processing, progress, in progress' },
+    { Status: 'COMPLETED', AcceptableValues: 'completed, complete, done, end, ended, closed, finished' },
+    { Status: 'PENDING', AcceptableValues: 'pending, queued, waiting' },
+    { Status: 'HOLD', AcceptableValues: 'hold, paused, on hold' },
+    { Status: 'SCRAPPED', AcceptableValues: 'scrap, scrapped, canceled, cancelled, rejected, failed' },
+    { Status: 'UNKNOWN', AcceptableValues: 'other / not matched' },
+  ];
+
+  defaultStatusColumns = ['Status', 'AcceptableValues'];
 
   response = {
     Status: true,
@@ -202,6 +219,7 @@ export class NestedTablePage {
     return status === 'SCRAPPED' || status === 'HOLD';
   };
 
+
   onView(row: Record<string, unknown>) {
     this.lastAction = `View clicked for StationConfigID ${row?.['StationConfigID'] ?? ''}`;
   }
@@ -225,4 +243,5 @@ export class NestedTablePage {
   onNestedDelete(row: Record<string, unknown>) {
     this.lastAction = `Nested delete clicked for OrganCode ${row?.['OrganCode'] ?? ''}`;
   }
+
 }

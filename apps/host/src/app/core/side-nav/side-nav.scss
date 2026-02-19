@@ -1,0 +1,105 @@
+:host {
+  display: block;
+}
+
+.app-sidebar {
+  position: fixed;
+  top: var(--app-content-offset);
+  left: 0;
+  bottom: 0;
+  width: var(--app-sidebar-width);
+  z-index: 15;
+  padding: 0 0.75rem 2.5rem;
+  box-sizing: border-box;
+  background: transparent;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.app-sidebar__panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba(248, 250, 252, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.app-sidebar__header {
+  display: grid;
+  gap: 0.3rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px dashed rgba(148, 163, 184, 0.45);
+}
+
+.app-sidebar__home {
+  text-decoration: none;
+  font-weight: 700;
+  padding: 0.65rem 0.85rem;
+  border-radius: 12px;
+  background: linear-gradient(120deg, rgba(37, 99, 235, 0.18), rgba(56, 189, 248, 0.12));
+  border: 1px solid rgba(37, 99, 235, 0.4);
+  color: #1d4ed8;
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+  display: inline-flex;
+  align-items: center;
+}
+
+.app-sidebar__home.is-active {
+  background: linear-gradient(120deg, rgba(37, 99, 235, 0.24), rgba(56, 189, 248, 0.18));
+  border-color: rgba(37, 99, 235, 0.55);
+}
+
+.app-sidebar__caption {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.app-sidebar__nav {
+  display: grid;
+  gap: 0.55rem;
+  flex: 1;
+  overflow-y: auto;
+  align-content: start;
+  padding-right: 0.15rem;
+}
+
+.app-sidebar__nav a {
+  color: #0f172a;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.55rem 0.75rem;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+.app-sidebar__nav a:hover {
+  background: rgba(37, 99, 235, 0.12);
+  color: #1d4ed8;
+  transform: translateX(2px);
+}
+
+.app-sidebar__nav a.is-active {
+  background: rgba(37, 99, 235, 0.18);
+  color: #1d4ed8;
+  border-color: rgba(37, 99, 235, 0.4);
+  box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.25);
+}
+
+:host-context(.app-shell.is-collapsed) .app-sidebar {
+  transform: translateX(calc(-1 * var(--app-sidebar-width)));
+  opacity: 0;
+  pointer-events: none;
+}

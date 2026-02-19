@@ -1,0 +1,28 @@
+<div
+  class="pt-ui-radio"
+  [class.is-disabled]="disabled"
+>
+  <mat-radio-button
+    [id]="inputId"
+    [checked]="checked"
+    [disabled]="disabled"
+    [required]="required"
+    [labelPosition]="labelPosition"
+    [name]="inputName"
+    [value]="value"
+    [disableRipple]="disableRipple"
+    [tabIndex]="tabIndex"
+    [color]="color"
+    [attr.aria-label]="ariaLabel || null"
+    [attr.aria-labelledby]="ariaLabelledby || null"
+    (change)="onChange($event)"
+    (click)="onPressed($event)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+  >
+    <span class="pt-ui-radio__label">{{ label }}</span>
+    @if (required) {
+      <span class="pt-ui-radio__required">*</span>
+    }
+  </mat-radio-button>
+</div>

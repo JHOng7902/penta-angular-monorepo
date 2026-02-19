@@ -1,0 +1,29 @@
+<div
+  class="pt-ui-checkbox"
+  [class.is-disabled]="disabled"
+>
+  <mat-checkbox
+    [id]="inputId"
+    [checked]="checked"
+    [indeterminate]="indeterminate"
+    [disabled]="disabled"
+    [required]="required"
+    [labelPosition]="labelPosition"
+    [attr.name]="name ?? null"
+    [attr.value]="value ?? null"
+    [disableRipple]="disableRipple"
+    [tabIndex]="tabIndex"
+    [attr.aria-label]="ariaLabel || null"
+    [attr.aria-labelledby]="ariaLabelledby || null"
+    (change)="onChange($event)"
+    (indeterminateChange)="onIndeterminateChange($event)"
+    (click)="onPressed($event)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+  >
+    <span class="pt-ui-checkbox__label">{{ label }}</span>
+    @if (required) {
+      <span class="pt-ui-checkbox__required">*</span>
+    }
+  </mat-checkbox>
+</div>

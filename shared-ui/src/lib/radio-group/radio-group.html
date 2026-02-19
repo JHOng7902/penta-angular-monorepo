@@ -1,0 +1,36 @@
+<div class="pt-ui-radio-group" [class.is-horizontal]="isHorizontal">
+  @if (label) {
+    <label class="pt-ui-radio-group__label" [attr.id]="groupId">
+      {{ label }}
+      @if (required) {
+        <span class="pt-ui-radio-group__required">*</span>
+      }
+    </label>
+  }
+  <mat-radio-group
+    class="pt-ui-radio-group__options"
+    [attr.aria-labelledby]="label ? groupId : null"
+    [disabled]="disabled"
+    [required]="required"
+    [value]="value"
+    [name]="groupName"
+    (change)="onChange($event)"
+  >
+    @for (option of options; track trackByOption($index, option)) {
+      <mat-radio-button
+        [value]="option.value"
+        [disabled]="disabled || isOptionDisabled(option)"
+        [labelPosition]="labelPosition"
+        [color]="color"
+        class="pt-ui-radio-group__option"
+      >
+        <div class="pt-ui-radio-group__option-content">
+          <span class="pt-ui-radio-group__option-label">{{ option.label }}</span>
+          @if (option.description) {
+            <span class="pt-ui-radio-group__option-meta">{{ option.description }}</span>
+          }
+        </div>
+      </mat-radio-button>
+    }
+  </mat-radio-group>
+</div>

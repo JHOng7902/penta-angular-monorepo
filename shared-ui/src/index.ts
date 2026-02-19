@@ -11,6 +11,14 @@ export * from './lib/table/table-date.pipe';
 
 export * from './lib/input/input.component';
 
+export * from './lib/checkbox/checkbox';
+
+export * from './lib/radio/radio';
+
+export * from './lib/radio-group/radio-group';
+
+export * from './lib/select/select.component';
+
 export * from './lib/nested-table/nested-table';
 
 export * from './lib/toast-message/toast-message';

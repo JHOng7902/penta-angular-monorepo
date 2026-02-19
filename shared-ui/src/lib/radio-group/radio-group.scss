@@ -1,0 +1,62 @@
+.pt-ui-radio-group {
+  display: grid;
+  gap: 0.5rem;
+  width: 100%;
+  font-family: inherit;
+  color: inherit;
+}
+
+.pt-ui-radio-group.is-horizontal .pt-ui-radio-group__options {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.pt-ui-radio-group__label {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.pt-ui-radio-group__required {
+  color: #dc2626;
+  margin-left: 0.15rem;
+}
+
+.pt-ui-radio-group__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pt-ui-radio-group__option {
+  margin: 0;
+}
+
+.pt-ui-radio-group__option-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.pt-ui-radio-group__option-label {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.pt-ui-radio-group__option-meta {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.pt-ui-radio-group ::ng-deep .mdc-label {
+  font-weight: 600;
+  color: inherit;
+  font-family: inherit;
+}
+
+.pt-ui-radio-group ::ng-deep .mat-mdc-radio-button.mat-mdc-radio-disabled {
+  opacity: 0.6;
+}
+
+.pt-ui-radio-group ::ng-deep .mat-mdc-radio-button.mat-mdc-radio-disabled .mdc-label {
+  color: #94a3b8;
+}

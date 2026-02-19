@@ -15,7 +15,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Table, TableColumn } from '../table/table';
+import { StatusOverride, StatusResolver, Table, TableColumn } from '../table/table';
 import { PentaDateTimePipe } from '../table/table-date.pipe';
 
 @Component({
@@ -64,6 +64,10 @@ export class NestedTable implements OnChanges, AfterViewInit {
   @Input() nestedStickyHeader = false;
   @Input() expandIcon = 'chevron_right';
   @Input() collapseIcon = 'expand_more';
+  @Input() statusConfig: Record<string, StatusOverride> = {};
+  @Input() nestedStatusConfig: Record<string, StatusOverride> = {};
+  @Input() statusResolver?: StatusResolver;
+  @Input() nestedStatusResolver?: StatusResolver;
 
   @Output() view = new EventEmitter<Record<string, unknown>>();
   @Output() edit = new EventEmitter<Record<string, unknown>>();
@@ -235,7 +239,11 @@ export class NestedTable implements OnChanges, AfterViewInit {
     return this.formatValue(row[key]);
   }
 
-  statusClass(value: string): string {
+  statusClass(value: string, row?: Record<string, unknown>, key?: string): string {
+    const override = this.resolveStatusOverride(value, row, key, this.statusConfig, this.statusResolver);
+    if (override?.class) {
+      return override.class;
+    }
     const normalized = value.toLowerCase();
     const tokens = this.statusTokens(value);
     if (this.hasStatus(tokens, normalized, ['open', 'new'])) {
@@ -281,7 +289,11 @@ export class NestedTable implements OnChanges, AfterViewInit {
     return 'status-default';
   }
 
-  statusIcon(value: string): string {
+  statusIcon(value: string, row?: Record<string, unknown>, key?: string): string {
+    const override = this.resolveStatusOverride(value, row, key, this.statusConfig, this.statusResolver);
+    if (override?.icon) {
+      return override.icon;
+    }
     const normalized = value.toLowerCase();
     const tokens = this.statusTokens(value);
     if (this.hasStatus(tokens, normalized, ['open', 'new'])) {
@@ -381,6 +393,61 @@ export class NestedTable implements OnChanges, AfterViewInit {
     return values.some((value) =>
       value.includes(' ') ? normalized.includes(value) : tokens.includes(value),
     );
+  }
+
+  get nestedStatusConfigResolved(): Record<string, StatusOverride> {
+    if (this.nestedStatusConfig && Object.keys(this.nestedStatusConfig).length > 0) {
+      return this.nestedStatusConfig;
+    }
+    return this.statusConfig ?? {};
+  }
+
+  get nestedStatusResolverResolved(): StatusResolver | undefined {
+    return this.nestedStatusResolver ?? this.statusResolver;
+  }
+
+  private getStatusOverride(
+    value: string,
+    config: Record<string, StatusOverride>,
+  ): StatusOverride | undefined {
+    const overrides = config ?? {};
+    if (!value) {
+      return undefined;
+    }
+    const normalized = value.toLowerCase();
+    if (overrides[normalized]) {
+      return overrides[normalized];
+    }
+    if (overrides[value]) {
+      return overrides[value];
+    }
+    const tokens = this.statusTokens(value);
+    for (const [key, override] of Object.entries(overrides)) {
+      const keyNormalized = key.toLowerCase();
+      if (tokens.includes(keyNormalized) || normalized.includes(keyNormalized)) {
+        return override;
+      }
+    }
+    return undefined;
+  }
+
+  private resolveStatusOverride(
+    value: string,
+    row: Record<string, unknown> | undefined,
+    key: string | undefined,
+    config: Record<string, StatusOverride>,
+    resolver?: StatusResolver,
+  ): StatusOverride | undefined {
+    if (resolver) {
+      const resolved = resolver(value, row ?? {}, key);
+      if (typeof resolved === 'string') {
+        return { class: resolved };
+      }
+      if (resolved?.class || resolved?.icon) {
+        return resolved;
+      }
+    }
+    return this.getStatusOverride(value, config);
   }
 
   private buildDisplayedColumns(): string[] {

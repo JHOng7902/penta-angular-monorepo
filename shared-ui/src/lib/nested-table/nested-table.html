@@ -96,8 +96,11 @@
           }
           <td mat-cell *matCellDef="let row">
             @if (isStatusColumn(column.key)) {
-              <span class="status-badge" [class]="statusClass(statusLabel(row, column.key))">
-                <mat-icon>{{ statusIcon(statusLabel(row, column.key)) }}</mat-icon>
+              <span
+                class="status-badge"
+                [class]="statusClass(statusLabel(row, column.key), row, column.key)"
+              >
+                <mat-icon>{{ statusIcon(statusLabel(row, column.key), row, column.key) }}</mat-icon>
                 {{ statusLabel(row, column.key) }}
               </span>
             } @else if (isDateCell(column.key, row[column.key])) {
@@ -125,6 +128,8 @@
               [displayDelete]="displayNestedDelete"
               [displayCheckbox]="displayNestedCheckbox"
               [checkboxDisabled]="nestedCheckboxDisabled"
+              [statusConfig]="nestedStatusConfigResolved"
+              [statusResolver]="nestedStatusResolverResolved"
               (selectionChange)="nestedSelectionChange.emit($event)"
               (view)="onNestedView($event)"
               (edit)="onNestedEdit($event)"

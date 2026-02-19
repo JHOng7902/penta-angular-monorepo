@@ -1,0 +1,34 @@
+.pt-ui-radio {
+  display: inline-flex;
+  align-items: center;
+  font-family: inherit;
+  color: inherit;
+}
+
+.pt-ui-radio.is-disabled {
+  opacity: 0.65;
+}
+
+.pt-ui-radio ::ng-deep .mat-mdc-radio-button {
+  align-items: center;
+  font-family: inherit;
+}
+
+.pt-ui-radio ::ng-deep .mdc-label {
+  font-weight: 600;
+  color: inherit;
+  font-family: inherit;
+}
+
+.pt-ui-radio__label {
+  margin-right: 0.25rem;
+}
+
+.pt-ui-radio__required {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.pt-ui-radio.is-disabled ::ng-deep .mdc-label {
+  color: #64748b;
+}

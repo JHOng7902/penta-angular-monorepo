@@ -1,0 +1,123 @@
+<div
+  class="pt-ui-select"
+  [class.pt-ui-select--label-left]="labelPosition === 'left'"
+  [class.pt-ui-select--label-hidden]="labelPosition === 'hidden'"
+>
+  @if (labelPosition !== 'hidden' && label) {
+    <label class="pt-ui-select__label" [attr.for]="inputId">
+      {{ label }}
+      @if (required) {
+        <span class="pt-ui-select__required">*</span>
+      }
+    </label>
+  }
+  <div
+    class="pt-ui-select__field"
+    [class.is-disabled]="disabled"
+    [class.is-clearable]="showClearButton"
+  >
+    <mat-select
+      class="pt-ui-select__control"
+      [id]="inputId"
+      [attr.name]="name ?? null"
+      [disabled]="disabled"
+      [multiple]="multiple"
+      [value]="value"
+      [compareWith]="compareWith"
+      [panelClass]="panelClasses"
+      (selectionChange)="onSelectionChange($event)"
+      (openedChange)="onOpenedChange($event)"
+    >
+      <mat-select-trigger>
+        @if (showChips) {
+          <div class="pt-ui-select__chips">
+            @for (item of chipItems; track trackByChip($index, item)) {
+              <span class="pt-ui-select__chip">
+                <span class="pt-ui-select__chip-label">{{ item.label }}</span>
+                @if (chipRemovable) {
+                  <button
+                    class="pt-ui-select__chip-remove"
+                    type="button"
+                    aria-label="Remove selection"
+                    (mousedown)="$event.stopPropagation()"
+                    (click)="onChipRemove(item, $event)"
+                  >
+                    <mat-icon>close</mat-icon>
+                  </button>
+                }
+              </span>
+            }
+          </div>
+        } @else {
+          <span class="pt-ui-select__value" [class.is-placeholder]="isPlaceholder">
+            {{ displayValue }}
+          </span>
+        }
+      </mat-select-trigger>
+
+      @if (showFilter && !disabled) {
+        <mat-option class="pt-ui-select__filter-option" disabled>
+          <div
+            class="pt-ui-select__filter-wrap"
+            (mousedown)="$event.stopPropagation()"
+            (click)="$event.stopPropagation(); focusFilterInput()"
+            (keydown.enter)="$event.preventDefault(); $event.stopPropagation(); focusFilterInput()"
+            (keydown.space)="$event.preventDefault(); $event.stopPropagation(); focusFilterInput()"
+            role="button"
+            tabindex="0"
+            aria-label="Focus filter input"
+          >
+            <input
+              #filterInput
+              class="pt-ui-select__filter"
+              type="text"
+              [placeholder]="filterPlaceholder"
+              [value]="filterValue"
+              (input)="onFilterInput($event)"
+              (mousedown)="$event.stopPropagation()"
+              (click)="$event.stopPropagation()"
+              (keydown)="onFilterKeydown($event)"
+            />
+            @if (showFilterClear) {
+              <button
+                class="pt-ui-select__filter-clear"
+                type="button"
+                aria-label="Clear filter"
+                (mousedown)="$event.stopPropagation()"
+                (click)="onFilterClear($event)"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            }
+          </div>
+        </mat-option>
+      }
+
+      @for (option of filteredOptions; track trackByOption($index, option)) {
+        <mat-option [value]="option.value" [disabled]="isOptionDisabled(option)">
+          <div class="pt-ui-select__option">
+            <span class="pt-ui-select__option-label">{{ option.label }}</span>
+            @if (option.description) {
+              <span class="pt-ui-select__option-meta">{{ option.description }}</span>
+            }
+          </div>
+        </mat-option>
+      }
+
+      @if (filteredOptions.length === 0) {
+        <mat-option disabled>No matches</mat-option>
+      }
+    </mat-select>
+
+    @if (showClearButton) {
+      <button
+        class="pt-ui-select__clear"
+        type="button"
+        aria-label="Clear selection"
+        (click)="onClear($event)"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </div>
+</div>

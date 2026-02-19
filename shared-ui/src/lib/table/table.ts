@@ -24,6 +24,17 @@ export interface TableColumn {
   label?: string;
 }
 
+export interface StatusOverride {
+  class?: string;
+  icon?: string;
+}
+
+export type StatusResolver = (
+  value: string,
+  row: Record<string, unknown>,
+  key?: string,
+) => StatusOverride | string | null | undefined;
+
 @Component({
   selector: 'pt-ui-table',
   standalone: true,
@@ -76,6 +87,8 @@ export class Table implements OnChanges, AfterViewInit {
   @Input() checkboxDisabled:
     | boolean
     | ((row: Record<string, unknown>) => boolean) = false;
+  @Input() statusConfig: Record<string, StatusOverride> = {};
+  @Input() statusResolver?: StatusResolver;
 
   @Output() view = new EventEmitter<Record<string, unknown>>();
   @Output() edit = new EventEmitter<Record<string, unknown>>();
@@ -273,7 +286,11 @@ export class Table implements OnChanges, AfterViewInit {
     return this.formatValue(row[key]);
   }
 
-  statusClass(value: string): string {
+  statusClass(value: string, row?: Record<string, unknown>, key?: string): string {
+    const override = this.resolveStatusOverride(value, row, key);
+    if (override?.class) {
+      return override.class;
+    }
     const normalized = value.toLowerCase();
     const tokens = this.statusTokens(value);
     if (this.hasStatus(tokens, normalized, ['open', 'new'])) {
@@ -319,7 +336,11 @@ export class Table implements OnChanges, AfterViewInit {
     return 'status-default';
   }
 
-  statusIcon(value: string): string {
+  statusIcon(value: string, row?: Record<string, unknown>, key?: string): string {
+    const override = this.resolveStatusOverride(value, row, key);
+    if (override?.icon) {
+      return override.icon;
+    }
     const normalized = value.toLowerCase();
     const tokens = this.statusTokens(value);
     if (this.hasStatus(tokens, normalized, ['open', 'new'])) {
@@ -504,6 +525,45 @@ export class Table implements OnChanges, AfterViewInit {
       .toLowerCase()
       .split(/\s+/)
       .filter(Boolean);
+  }
+
+  private getStatusOverride(value: string): StatusOverride | undefined {
+    const config = this.statusConfig ?? {};
+    if (!value) {
+      return undefined;
+    }
+    const normalized = value.toLowerCase();
+    if (config[normalized]) {
+      return config[normalized];
+    }
+    if (config[value]) {
+      return config[value];
+    }
+    const tokens = this.statusTokens(value);
+    for (const [key, override] of Object.entries(config)) {
+      const keyNormalized = key.toLowerCase();
+      if (tokens.includes(keyNormalized) || normalized.includes(keyNormalized)) {
+        return override;
+      }
+    }
+    return undefined;
+  }
+
+  private resolveStatusOverride(
+    value: string,
+    row?: Record<string, unknown>,
+    key?: string,
+  ): StatusOverride | undefined {
+    if (this.statusResolver) {
+      const resolved = this.statusResolver(value, row ?? {}, key);
+      if (typeof resolved === 'string') {
+        return { class: resolved };
+      }
+      if (resolved?.class || resolved?.icon) {
+        return resolved;
+      }
+    }
+    return this.getStatusOverride(value);
   }
 
   private hasStatus(tokens: string[], normalized: string, values: string[]): boolean {

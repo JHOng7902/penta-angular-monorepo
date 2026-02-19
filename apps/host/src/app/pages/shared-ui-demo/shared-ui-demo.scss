@@ -1,6 +1,7 @@
 .demo-page {
   display: grid;
   gap: 2.5rem;
+  min-width: 0;
 }
 
 .demo-section {
@@ -8,6 +9,74 @@
   border-radius: 20px;
   padding: 2rem;
   border: 1px solid rgba(15, 23, 42, 0.08);
+  min-width: 0;
+}
+
+.demo-section--hero {
+  background: #ffffff;
+}
+
+.demo-hero {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  align-items: center;
+}
+
+.demo-eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.demo-section h2 {
+  margin: 0 0 0.65rem;
+  font-size: 1.8rem;
+  color: #0f172a;
+}
+
+.demo-section h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  color: #0f172a;
+}
+
+.demo-lead {
+  margin: 0;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.demo-meta {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.demo-meta__item {
+  background: #f1f5f9;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 14px;
+  padding: 0.75rem 0.9rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.demo-meta__label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.demo-meta__value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 .demo-row {
@@ -20,4 +89,43 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
+}
+
+.demo-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.4rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.demo-code {
+  margin: 0.75rem 0 0;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.demo-code code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  border: none;
+}
+
+.demo-note {
+  margin: 0.65rem 0 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .demo-hero {
+    grid-template-columns: 1fr;
+  }
 }

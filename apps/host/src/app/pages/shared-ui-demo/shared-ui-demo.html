@@ -1,70 +1,90 @@
 <div class="demo-page">
-  <section class="demo-section">
-    <pt-ui-section-title
-      title="Buttons"
-      subtitle="Primary, outline, and ghost variants with size options."
-    ></pt-ui-section-title>
-    <div class="demo-row">
-      <pt-ui-button label="Primary"></pt-ui-button>
-      <pt-ui-button variant="outline" label="Outline"></pt-ui-button>
-      <pt-ui-button variant="ghost" label="Ghost"></pt-ui-button>
+  <section class="demo-section demo-section--hero">
+    <div class="demo-hero">
+      <div>
+        <p class="demo-eyebrow">Shared UI Library</p>
+        <h2>Reusable Angular components for the Penta platform</h2>
+        <p class="demo-lead">
+          This library provides consistent UI building blocks (buttons, inputs,
+          tables, cards, toasts) used across apps in this monorepo. Use it to
+          keep styles aligned and accelerate feature delivery.
+        </p>
+      </div>
+      <div class="demo-meta">
+        <div class="demo-meta__item">
+          <span class="demo-meta__label">Shared UI</span>
+          <span class="demo-meta__value">v0.0.1</span>
+        </div>
+        <div class="demo-meta__item">
+          <span class="demo-meta__label">Angular</span>
+          <span class="demo-meta__value">~21.1.0</span>
+        </div>
+        <div class="demo-meta__item">
+          <span class="demo-meta__label">Node</span>
+          <span class="demo-meta__value">>= 20.19.0</span>
+        </div>
+        <div class="demo-meta__item">
+          <span class="demo-meta__label">Nx</span>
+          <span class="demo-meta__value">22.4.2</span>
+        </div>
+        <div class="demo-meta__item">
+          <span class="demo-meta__label">TypeScript</span>
+          <span class="demo-meta__value">~5.9.2</span>
+        </div>
+      </div>
     </div>
-    <div class="demo-row">
-      <pt-ui-button size="sm" label="Small"></pt-ui-button>
-      <pt-ui-button size="md" label="Medium"></pt-ui-button>
-      <pt-ui-button size="lg" label="Large"></pt-ui-button>
-      <pt-ui-button size="xl" label="XL"></pt-ui-button>
-      <pt-ui-button size="xxl" label="XXL" tooltip="XXL button" tooltipPosition="above"></pt-ui-button>
-      <pt-ui-button variant="outline" [disabled]="true" label="Disabled"></pt-ui-button>
-      <pt-ui-button
-        content="text-icon"
-        icon="bolt"
-        color="success"
-        label="Success"
-        [blink]="true"
-      ></pt-ui-button>
-      <pt-ui-button
-        content="icon"
-        icon="campaign"
-        [blink]="true"
-        color="info"
-        ariaLabel="Notifications"
-        (pressed)="displayText($event)"
-      ></pt-ui-button>
-    </div>
-    @if(text !== ''){
-      <p>{{text}}</p>
-    }
   </section>
 
   <section class="demo-section">
-    <pt-ui-section-title
-      title="Cards"
-      subtitle="Flexible layout with header, body, and footer slots."
-    ></pt-ui-section-title>
-    <div class="demo-grid">
-      <pt-ui-card>
-        <div ptUiCardHeader>Team Alignment</div>
-        <div ptUiCardBody>
-          Keep shared UI consistent across projects and deploy the same components
-          to every app inside the monorepo.
-        </div>
-        <div ptUiCardFooter>
-          <pt-ui-button size="sm">Review</pt-ui-button>
-          <pt-ui-button variant="outline" size="sm">Open spec</pt-ui-button>
-        </div>
-      </pt-ui-card>
-      <pt-ui-card>
-        <div ptUiCardHeader>Release Pipeline</div>
-        <div ptUiCardBody>
-          Conventional commits drive version bumps, changelogs, and releases
-          automatically when you push to main.
-        </div>
-        <div ptUiCardFooter>
-          <pt-ui-button size="sm">Release dry-run</pt-ui-button>
-        </div>
-      </pt-ui-card>
-    </div>
+    <h3>Requirements</h3>
+    <ul class="demo-list">
+      <li>Node >= 20.19.0 (see <code>.nvmrc</code>)</li>
+      <li>Angular ~21.1.0 with Angular Material + CDK</li>
+      <li>RxJS ~7.8.0</li>
+    </ul>
+  </section>
+
+  <section class="demo-section">
+    <h3>Install (Monorepo)</h3>
+    <p>Install dependencies from the repo root, then run the host app:</p>
+    <pre class="demo-code"><code>npm install
+npx nx serve host</code></pre>
+    <p>Build the shared UI package when needed:</p>
+    <pre class="demo-code"><code>npx nx build shared-ui</code></pre>
+  </section>
+
+  <section class="demo-section">
+    <h3>Import &amp; Use Components</h3>
+    <p>Import components directly from <code>@penta/shared-ui</code>:</p>
+    <pre class="demo-code" ngNonBindable><code>import &#123; Button, InputComponent, Table &#125; from '@penta/shared-ui';</code></pre>
+    <pre class="demo-code" ngNonBindable><code>&lt;pt-ui-button buttonText="Save"&gt;&lt;/pt-ui-button&gt;
+&lt;pt-ui-input label="Email" type="email" [(value)]="email"&gt;&lt;/pt-ui-input&gt;
+&lt;pt-ui-table [data]="rows"&gt;&lt;/pt-ui-table&gt;</code></pre>
+    <p class="demo-note">Component prefix: <code>pt-ui-</code></p>
+  </section>
+
+  <section class="demo-section">
+    <h3>Create A New App (Standalone)</h3>
+    <p>Generate a standalone app and start importing shared components:</p>
+    <pre class="demo-code" ngNonBindable><code>npx nx g @nx/angular:app my-app --standalone --style=scss
+npx nx serve my-app</code></pre>
+  </section>
+
+  <section class="demo-section">
+    <h3>Create A New App (NgModule / Non-Standalone)</h3>
+    <p>Create a module-based app and import shared components into the module:</p>
+    <pre class="demo-code" ngNonBindable><code>npx nx g @nx/angular:app my-legacy-app --standalone=false --style=scss</code></pre>
+    <pre class="demo-code" ngNonBindable><code>// app.module.ts
+import &#123; NgModule &#125; from '@angular/core';
+import &#123; BrowserModule &#125; from '@angular/platform-browser';
+import &#123; Button, InputComponent, Table &#125; from '@penta/shared-ui';
+
+@NgModule(&#123;
+  declarations: [AppComponent],
+  imports: [BrowserModule, Button, InputComponent, Table],
+  bootstrap: [AppComponent],
+&#125;)
+export class AppModule &#123;&#125;</code></pre>
   </section>
 </div>
 

@@ -3,20 +3,22 @@
     <h2>Confirmation Dialog</h2>
     <p>
       Use <strong>pt-ui-confirm-dialog</strong> for destructive or permission-based
-      actions. It includes alert/confirm styling and explicit Yes/No actions.
+      actions. It includes alert/confirmation styling and explicit Yes/No actions.
     </p>
   </header>
 
   <section class="confirm-dialog-page__section" id="basic">
     <h3>Default Confirmation</h3>
     <p class="confirm-dialog-page__desc">
-      Choose a tone and open the dialog to preview different alert styles.
+      Choose a type and open the dialog to preview different alert styles.
     </p>
     <div class="confirm-dialog-page__row">
-      <pt-ui-button buttonText="Alert tone" (pressed)="openTone('alert')"></pt-ui-button>
-      <pt-ui-button buttonText="Confirm tone" variant="outline" (pressed)="openTone('confirm')">
-      </pt-ui-button>
-      <pt-ui-button buttonText="Neutral tone" variant="ghost" (pressed)="openTone('neutral')">
+      <pt-ui-button buttonText="Alert type" (pressed)="openType('alert')"></pt-ui-button>
+      <pt-ui-button
+        buttonText="Confirmation type"
+        variant="outline"
+        (pressed)="openType('confirmation')"
+      >
       </pt-ui-button>
       <span class="confirm-dialog-page__note">{{ confirmResult }}</span>
     </div>
@@ -26,7 +28,7 @@
       title="Delete this record?"
       message="This action cannot be undone. Proceed anyway?"
       icon="warning"
-      [tone]="tone"
+      [type]="type"
       [closeOnBackdrop]="false"
       confirmText="Yes"
       cancelText="No"
@@ -41,7 +43,7 @@
   title="Delete this record?"
   message="This action cannot be undone. Proceed anyway?"
   icon="warning"
-  tone="alert"
+  type="alert"
   confirmText="Yes"
   cancelText="No"
   [(open)]="open"
@@ -52,11 +54,11 @@
       <div class="confirm-dialog-page__code-block">
         <span class="confirm-dialog-page__code-label">TypeScript</span>
         <pre class="confirm-dialog-page__code" ngNonBindable><code>confirmOpen = false;
-tone: ConfirmDialogTone = 'alert';
+type: ConfirmDialogType = 'alert';
 confirmResult = 'No decision yet.';
 
-openTone(tone: ConfirmDialogTone): void &#123;
-  this.tone = tone;
+openType(type: ConfirmDialogType): void &#123;
+  this.type = type;
   this.confirmOpen = true;
 &#125;
 
@@ -88,7 +90,7 @@ onCancelled(): void &#123;
         [title]="state.title"
         [message]="state.message"
         [icon]="state.icon"
-        [tone]="state.tone"
+        [type]="state.type"
         [confirmText]="state.confirmText"
         [cancelText]="state.cancelText"
         [closeOnBackdrop]="state.closeOnBackdrop"
@@ -100,6 +102,7 @@ onCancelled(): void &#123;
         [maxHeight]="state.maxHeight"
         (confirmed)="confirmationDialogService.confirm()"
         (cancelled)="confirmationDialogService.cancel()"
+        (afterClosed)="confirmationDialogService.onAfterClosed()"
       ></pt-ui-confirm-dialog>
     }
 
@@ -112,11 +115,12 @@ onCancelled(): void &#123;
     [title]="state.title"
     [message]="state.message"
     [icon]="state.icon"
-    [tone]="state.tone"
+    [type]="state.type"
     [confirmText]="state.confirmText"
     [cancelText]="state.cancelText"
     (confirmed)="confirmationDialogService.confirm()"
     (cancelled)="confirmationDialogService.cancel()"
+    (afterClosed)="confirmationDialogService.onAfterClosed()"
   &gt;&lt;/pt-ui-confirm-dialog&gt;
 &#125;</code></pre>
       </div>
@@ -128,7 +132,7 @@ openServiceDialog(): void &#123;
   this.confirmationDialogService
     .openDialog('Confirmation', 'Are you sure want to process, this cannot be undo', &#123;
       icon: 'warning',
-      tone: 'alert',
+      type: 'alert',
       confirmText: 'Yes',
       cancelText: 'No',
     &#125;)
@@ -153,13 +157,13 @@ openServiceDialog(): void &#123;
       <pt-ui-input label="Max Width" [(value)]="dialogMaxWidth" placeholder="720px"></pt-ui-input>
       <pt-ui-input label="Max Height" [(value)]="dialogMaxHeight" placeholder="70vh"></pt-ui-input>
     </div>
-    <pt-ui-button buttonText="Open sized confirm" (pressed)="sizeOpen = true"></pt-ui-button>
+    <pt-ui-button buttonText="Open sized confirmation" (pressed)="sizeOpen = true"></pt-ui-button>
     <pt-ui-confirm-dialog
       [(open)]="sizeOpen"
       title="Sized confirmation"
       message="Adjust width, height, and min/max constraints using the inputs above."
       icon="info"
-      tone="neutral"
+      type="confirmation"
       [closeOnBackdrop]="false"
       confirmText="Okay"
       cancelText="Cancel"
@@ -190,14 +194,17 @@ openServiceDialog(): void &#123;
       For component-scoped styles, use <code>::ng-deep</code> or move overrides
       to a global stylesheet.
     </p>
-    <pt-ui-button buttonText="Open themed confirm" (pressed)="customOpen = true"></pt-ui-button>
+    <pt-ui-button
+      buttonText="Open themed confirmation"
+      (pressed)="customOpen = true"
+    ></pt-ui-button>
     <div class="confirm-dialog-page__custom-theme">
       <pt-ui-confirm-dialog
         [(open)]="customOpen"
         title="Archive this project?"
         message="You can restore archived projects later."
         icon="task_alt"
-        tone="confirm"
+        type="confirmation"
         [closeOnBackdrop]="false"
         confirmText="Yes, archive"
         cancelText="Cancel"
@@ -222,5 +229,60 @@ openServiceDialog(): void &#123;
 :host ::ng-deep .confirm-dialog-page__custom-theme .pt-ui-confirm-dialog__footer &#123;
   background: #ecfdf5;
 &#125;</code></pre>
+  </section>
+
+  <section class="confirm-dialog-page__section" id="api">
+    <h3>Inputs &amp; Outputs</h3>
+    <div class="confirm-dialog-page__api">
+      <div>
+        <h4>Inputs</h4>
+        <table class="confirm-dialog-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>open</code></td><td>boolean</td><td>Control dialog visibility (supports <code>[(open)]</code>).</td></tr>
+            <tr><td><code>title</code></td><td>string</td><td>Header title text.</td></tr>
+            <tr><td><code>message</code></td><td>string</td><td>Main confirmation message text.</td></tr>
+            <tr><td><code>ariaLabel</code></td><td>string</td><td>Accessible label when title is not used.</td></tr>
+            <tr><td><code>icon</code></td><td>string</td><td>Material icon name shown in the header.</td></tr>
+            <tr><td><code>type</code></td><td><code>'alert' | 'confirmation'</code></td><td>Visual confirm type variant.</td></tr>
+            <tr><td><code>confirmText</code></td><td>string</td><td>Text for the confirm action button.</td></tr>
+            <tr><td><code>cancelText</code></td><td>string</td><td>Text for the cancel action button.</td></tr>
+            <tr><td><code>closeOnBackdrop</code></td><td>boolean</td><td>Close when clicking outside the panel.</td></tr>
+            <tr><td><code>width</code></td><td>string | number</td><td>Dialog width.</td></tr>
+            <tr><td><code>height</code></td><td>string | number</td><td>Dialog height.</td></tr>
+            <tr><td><code>minWidth</code></td><td>string | number</td><td>Minimum width constraint.</td></tr>
+            <tr><td><code>minHeight</code></td><td>string | number</td><td>Minimum height constraint.</td></tr>
+            <tr><td><code>maxWidth</code></td><td>string | number</td><td>Maximum width constraint.</td></tr>
+            <tr><td><code>maxHeight</code></td><td>string | number</td><td>Maximum height constraint.</td></tr>
+            <tr><td><code>panelClass</code></td><td>string | string[]</td><td>Extra class(es) applied to the dialog panel.</td></tr>
+            <tr><td><code>backdropClass</code></td><td>string | string[]</td><td>Extra class(es) applied to the backdrop.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>Outputs</h4>
+        <table class="confirm-dialog-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>openChange</code></td><td>EventEmitter&lt;boolean&gt;</td><td>Emits when open state changes.</td></tr>
+            <tr><td><code>confirmed</code></td><td>EventEmitter&lt;void&gt;</td><td>Emits when confirm action is clicked.</td></tr>
+            <tr><td><code>cancelled</code></td><td>EventEmitter&lt;void&gt;</td><td>Emits when cancel action is clicked.</td></tr>
+            <tr><td><code>afterClosed</code></td><td>EventEmitter&lt;void&gt;</td><td>Emits after close animation fully completes.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </section>
 </main>

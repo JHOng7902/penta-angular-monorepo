@@ -1,6 +1,7 @@
-@if (open) {
+@if (isRendered) {
   <div
     [ngClass]="backdropClasses"
+    [class.is-closing]="isClosing"
     role="button"
     tabindex="0"
     aria-label="Close dialog"
@@ -10,12 +11,14 @@
   >
     <div
       [ngClass]="panelClasses"
+      [class.is-closing]="isClosing"
       role="alertdialog"
       tabindex="0"
       [attr.aria-modal]="true"
       [attr.aria-labelledby]="dialogAriaLabelledBy"
       [attr.aria-label]="dialogAriaLabel"
       [ngStyle]="panelStyles"
+      (animationend)="onPanelAnimationEnd($event)"
       (click)="$event.stopPropagation()"
       (keydown.enter)="$event.stopPropagation()"
       (keydown.space)="$event.stopPropagation()"

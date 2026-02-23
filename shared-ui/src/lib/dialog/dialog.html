@@ -1,6 +1,7 @@
-@if (open) {
+@if (isRendered) {
   <div
     class="pt-ui-dialog__backdrop"
+    [class.is-closing]="isClosing"
     role="button"
     tabindex="0"
     aria-label="Close dialog"
@@ -10,11 +11,13 @@
   >
     <div
       class="pt-ui-dialog__panel"
+      [class.is-closing]="isClosing"
       role="dialog"
       [attr.aria-modal]="true"
       [attr.aria-labelledby]="ariaLabelledBy"
       [attr.aria-label]="title ? null : ariaLabel"
       [ngStyle]="panelStyles"
+      (animationend)="onPanelAnimationEnd($event)"
       cdkDrag
       [cdkDragDisabled]="!draggable"
       cdkDragBoundary=".pt-ui-dialog__backdrop"

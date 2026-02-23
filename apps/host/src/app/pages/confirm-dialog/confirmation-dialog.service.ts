@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ConfirmDialogTone } from '@penta/shared-ui';
+import { ConfirmDialogType } from '@penta/shared-ui';
 
 export interface ConfirmationDialogConfig {
   title: string;
   message: string;
   icon?: string;
-  tone?: ConfirmDialogTone;
+  type?: ConfirmDialogType;
   confirmText?: string;
   cancelText?: string;
   closeOnBackdrop?: boolean;
@@ -23,7 +23,7 @@ export interface ConfirmationDialogState {
   title: string;
   message: string;
   icon: string;
-  tone: ConfirmDialogTone;
+  type: ConfirmDialogType;
   confirmText: string;
   cancelText: string;
   closeOnBackdrop: boolean;
@@ -49,14 +49,17 @@ export class ConfirmationDialogService {
   ): Promise<boolean> {
     if (this.resolver) {
       this.resolver(false);
+      this.resolver = undefined;
     }
+
+    const resolvedType = options.type ?? 'confirmation';
 
     const config: ConfirmationDialogState = {
       open: true,
       title,
       message,
       icon: options.icon ?? 'help',
-      tone: options.tone ?? 'confirm',
+      type: resolvedType,
       confirmText: options.confirmText ?? 'Yes',
       cancelText: options.cancelText ?? 'No',
       closeOnBackdrop: options.closeOnBackdrop ?? false,
@@ -88,6 +91,19 @@ export class ConfirmationDialogService {
       this.resolver(result);
       this.resolver = undefined;
     }
-    this.stateSubject.next(null);
+
+    const current = this.stateSubject.value;
+    if (!current) {
+      return;
+    }
+
+    this.stateSubject.next({ ...current, open: false });
+  }
+
+  onAfterClosed(): void {
+    const current = this.stateSubject.value;
+    if (current && !current.open) {
+      this.stateSubject.next(null);
+    }
   }
 }

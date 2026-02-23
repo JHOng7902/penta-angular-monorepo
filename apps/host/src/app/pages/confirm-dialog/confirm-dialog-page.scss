@@ -95,6 +95,50 @@
   color: #0f172a;
 }
 
+.confirm-dialog-page__api {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.confirm-dialog-page__api > div {
+  min-width: 0;
+}
+
+.confirm-dialog-page__api-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  font-size: 0.9rem;
+  table-layout: fixed;
+}
+
+.confirm-dialog-page__api-table th,
+.confirm-dialog-page__api-table td {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.confirm-dialog-page__api-table th {
+  background: #f1f5f9;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.confirm-dialog-page__api-table tbody tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+.confirm-dialog-page__api-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
 :host ::ng-deep .confirm-dialog-page__custom-theme .pt-ui-confirm-dialog__backdrop {
   background: rgba(16, 185, 129, 0.18);
   backdrop-filter: blur(6px);

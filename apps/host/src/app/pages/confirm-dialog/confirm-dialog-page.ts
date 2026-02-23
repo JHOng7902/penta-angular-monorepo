@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Button, ConfirmDialogComponent, InputComponent } from '@penta/shared-ui';
-import { ConfirmDialogTone } from '@penta/shared-ui';
+import { ConfirmDialogType } from '@penta/shared-ui';
 import { ConfirmationDialogService, ConfirmationDialogState } from './confirmation-dialog.service';
 import { Observable } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class ConfirmDialogPage {
   confirmOpen = false;
   customOpen = false;
   sizeOpen = false;
-  tone: ConfirmDialogTone = 'alert';
+  type: ConfirmDialogType = 'alert';
   confirmResult = 'No decision yet.';
 
   dialogWidth = '520px';
@@ -34,8 +34,8 @@ export class ConfirmDialogPage {
     this.serviceState$ = this.confirmationDialogService.state$;
   }
 
-  openTone(tone: ConfirmDialogTone): void {
-    this.tone = tone;
+  openType(type: ConfirmDialogType): void {
+    this.type = type;
     this.confirmOpen = true;
   }
 
@@ -51,7 +51,7 @@ export class ConfirmDialogPage {
     this.confirmationDialogService
       .openDialog('Confirmation', 'Are you sure want to process, this cannot be undo', {
         icon: 'warning',
-        tone: 'alert',
+        type: 'alert',
         confirmText: 'Yes',
         cancelText: 'No',
       })

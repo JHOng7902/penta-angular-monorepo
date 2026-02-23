@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,13 +23,46 @@ export interface DialogCloseEvent {
   standalone: true,
   imports: [CommonModule, DragDropModule, MatButtonModule, MatIconModule],
   templateUrl: './dialog.html',
-  styleUrl: './dialog.scss',
+  styleUrls: ['./dialog.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class DialogComponent {
+export class DialogComponent implements OnDestroy {
   private static nextId = 0;
+  private static readonly closeAnimationMs = 220;
   private readonly titleId = `pt-ui-dialog-title-${DialogComponent.nextId++}`;
+  private closeAnimationTimer?: ReturnType<typeof setTimeout>;
+  private _open = false;
 
-  @Input() open = false;
+  @Input()
+  get open(): boolean {
+    return this._open;
+  }
+  set open(value: boolean) {
+    const next = !!value;
+
+    if (next === this._open && (next || !this.isRendered || this.isClosing)) {
+      return;
+    }
+
+    this._open = next;
+
+    if (next) {
+      this.clearCloseAnimationTimer();
+      this.isClosing = false;
+      this.isRendered = true;
+      return;
+    }
+
+    if (!this.isRendered) {
+      return;
+    }
+
+    this.startCloseAnimation();
+  }
+
+  isRendered = false;
+  isClosing = false;
+
   @Input() title = '';
   @Input() ariaLabel?: string;
   @Input() draggable = false;
@@ -116,10 +156,64 @@ export class DialogComponent {
     this.requestClose('close', event);
   }
 
+  onPanelAnimationEnd(event: AnimationEvent): void {
+    if (!this.isClosing) {
+      return;
+    }
+    const target = event.target;
+    if (!(target instanceof HTMLElement) || !target.classList.contains('pt-ui-dialog__panel')) {
+      return;
+    }
+    this.finishCloseAnimation();
+  }
+
+  ngOnDestroy(): void {
+    this.clearCloseAnimationTimer();
+  }
+
   private requestClose(reason: DialogCloseReason, event?: MouseEvent): void {
     this.open = false;
     this.openChange.emit(false);
     this.closed.emit({ reason, event });
+  }
+
+  private startCloseAnimation(): void {
+    if (this.isClosing || !this.isRendered) {
+      return;
+    }
+
+    if (this.prefersReducedMotion()) {
+      this.finishCloseAnimation();
+      return;
+    }
+
+    this.isClosing = true;
+    this.clearCloseAnimationTimer();
+    this.closeAnimationTimer = setTimeout(() => {
+      this.finishCloseAnimation();
+    }, DialogComponent.closeAnimationMs);
+  }
+
+  private finishCloseAnimation(): void {
+    this.clearCloseAnimationTimer();
+    this.isClosing = false;
+    if (!this._open) {
+      this.isRendered = false;
+    }
+  }
+
+  private clearCloseAnimationTimer(): void {
+    if (this.closeAnimationTimer) {
+      clearTimeout(this.closeAnimationTimer);
+      this.closeAnimationTimer = undefined;
+    }
+  }
+
+  private prefersReducedMotion(): boolean {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return false;
+    }
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
   private resolveSize(value?: string | number): string | undefined {

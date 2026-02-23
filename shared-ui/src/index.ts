@@ -23,3 +23,7 @@ export * from './lib/nested-table/nested-table';
 
 export * from './lib/toast-message/toast-message';
 export * from './lib/toast-message/toast-message.service';
+
+export * from './lib/dialog/dialog';
+
+export * from './lib/confirm-dialog/confirm-dialog';

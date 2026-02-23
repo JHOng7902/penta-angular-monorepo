@@ -1,0 +1,222 @@
+<main class="dialog-page">
+  <header class="dialog-page__hero">
+    <h2>Dialog Component</h2>
+    <p>
+      The shared <strong>pt-ui-dialog</strong> supports draggable panels, optional
+      close-on-backdrop behavior, and sizing controls.
+    </p>
+  </header>
+
+  <section class="dialog-page__section" id="import-use">
+    <h3>Import &amp; Use</h3>
+    <ol class="dialog-page__steps">
+      <li>Import <code>DialogComponent</code> from the shared library.</li>
+      <li>Add it to the <code>imports</code> array of your standalone component.</li>
+      <li>Toggle using <code>[(open)]</code> and listen for <code>(closed)</code>.</li>
+    </ol>
+    <pre class="dialog-page__code" ngNonBindable><code>import &#123; DialogComponent &#125; from '@penta/shared-ui';
+
+@Component(&#123;
+  standalone: true,
+  imports: [DialogComponent],
+&#125;)
+export class ExampleComponent &#123;&#125;
+
+&lt;pt-ui-dialog title="Confirm" [(open)]="open" (closed)="onClosed($event)"&gt;
+  Dialog body
+&lt;/pt-ui-dialog&gt;</code></pre>
+  </section>
+
+  <section class="dialog-page__section" id="basic">
+    <h3>Basic Dialog</h3>
+    <p class="dialog-page__desc">
+      Use <code>closeOnBackdrop</code> to control whether clicking outside closes the dialog.
+    </p>
+    <div class="dialog-page__row">
+      <pt-ui-button buttonText="Open dialog" (pressed)="basicOpen = true"></pt-ui-button>
+      <span class="dialog-page__note">{{ lastEvent }}</span>
+    </div>
+    <label class="dialog-page__toggle">
+      <input
+        type="checkbox"
+        [checked]="closeOnBackdrop"
+        (change)="closeOnBackdrop = !closeOnBackdrop"
+      />
+      Close on backdrop click
+    </label>
+
+    <pt-ui-dialog
+      [(open)]="basicOpen"
+      title="Default dialog"
+      [closeOnBackdrop]="closeOnBackdrop"
+      [showFooter]="true"
+      (closed)="onClosed($event)"
+    >
+      <p>
+        This dialog uses default sizing. Toggle the backdrop behavior to prevent
+        accidental closes.
+      </p>
+      <div class="dialog-page__actions" ptDialogFooter>
+        <pt-ui-button buttonText="Cancel" variant="outline" (pressed)="basicOpen = false">
+        </pt-ui-button>
+        <pt-ui-button buttonText="Confirm" (pressed)="basicOpen = false"></pt-ui-button>
+      </div>
+    </pt-ui-dialog>
+    <pre class="dialog-page__code" ngNonBindable><code>&lt;pt-ui-dialog
+  title="Default dialog"
+  [closeOnBackdrop]="true"
+  [(open)]="open"
+&gt;
+  Dialog body
+&lt;/pt-ui-dialog&gt;</code></pre>
+  </section>
+
+  <section class="dialog-page__section" id="draggable">
+    <h3>Draggable Dialog</h3>
+    <p class="dialog-page__desc">
+      Set <code>draggable</code> to move the dialog by dragging the header.
+    </p>
+    <pt-ui-button buttonText="Open draggable dialog" (pressed)="dragOpen = true"></pt-ui-button>
+    <pt-ui-dialog
+      [(open)]="dragOpen"
+      title="Draggable dialog"
+      [draggable]="true"
+      [closeOnBackdrop]="false"
+      [showFooter]="true"
+    >
+      <p>Drag the header to reposition the dialog.</p>
+      <div class="dialog-page__actions" ptDialogFooter>
+        <pt-ui-button buttonText="Close" (pressed)="dragOpen = false"></pt-ui-button>
+      </div>
+    </pt-ui-dialog>
+    <pre class="dialog-page__code" ngNonBindable><code>&lt;pt-ui-dialog
+  title="Draggable dialog"
+  [draggable]="true"
+  [closeOnBackdrop]="false"
+  [(open)]="open"
+&gt;&lt;/pt-ui-dialog&gt;</code></pre>
+  </section>
+
+  <section class="dialog-page__section" id="sizing">
+    <h3>Size Controls</h3>
+    <p class="dialog-page__desc">
+      Bind width/height settings to match your layout.
+    </p>
+    <div class="dialog-page__grid dialog-page__inputs">
+      <pt-ui-input label="Width" [(value)]="dialogWidth" placeholder="640px"></pt-ui-input>
+      <pt-ui-input label="Height" [(value)]="dialogHeight" placeholder="auto"></pt-ui-input>
+      <pt-ui-input label="Max Width" [(value)]="dialogMaxWidth" placeholder="900px"></pt-ui-input>
+      <pt-ui-input label="Max Height" [(value)]="dialogMaxHeight" placeholder="70vh"></pt-ui-input>
+    </div>
+    <pt-ui-button buttonText="Open sized dialog" (pressed)="sizeOpen = true"></pt-ui-button>
+    <pt-ui-dialog
+      [(open)]="sizeOpen"
+      title="Sized dialog"
+      [width]="dialogWidth"
+      [height]="dialogHeight"
+      [maxWidth]="dialogMaxWidth"
+      [maxHeight]="dialogMaxHeight"
+      [showFooter]="true"
+    >
+      <p>
+        Try values like <code>720px</code>, <code>80vh</code>, or <code>100%</code>.
+      </p>
+      <div class="dialog-page__actions" ptDialogFooter>
+        <pt-ui-button buttonText="Close" (pressed)="sizeOpen = false"></pt-ui-button>
+      </div>
+    </pt-ui-dialog>
+    <pre class="dialog-page__code" ngNonBindable><code>&lt;pt-ui-dialog
+  [width]="'640px'"
+  [height]="'auto'"
+  [maxWidth]="'900px'"
+  [maxHeight]="'70vh'"
+&gt;&lt;/pt-ui-dialog&gt;</code></pre>
+  </section>
+
+  <section class="dialog-page__section" id="customize">
+    <h3>Customize Styles</h3>
+    <p class="dialog-page__desc">
+      Wrap dialogs in a class and override styles locally. For component-scoped
+      styles, use <code>::ng-deep</code> or move overrides to a global stylesheet.
+    </p>
+    <pt-ui-button buttonText="Open themed dialog" (pressed)="customOpen = true"></pt-ui-button>
+    <div class="dialog-page__custom-theme">
+      <pt-ui-dialog
+        [(open)]="customOpen"
+        title="Themed dialog"
+        [showFooter]="true"
+        [closeOnBackdrop]="false"
+      >
+        <p>Custom theme overrides the header, panel, and footer styling.</p>
+        <div class="dialog-page__actions" ptDialogFooter>
+          <pt-ui-button buttonText="Close" variant="outline" (pressed)="customOpen = false">
+          </pt-ui-button>
+          <pt-ui-button buttonText="Confirm" (pressed)="customOpen = false"></pt-ui-button>
+        </div>
+      </pt-ui-dialog>
+    </div>
+    <pre class="dialog-page__code" ngNonBindable><code>&lt;div class="dialog-page__custom-theme"&gt;
+  &lt;pt-ui-dialog title="Themed dialog" [(open)]="open"&gt;...&lt;/pt-ui-dialog&gt;
+&lt;/div&gt;
+
+:host ::ng-deep .dialog-page__custom-theme .pt-ui-dialog__panel &#123;
+  background: #0f172a;
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.2);
+&#125;
+
+:host ::ng-deep .dialog-page__custom-theme .pt-ui-dialog__header &#123;
+  background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+  border-bottom-color: rgba(148, 163, 184, 0.25);
+&#125;
+
+:host ::ng-deep .dialog-page__custom-theme .pt-ui-dialog__footer &#123;
+  background: rgba(15, 23, 42, 0.85);
+&#125;</code></pre>
+  </section>
+
+  <section class="dialog-page__section" id="api">
+    <h3>Inputs &amp; Outputs</h3>
+    <div class="dialog-page__api">
+      <div>
+        <h4>Inputs</h4>
+        <table class="dialog-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>open</code></td><td>boolean</td><td>Control dialog visibility (supports <code>[(open)]</code>).</td></tr>
+            <tr><td><code>title</code></td><td>string</td><td>Header title text.</td></tr>
+            <tr><td><code>draggable</code></td><td>boolean</td><td>Enable dragging via the header.</td></tr>
+            <tr><td><code>closeOnBackdrop</code></td><td>boolean</td><td>Close when clicking outside.</td></tr>
+            <tr><td><code>width</code></td><td>string | number</td><td>Dialog width.</td></tr>
+            <tr><td><code>height</code></td><td>string | number</td><td>Dialog height.</td></tr>
+            <tr><td><code>maxWidth</code></td><td>string | number</td><td>Max width constraint.</td></tr>
+            <tr><td><code>maxHeight</code></td><td>string | number</td><td>Max height constraint.</td></tr>
+            <tr><td><code>showFooter</code></td><td>boolean</td><td>Render the footer slot.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>Outputs</h4>
+        <table class="dialog-page__api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>openChange</code></td><td>EventEmitter&lt;boolean&gt;</td><td>Emits when the dialog closes.</td></tr>
+            <tr><td><code>closed</code></td><td>EventEmitter&lt;DialogCloseEvent&gt;</td><td>Provides close reason.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>

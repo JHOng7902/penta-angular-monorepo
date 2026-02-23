@@ -1,0 +1,202 @@
+.dialog-page {
+  display: grid;
+  gap: 2rem;
+}
+
+.dialog-page__hero {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 1.75rem 2rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.dialog-page__section {
+  display: grid;
+  gap: 0.75rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.dialog-page__desc {
+  margin: 0;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.dialog-page__steps {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #475569;
+  line-height: 1.6;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.dialog-page__steps code {
+  background: rgba(15, 23, 42, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+}
+
+.dialog-page__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.dialog-page__note {
+  color: #475569;
+  font-weight: 600;
+}
+
+.dialog-page__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.dialog-page__toggle input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+}
+
+.dialog-page__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.dialog-page__inputs {
+  align-items: end;
+}
+
+.dialog-page__actions {
+  display: inline-flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.dialog-page__code {
+  margin: 0;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.dialog-page__code code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  border: none;
+  display: block;
+  white-space: inherit;
+}
+
+.dialog-page__api {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.dialog-page__api > div {
+  min-width: 0;
+}
+
+.dialog-page__api-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  font-size: 0.9rem;
+  table-layout: fixed;
+}
+
+.dialog-page__api-table th,
+.dialog-page__api-table td {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.dialog-page__api-table th {
+  background: #f1f5f9;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.dialog-page__api-table tbody tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+.dialog-page__api-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.dialog-page__section code {
+  background: rgba(15, 23, 42, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+}
+
+.dialog-page__code code {
+  background: transparent;
+  padding: 0;
+  border: none;
+  color: #e2e8f0;
+}
+
+:host ::ng-deep .dialog-page__custom-theme .pt-ui-dialog__backdrop {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+:host ::ng-deep .dialog-page__custom-theme .pt-ui-dialog__panel {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.2);
+  box-shadow: 0 26px 72px rgba(15, 23, 42, 0.5);
+}
+
+:host ::ng-deep .dialog-page__custom-theme .pt-ui-dialog__header {
+  background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+  border-bottom-color: rgba(148, 163, 184, 0.25);
+}
+
+:host ::ng-deep .dialog-page__custom-theme .pt-ui-dialog__title {
+  color: #e2e8f0;
+}
+
+:host ::ng-deep .dialog-page__custom-theme .pt-ui-dialog__close {
+  color: #cbd5f5;
+}
+
+:host ::ng-deep .dialog-page__custom-theme .pt-ui-dialog__close:hover {
+  color: #ffffff;
+}
+
+:host ::ng-deep .dialog-page__custom-theme .pt-ui-dialog__body {
+  color: #e2e8f0;
+}
+
+:host ::ng-deep .dialog-page__custom-theme .pt-ui-dialog__footer {
+  background: rgba(15, 23, 42, 0.85);
+  border-top-color: rgba(148, 163, 184, 0.25);
+}

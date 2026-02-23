@@ -1,0 +1,45 @@
+@if (open) {
+  <div
+    [ngClass]="backdropClasses"
+    role="button"
+    tabindex="0"
+    aria-label="Close dialog"
+    (click)="onBackdropClick($event)"
+    (keydown.enter)="onBackdropKey($event)"
+    (keydown.space)="onBackdropKey($event)"
+  >
+    <div
+      [ngClass]="panelClasses"
+      role="alertdialog"
+      tabindex="0"
+      [attr.aria-modal]="true"
+      [attr.aria-labelledby]="dialogAriaLabelledBy"
+      [attr.aria-label]="dialogAriaLabel"
+      [ngStyle]="panelStyles"
+      (click)="$event.stopPropagation()"
+      (keydown.enter)="$event.stopPropagation()"
+      (keydown.space)="$event.stopPropagation()"
+    >
+      <header class="pt-ui-confirm-dialog__header">
+        <div class="pt-ui-confirm-dialog__title" [attr.id]="dialogTitleId">
+          <span class="pt-ui-confirm-dialog__icon">
+            <mat-icon>{{ icon }}</mat-icon>
+          </span>
+          <span class="pt-ui-confirm-dialog__title-text">{{ title }}</span>
+        </div>
+      </header>
+
+      <div class="pt-ui-confirm-dialog__body">
+        <p class="pt-ui-confirm-dialog__message">{{ message }}</p>
+      </div>
+
+      <div class="pt-ui-confirm-dialog__footer">
+        <div class="pt-ui-confirm-dialog__actions">
+          <pt-ui-button [buttonText]="cancelText" variant="outline" (pressed)="onCancel()">
+          </pt-ui-button>
+          <pt-ui-button [buttonText]="confirmText" (pressed)="onConfirm()"></pt-ui-button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

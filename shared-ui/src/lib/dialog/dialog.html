@@ -1,0 +1,54 @@
+@if (open) {
+  <div
+    class="pt-ui-dialog__backdrop"
+    role="button"
+    tabindex="0"
+    aria-label="Close dialog"
+    (click)="onBackdropClick($event)"
+    (keydown.enter)="onBackdropKey($event)"
+    (keydown.space)="onBackdropKey($event)"
+  >
+    <div
+      class="pt-ui-dialog__panel"
+      role="dialog"
+      [attr.aria-modal]="true"
+      [attr.aria-labelledby]="ariaLabelledBy"
+      [attr.aria-label]="title ? null : ariaLabel"
+      [ngStyle]="panelStyles"
+      cdkDrag
+      [cdkDragDisabled]="!draggable"
+      cdkDragBoundary=".pt-ui-dialog__backdrop"
+    >
+      <header class="pt-ui-dialog__header" cdkDragHandle [class.is-draggable]="draggable">
+        <div class="pt-ui-dialog__title" [attr.id]="dialogTitleId">
+          <ng-content select="[ptDialogTitle]"></ng-content>
+          @if (!title && !ariaLabel) {
+            <span class="pt-ui-dialog__title-fallback">Dialog</span>
+          }
+          @if (title) {
+            <span class="pt-ui-dialog__title-text">{{ title }}</span>
+          }
+        </div>
+        @if (showClose) {
+          <button
+            type="button"
+            class="pt-ui-dialog__close"
+            mat-icon-button
+            (click)="onCloseClick($event)"
+            aria-label="Close dialog"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </header>
+      <div class="pt-ui-dialog__body">
+        <ng-content></ng-content>
+      </div>
+      @if (showFooter) {
+        <div class="pt-ui-dialog__footer">
+          <ng-content select="[ptDialogFooter]"></ng-content>
+        </div>
+      }
+    </div>
+  </div>
+}

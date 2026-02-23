@@ -1,0 +1,110 @@
+.confirm-dialog-page {
+  display: grid;
+  gap: 2rem;
+}
+
+.confirm-dialog-page__hero {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 1.75rem 2rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.confirm-dialog-page__section {
+  display: grid;
+  gap: 0.75rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.confirm-dialog-page__desc {
+  margin: 0;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.confirm-dialog-page__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.confirm-dialog-page__code-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+.confirm-dialog-page__code-block {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.confirm-dialog-page__code-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.confirm-dialog-page__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.confirm-dialog-page__inputs {
+  align-items: end;
+}
+
+.confirm-dialog-page__note {
+  color: #475569;
+  font-weight: 600;
+}
+
+.confirm-dialog-page__code {
+  margin: 0;
+  background: #0f172a;
+  color: #e2e8f0 !important;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.confirm-dialog-page__code code {
+  background: transparent;
+  padding: 0;
+  color: #e2e8f0 !important;
+  border: none;
+  display: block;
+  white-space: inherit;
+}
+
+.confirm-dialog-page__section code {
+  background: rgba(15, 23, 42, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+}
+
+:host ::ng-deep .confirm-dialog-page__custom-theme .pt-ui-confirm-dialog__backdrop {
+  background: rgba(16, 185, 129, 0.18);
+  backdrop-filter: blur(6px);
+}
+
+:host ::ng-deep .confirm-dialog-page__custom-theme .pt-ui-confirm-dialog__panel {
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 28px 70px rgba(16, 185, 129, 0.18);
+  --pt-confirm-header-bg: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  --pt-confirm-header-border: rgba(16, 185, 129, 0.25);
+  --pt-confirm-footer-bg: #ecfdf5;
+  --pt-confirm-footer-border: rgba(16, 185, 129, 0.2);
+}

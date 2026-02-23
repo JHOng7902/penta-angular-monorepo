@@ -1,0 +1,226 @@
+<main class="confirm-dialog-page">
+  <header class="confirm-dialog-page__hero">
+    <h2>Confirmation Dialog</h2>
+    <p>
+      Use <strong>pt-ui-confirm-dialog</strong> for destructive or permission-based
+      actions. It includes alert/confirm styling and explicit Yes/No actions.
+    </p>
+  </header>
+
+  <section class="confirm-dialog-page__section" id="basic">
+    <h3>Default Confirmation</h3>
+    <p class="confirm-dialog-page__desc">
+      Choose a tone and open the dialog to preview different alert styles.
+    </p>
+    <div class="confirm-dialog-page__row">
+      <pt-ui-button buttonText="Alert tone" (pressed)="openTone('alert')"></pt-ui-button>
+      <pt-ui-button buttonText="Confirm tone" variant="outline" (pressed)="openTone('confirm')">
+      </pt-ui-button>
+      <pt-ui-button buttonText="Neutral tone" variant="ghost" (pressed)="openTone('neutral')">
+      </pt-ui-button>
+      <span class="confirm-dialog-page__note">{{ confirmResult }}</span>
+    </div>
+
+    <pt-ui-confirm-dialog
+      [(open)]="confirmOpen"
+      title="Delete this record?"
+      message="This action cannot be undone. Proceed anyway?"
+      icon="warning"
+      [tone]="tone"
+      [closeOnBackdrop]="false"
+      confirmText="Yes"
+      cancelText="No"
+      (confirmed)="onConfirmed()"
+      (cancelled)="onCancelled()"
+    ></pt-ui-confirm-dialog>
+
+    <div class="confirm-dialog-page__code-grid">
+      <div class="confirm-dialog-page__code-block">
+        <span class="confirm-dialog-page__code-label">HTML</span>
+        <pre class="confirm-dialog-page__code" ngNonBindable><code>&lt;pt-ui-confirm-dialog
+  title="Delete this record?"
+  message="This action cannot be undone. Proceed anyway?"
+  icon="warning"
+  tone="alert"
+  confirmText="Yes"
+  cancelText="No"
+  [(open)]="open"
+  (confirmed)="onConfirmed()"
+  (cancelled)="onCancelled()"
+&gt;&lt;/pt-ui-confirm-dialog&gt;</code></pre>
+      </div>
+      <div class="confirm-dialog-page__code-block">
+        <span class="confirm-dialog-page__code-label">TypeScript</span>
+        <pre class="confirm-dialog-page__code" ngNonBindable><code>confirmOpen = false;
+tone: ConfirmDialogTone = 'alert';
+confirmResult = 'No decision yet.';
+
+openTone(tone: ConfirmDialogTone): void &#123;
+  this.tone = tone;
+  this.confirmOpen = true;
+&#125;
+
+onConfirmed(): void &#123;
+  this.confirmResult = 'Confirmed';
+&#125;
+
+onCancelled(): void &#123;
+  this.confirmResult = 'Cancelled';
+&#125;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="confirm-dialog-page__section" id="service">
+    <h3>Service Usage</h3>
+    <p class="confirm-dialog-page__desc">
+      In real apps, developers often open a confirmation dialog from TypeScript:
+      <code>this.confirmationDialogService.openDialog(...)</code>.
+    </p>
+    <div class="confirm-dialog-page__row">
+      <pt-ui-button buttonText="Open via service" (pressed)="openServiceDialog()"></pt-ui-button>
+      <span class="confirm-dialog-page__note">{{ confirmResult }}</span>
+    </div>
+
+    @if (serviceState$ | async; as state) {
+      <pt-ui-confirm-dialog
+        [open]="state.open"
+        [title]="state.title"
+        [message]="state.message"
+        [icon]="state.icon"
+        [tone]="state.tone"
+        [confirmText]="state.confirmText"
+        [cancelText]="state.cancelText"
+        [closeOnBackdrop]="state.closeOnBackdrop"
+        [width]="state.width"
+        [height]="state.height"
+        [minWidth]="state.minWidth"
+        [minHeight]="state.minHeight"
+        [maxWidth]="state.maxWidth"
+        [maxHeight]="state.maxHeight"
+        (confirmed)="confirmationDialogService.confirm()"
+        (cancelled)="confirmationDialogService.cancel()"
+      ></pt-ui-confirm-dialog>
+    }
+
+    <div class="confirm-dialog-page__code-grid">
+      <div class="confirm-dialog-page__code-block">
+        <span class="confirm-dialog-page__code-label">HTML</span>
+        <pre class="confirm-dialog-page__code" ngNonBindable><code>&#64;if (serviceState$ | async; as state) &#123;
+  &lt;pt-ui-confirm-dialog
+    [open]="state.open"
+    [title]="state.title"
+    [message]="state.message"
+    [icon]="state.icon"
+    [tone]="state.tone"
+    [confirmText]="state.confirmText"
+    [cancelText]="state.cancelText"
+    (confirmed)="confirmationDialogService.confirm()"
+    (cancelled)="confirmationDialogService.cancel()"
+  &gt;&lt;/pt-ui-confirm-dialog&gt;
+&#125;</code></pre>
+      </div>
+      <div class="confirm-dialog-page__code-block">
+        <span class="confirm-dialog-page__code-label">TypeScript</span>
+        <pre class="confirm-dialog-page__code" ngNonBindable><code>constructor(private readonly confirmationDialogService: ConfirmationDialogService) &#123;&#125;
+
+openServiceDialog(): void &#123;
+  this.confirmationDialogService
+    .openDialog('Confirmation', 'Are you sure want to process, this cannot be undo', &#123;
+      icon: 'warning',
+      tone: 'alert',
+      confirmText: 'Yes',
+      cancelText: 'No',
+    &#125;)
+    .then((confirmed) =&gt; &#123;
+      this.confirmResult = confirmed ? 'Confirmed' : 'Cancelled';
+    &#125;);
+&#125;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="confirm-dialog-page__section" id="sizing">
+    <h3>Size Controls</h3>
+    <p class="confirm-dialog-page__desc">
+      Bind width/height settings to match your layout.
+    </p>
+    <div class="confirm-dialog-page__grid confirm-dialog-page__inputs">
+      <pt-ui-input label="Width" [(value)]="dialogWidth" placeholder="520px"></pt-ui-input>
+      <pt-ui-input label="Height" [(value)]="dialogHeight" placeholder="auto"></pt-ui-input>
+      <pt-ui-input label="Min Width" [(value)]="dialogMinWidth" placeholder="320px"></pt-ui-input>
+      <pt-ui-input label="Min Height" [(value)]="dialogMinHeight" placeholder="auto"></pt-ui-input>
+      <pt-ui-input label="Max Width" [(value)]="dialogMaxWidth" placeholder="720px"></pt-ui-input>
+      <pt-ui-input label="Max Height" [(value)]="dialogMaxHeight" placeholder="70vh"></pt-ui-input>
+    </div>
+    <pt-ui-button buttonText="Open sized confirm" (pressed)="sizeOpen = true"></pt-ui-button>
+    <pt-ui-confirm-dialog
+      [(open)]="sizeOpen"
+      title="Sized confirmation"
+      message="Adjust width, height, and min/max constraints using the inputs above."
+      icon="info"
+      tone="neutral"
+      [closeOnBackdrop]="false"
+      confirmText="Okay"
+      cancelText="Cancel"
+      [width]="dialogWidth"
+      [height]="dialogHeight"
+      [minWidth]="dialogMinWidth"
+      [minHeight]="dialogMinHeight"
+      [maxWidth]="dialogMaxWidth"
+      [maxHeight]="dialogMaxHeight"
+      (confirmed)="onConfirmed()"
+      (cancelled)="onCancelled()"
+    ></pt-ui-confirm-dialog>
+
+    <pre class="confirm-dialog-page__code" ngNonBindable><code>&lt;pt-ui-confirm-dialog
+  [width]="'520px'"
+  [height]="'auto'"
+  [minWidth]="'320px'"
+  [minHeight]="'auto'"
+  [maxWidth]="'720px'"
+  [maxHeight]="'70vh'"
+&gt;&lt;/pt-ui-confirm-dialog&gt;</code></pre>
+  </section>
+
+  <section class="confirm-dialog-page__section" id="customize">
+    <h3>Customize Styles</h3>
+    <p class="confirm-dialog-page__desc">
+      Wrap the confirmation dialog in a class and override styles locally.
+      For component-scoped styles, use <code>::ng-deep</code> or move overrides
+      to a global stylesheet.
+    </p>
+    <pt-ui-button buttonText="Open themed confirm" (pressed)="customOpen = true"></pt-ui-button>
+    <div class="confirm-dialog-page__custom-theme">
+      <pt-ui-confirm-dialog
+        [(open)]="customOpen"
+        title="Archive this project?"
+        message="You can restore archived projects later."
+        icon="task_alt"
+        tone="confirm"
+        [closeOnBackdrop]="false"
+        confirmText="Yes, archive"
+        cancelText="Cancel"
+        (confirmed)="onConfirmed()"
+        (cancelled)="onCancelled()"
+      ></pt-ui-confirm-dialog>
+    </div>
+
+    <pre class="confirm-dialog-page__code" ngNonBindable><code>&lt;div class="confirm-dialog-page__custom-theme"&gt;
+  &lt;pt-ui-confirm-dialog title="Archive this project?" [(open)]="open"&gt;&lt;/pt-ui-confirm-dialog&gt;
+&lt;/div&gt;
+
+:host ::ng-deep .confirm-dialog-page__custom-theme .pt-ui-confirm-dialog__panel &#123;
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 28px 70px rgba(16, 185, 129, 0.18);
+&#125;
+
+:host ::ng-deep .confirm-dialog-page__custom-theme .pt-ui-confirm-dialog__header &#123;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+&#125;
+
+:host ::ng-deep .confirm-dialog-page__custom-theme .pt-ui-confirm-dialog__footer &#123;
+  background: #ecfdf5;
+&#125;</code></pre>
+  </section>
+</main>

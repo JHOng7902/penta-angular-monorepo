@@ -144,26 +144,59 @@
 }
 
 :host ::ng-deep .select-page__panel-theme .pt-ui-select__filter-wrap {
-  background: #ecfeff;
-  border-color: rgba(20, 184, 166, 0.5);
+  background: #ecfeff !important;
+  border-color: rgba(20, 184, 166, 0.5) !important;
 }
 
 :host ::ng-deep .select-page__panel-theme .pt-ui-select__filter::placeholder {
   color: rgba(15, 118, 110, 0.55);
 }
 
+:host ::ng-deep .select-page__panel-theme.mat-mdc-select-panel {
+  --mdc-list-list-item-selected-container-color: rgba(20, 184, 166, 0.16);
+  --mdc-list-list-item-hover-state-layer-color: rgba(20, 184, 166, 0.12);
+  --mdc-list-list-item-focus-state-layer-color: rgba(20, 184, 166, 0.14);
+  --mdc-list-list-item-pressed-state-layer-color: rgba(20, 184, 166, 0.2);
+  --mdc-list-list-item-hover-state-layer-opacity: 1;
+  --mdc-list-list-item-focus-state-layer-opacity: 1;
+  --mdc-list-list-item-pressed-state-layer-opacity: 1;
+}
+
 :host
   ::ng-deep
   .select-page__panel-theme
   .mat-mdc-option.mat-mdc-option-selected:not(.mat-mdc-option-disabled) {
-  background: rgba(20, 184, 166, 0.16);
+  background: rgba(20, 184, 166, 0.16) !important;
 }
 
 :host
   ::ng-deep
   .select-page__panel-theme
   .mat-mdc-option.mat-mdc-option-active:not(.mat-mdc-option-disabled) {
-  background: rgba(20, 184, 166, 0.1);
+  background: rgba(20, 184, 166, 0.1) !important;
+}
+
+:host
+  ::ng-deep
+  .select-page__panel-theme
+  .mat-mdc-option:not(.mat-mdc-option-disabled):hover {
+  background: rgba(20, 184, 166, 0.08) !important;
+}
+
+:host
+  ::ng-deep
+  .select-page__panel-theme
+  .mat-mdc-option.mat-mdc-option-selected
+  .pt-ui-select__option-label {
+  color: #0f766e !important;
+}
+
+:host
+  ::ng-deep
+  .select-page__panel-theme
+  .mat-mdc-option.mat-mdc-option-selected
+  .pt-ui-select__option-meta {
+  color: rgba(15, 118, 110, 0.8) !important;
 }
 
 .select-page__notice {

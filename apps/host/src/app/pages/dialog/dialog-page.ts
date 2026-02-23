@@ -11,6 +11,7 @@ import { DialogCloseEvent } from '@penta/shared-ui';
   styleUrl: './dialog-page.scss',
 })
 export class DialogPage {
+  serviceState: { open: boolean; title: string; message: string } | null = null;
   basicOpen = false;
   dragOpen = false;
   sizeOpen = false;
@@ -18,6 +19,7 @@ export class DialogPage {
 
   closeOnBackdrop = true;
   lastEvent = 'No close events yet.';
+  serviceResult = 'No service action yet.';
 
   dialogWidth = '640px';
   dialogHeight = 'auto';
@@ -26,6 +28,53 @@ export class DialogPage {
 
   onClosed(event: DialogCloseEvent): void {
     this.lastEvent = `Closed by ${event.reason}`;
+  }
+
+  onAfterClosed(): void {
+    this.lastEvent = `${this.lastEvent} (animation done)`;
+  }
+
+  openServiceDialog(): void {
+    this.serviceResult = 'Waiting for decision...';
+    this.serviceState = {
+      open: true,
+      title: 'Service dialog',
+      message: 'State cleanup will run after close animation completes.',
+    };
+  }
+
+  confirmServiceDialog(): void {
+    const current = this.serviceState;
+    if (!current) {
+      return;
+    }
+    this.serviceResult = 'Confirmed';
+    this.serviceState = { ...current, open: false };
+  }
+
+  cancelServiceDialog(): void {
+    const current = this.serviceState;
+    if (!current) {
+      return;
+    }
+    this.serviceResult = 'Cancelled';
+    this.serviceState = { ...current, open: false };
+  }
+
+  onServiceClosed(event: DialogCloseEvent): void {
+    const current = this.serviceState;
+    if (!current) {
+      return;
+    }
+    this.serviceResult = `Closed by ${event.reason}`;
+    this.serviceState = { ...current, open: false };
+  }
+
+  onServiceAfterClosed(): void {
+    const current = this.serviceState;
+    if (current && !current.open) {
+      this.serviceState = null;
+    }
   }
 
 }

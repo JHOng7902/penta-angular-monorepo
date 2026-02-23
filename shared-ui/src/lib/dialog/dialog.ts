@@ -78,6 +78,7 @@ export class DialogComponent implements OnDestroy {
 
   @Output() openChange = new EventEmitter<boolean>();
   @Output() closed = new EventEmitter<DialogCloseEvent>();
+  @Output() afterClosed = new EventEmitter<void>();
 
   get ariaLabelledBy(): string | null {
     if (this.title) {
@@ -199,6 +200,7 @@ export class DialogComponent implements OnDestroy {
     this.isClosing = false;
     if (!this._open) {
       this.isRendered = false;
+      this.afterClosed.emit();
     }
   }
 

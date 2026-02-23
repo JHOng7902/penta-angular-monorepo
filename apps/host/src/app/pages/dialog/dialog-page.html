@@ -12,7 +12,10 @@
     <ol class="dialog-page__steps">
       <li>Import <code>DialogComponent</code> from the shared library.</li>
       <li>Add it to the <code>imports</code> array of your standalone component.</li>
-      <li>Toggle using <code>[(open)]</code> and listen for <code>(closed)</code>.</li>
+      <li>
+        Toggle using <code>[(open)]</code>, use <code>(closed)</code> for reason, and
+        <code>(afterClosed)</code> for post-animation cleanup.
+      </li>
     </ol>
     <pre class="dialog-page__code" ngNonBindable><code>import &#123; DialogComponent &#125; from '@penta/shared-ui';
 
@@ -22,7 +25,12 @@
 &#125;)
 export class ExampleComponent &#123;&#125;
 
-&lt;pt-ui-dialog title="Confirm" [(open)]="open" (closed)="onClosed($event)"&gt;
+&lt;pt-ui-dialog
+  title="Confirm"
+  [(open)]="open"
+  (closed)="onClosed($event)"
+  (afterClosed)="onAfterClosed()"
+&gt;
   Dialog body
 &lt;/pt-ui-dialog&gt;</code></pre>
   </section>
@@ -31,6 +39,7 @@ export class ExampleComponent &#123;&#125;
     <h3>Basic Dialog</h3>
     <p class="dialog-page__desc">
       Use <code>closeOnBackdrop</code> to control whether clicking outside closes the dialog.
+      For service-driven dialogs, clear service state in <code>(afterClosed)</code>.
     </p>
     <div class="dialog-page__row">
       <pt-ui-button buttonText="Open dialog" (pressed)="basicOpen = true"></pt-ui-button>
@@ -51,6 +60,7 @@ export class ExampleComponent &#123;&#125;
       [closeOnBackdrop]="closeOnBackdrop"
       [showFooter]="true"
       (closed)="onClosed($event)"
+      (afterClosed)="onAfterClosed()"
     >
       <p>
         This dialog uses default sizing. Toggle the backdrop behavior to prevent
@@ -69,6 +79,56 @@ export class ExampleComponent &#123;&#125;
 &gt;
   Dialog body
 &lt;/pt-ui-dialog&gt;</code></pre>
+  </section>
+
+  <section class="dialog-page__section" id="service">
+    <h3>Service-Driven Example</h3>
+    <p class="dialog-page__desc">
+      Keep dialog state until <code>(afterClosed)</code> fires so close animation stays visible.
+    </p>
+    <div class="dialog-page__row">
+      <pt-ui-button buttonText="Open via service pattern" (pressed)="openServiceDialog()"></pt-ui-button>
+      <span class="dialog-page__note">{{ serviceResult }}</span>
+    </div>
+
+    @if (serviceState; as state) {
+      <pt-ui-dialog
+        [open]="state.open"
+        [title]="state.title"
+        [closeOnBackdrop]="true"
+        [showFooter]="true"
+        (closed)="onServiceClosed($event)"
+        (afterClosed)="onServiceAfterClosed()"
+      >
+        <p>{{ state.message }}</p>
+        <div class="dialog-page__actions" ptDialogFooter>
+          <pt-ui-button buttonText="Cancel" variant="outline" (pressed)="cancelServiceDialog()">
+          </pt-ui-button>
+          <pt-ui-button buttonText="Confirm" (pressed)="confirmServiceDialog()"></pt-ui-button>
+        </div>
+      </pt-ui-dialog>
+    }
+
+    <pre class="dialog-page__code" ngNonBindable><code>&#64;if (serviceState; as state) &#123;
+  &lt;pt-ui-dialog
+    [open]="state.open"
+    [title]="state.title"
+    (closed)="onServiceClosed($event)"
+    (afterClosed)="onServiceAfterClosed()"
+  &gt;
+    &lt;p&gt;&#123;&#123; state.message &#125;&#125;&lt;/p&gt;
+  &lt;/pt-ui-dialog&gt;
+&#125;
+
+confirmServiceDialog(): void &#123;
+  this.serviceState = &#123; ...this.serviceState!, open: false &#125;;
+&#125;
+
+onServiceAfterClosed(): void &#123;
+  if (this.serviceState &amp;&amp; !this.serviceState.open) &#123;
+    this.serviceState = null;
+  &#125;
+&#125;</code></pre>
   </section>
 
   <section class="dialog-page__section" id="draggable">
@@ -212,8 +272,9 @@ export class ExampleComponent &#123;&#125;
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>openChange</code></td><td>EventEmitter&lt;boolean&gt;</td><td>Emits when the dialog closes.</td></tr>
-            <tr><td><code>closed</code></td><td>EventEmitter&lt;DialogCloseEvent&gt;</td><td>Provides close reason.</td></tr>
+            <tr><td><code>openChange</code></td><td>EventEmitter&lt;boolean&gt;</td><td>Emits when the dialog requests close via UI actions.</td></tr>
+            <tr><td><code>closed</code></td><td>EventEmitter&lt;DialogCloseEvent&gt;</td><td>Provides close reason before animation finishes.</td></tr>
+            <tr><td><code>afterClosed</code></td><td>EventEmitter&lt;void&gt;</td><td>Emits after close animation fully completes.</td></tr>
           </tbody>
         </table>
       </div>

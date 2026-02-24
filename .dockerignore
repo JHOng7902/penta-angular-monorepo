@@ -1,0 +1,14 @@
+.git
+.github
+.angular
+.nx
+.vscode
+.qodo
+.verdaccio
+node_modules
+dist
+tmp
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+coverage

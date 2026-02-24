@@ -95,4 +95,69 @@ npx nx build shared-ui
 npx nx g @nx/angular:component shared-ui/src/lib/your-component --standalone --style=scss --export --prefix=pt-ui
 ```
 
+## Deploy `host` with Docker + Nginx
+
+This repo includes:
+
+- `Dockerfile` (multi-stage build: Nx production build -> Nginx runtime)
+- `nginx.conf` (SPA fallback + caching rules)
+- `docker-compose.yml` (runs `host` on port `8080`)
+
+### Prerequisites
+
+- Docker Desktop running
+
+### Build and run
+
+```sh
+docker compose up -d --build
+```
+
+Open:
+
+- App: `http://localhost:8080`
+- Health check: `http://localhost:8080/nginx-health`
+
+### Share on same LAN (Option 1)
+
+`localhost` only works on your own machine. To share with others on the same network:
+
+1. Find your IPv4 address:
+
+```sh
+ipconfig
+```
+
+2. Share this URL format:
+
+```text
+http://<your-ipv4>:8080
+```
+
+Example:
+
+```text
+http://172.16.32.255:8080
+```
+
+3. Allow inbound port `8080` in Windows Firewall (run PowerShell as Administrator):
+
+```powershell
+netsh advfirewall firewall add rule name="Penta Host 8080" dir=in action=allow protocol=TCP localport=8080 profile=domain
+```
+
+### Useful commands
+
+```sh
+# View logs
+docker compose logs -f host
+
+# Stop and remove container/network
+docker compose down
+
+# Rebuild clean (remove local compose image)
+docker compose down --rmi local --remove-orphans
+docker compose up -d --build
+```
+
 
